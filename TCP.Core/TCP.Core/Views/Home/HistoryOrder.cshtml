@@ -1,0 +1,32 @@
+﻿
+@{
+    Layout = null;
+}
+
+@if (Model != null)
+{
+    foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                <img src="~/Upload/Products/@item.ProductImage" class="img-responsive" width="50" />
+            </td>
+            <td width="40%">
+                @if (ViewBag.lang == "vn")
+                {
+                    @item.ProductTitle <span>x</span> @item.Amount
+                }
+                @if (ViewBag.lang == "en")
+                {
+                    @item.ProductTitle1 <span>x</span> @item.Amount
+                }
+            </td>
+            <td class="text-left">
+                @item.Prices.ToString("#,##0")
+            </td>
+            <td class="text-right">
+                @item.Total.ToString("#,##0")
+            </td>
+        </tr>
+    }
+}

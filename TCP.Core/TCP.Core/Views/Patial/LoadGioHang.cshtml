@@ -1,0 +1,68 @@
+﻿@using System.Data;
+@{
+    try
+    {
+        if (ViewBag.dt != null && ViewBag.dt.Rows.Count > 0)
+        {
+            int i = 0;
+            foreach (DataRow dr in ((DataTable)ViewBag.dt).Rows)
+            {
+    <tr>
+        <td style="width:125px">
+            @{
+                if (!string.IsNullOrEmpty(dr["ProductImage"].ToString()))
+                {
+                    <img src="~/upload/products/@(dr["ProductImage"].ToString())?v=1" class="img-responsive" style="width:120px;" />
+
+                }
+                else
+                {
+
+
+                }
+            }
+
+        </td>
+        <td style="text-align:left">
+            <div class="a-table">@(dr["ProductTitle"].ToString())</div>
+            <a href="javascript:DeleteShpCrt('@(i.ToString())')" class="a-table"><i class="bx bx-minus-circle" aria-hidden="true"></i> Xóa</a>
+        </td>
+        <td class="td-border-left">
+            <input type="number" id="soluong" name="soluong" data-id="@i.ToString()" onchange="UpdateCart('@i.ToString()')" min="1" value="@(dr["Amount"].ToString())" />
+        </td>
+        <td class="td-border-left">
+            <p class="p-table">
+                @(string.Format("{0:N0}", dr["ProductPrice"]).ToString())<sup>đ</sup>
+                @if (Tool.Utils.ReturnPrice(int.Parse((dr["ProductId"]).ToString())) != 0)
+                {
+                    <span class="pricefrom">@(string.Format("{0:N0}", Tool.Utils.ReturnPrice(int.Parse(dr["ProductId"].ToString()))))<sup>đ</sup></span>
+                }
+            </p>
+        </td>
+        <td>
+            <div style="background-color: @(dr["color"].ToString());width:20px;height:20px;">
+
+            </div>
+        </td>
+        <td>
+            @(dr["size"].ToString())
+        </td>
+        <td class="td-border-left">
+            <p class="p-table">@(string.Format("{0:N0}", dr["Total"]).ToString())<sup>đ</sup></p>
+        </td>
+    </tr>
+                i++;
+            }
+        }
+        else
+        {
+            <tr><td colspan="5"><div class="alert alert-info">Bạn chưa có sản phẩm nào trong giỏ hàng, vui lòng click <a href="/">đây</a> để chọn sản phẩm</div></td></tr>
+
+        }
+    }
+    catch (Exception ex)
+    {
+        <tr><td colspan="5">@ex.Message</td></tr>
+
+    }
+}

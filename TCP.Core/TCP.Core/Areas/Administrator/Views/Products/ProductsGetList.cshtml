@@ -1,0 +1,666 @@
+﻿
+@{
+    ViewBag.Title = "Quản lý danh sách sản phẩm";
+    Layout = "~/Areas/Administrator/Views/Shared/_Layout.cshtml";
+}
+<div class="app-main__inner">
+    <div class="app-page-title">
+        <div class="page-title-wrapper">
+            <div class="page-title-heading">
+                <div class="page-title-icon">
+                    <i class="pe-7s-drawer icon-gradient bg-happy-itmeo"></i>
+                </div>
+
+                <div class="page-title-subheading">
+                    <div class="box_search">
+                        <div class="col_cate">
+                            <div onclick="open_cate()" class="dmt">
+                                <span id="title_cate">
+                                    -Danh mục sản phẩm-
+                                </span>
+                                <i class="pe-7s-angle-down caret-left"></i>
+                            </div>
+                            <div class="col_cate_menu">
+                                <ul>
+                                    @if (ViewBag.Listcate != null)
+                                    {
+                                        <li>
+                                            <a onclick="toget(0,' Tất cả danh mục sản phẩm')">
+                                                Tất cả danh mục sản phẩm
+                                            </a>
+                                        </li>
+                                        foreach (var item in ViewBag.Listcate)
+                                        {
+                                            <li>
+                                                <a onclick="toget('@item.ProductCategoryId','@item.ProductCategoryTitle')">
+                                                    @item.ProductCategoryTitle
+                                                </a>
+                                            </li>
+                                            @Html.Action("ProductsGetListChild", "Products", new { ParentID = item.ProductCategoryId })
+                                        }
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col_search">
+                            <input placeholder="Tìm kiếm..." id="txtTimkiem" />
+                        </div>
+                        <div class="col_button">
+                            <a onclick="searchSP()" style="cursor:pointer;display:block;">
+                                <i class="pe-7s-search"></i>
+                            </a>
+                        </div>
+                        <div class="clearfix">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="page-title-actions">
+                @*<button type="button" data-toggle="tooltip" title="" data-placement="bottom" class="btn-shadow mr-3 btn btn-dark" data-original-title="Example Tooltip">
+                        <i class="fa fa-star"></i>
+                    </button>*@
+                <div class="d-inline-block dropdown">
+                    <button class="btn-shadow  btn btn-danger" type="button" onclick="uptop()">
+                        Up top
+                    </button>
+                    <button onclick="goto()" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn-shadow  btn btn-info">
+                        @*<span class="btn-icon-wrapper pr-2 opacity-7">
+                                <i class="fa fa-business-time fa-w-20"></i>
+                            </span>*@
+                        Thêm
+                    </button>
+                    @*<div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right">
+                            <ul class="nav flex-column">
+                                <li class="nav-item">
+                                    <a class="nav-link">
+                                        <i class="nav-link-icon lnr-inbox"></i>
+                                        <span> Inbox</span>
+                                        <div class="ml-auto badge badge-pill badge-secondary">86</div>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link">
+                                        <i class="nav-link-icon lnr-book"></i>
+                                        <span> Book</span>
+                                        <div class="ml-auto badge badge-pill badge-danger">5</div>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link">
+                                        <i class="nav-link-icon lnr-picture"></i>
+                                        <span> Picture</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a disabled="" class="nav-link disabled">
+                                        <i class="nav-link-icon lnr-file-empty"></i>
+                                        <span> File Disabled</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>*@
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="main-card mb-3 card">
+                <div class="card-body">
+                    <h5 class="card-title">Danh sách</h5>
+                    <div class="table-responsive">
+                        <table class="mb-0 table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Tên sản phẩm</th>
+                                    <th>Hình ảnh</th>
+                                    <th>URL</th>
+                                    <th>
+                                        Cập nhật giá
+                                    </th>
+                                    <th>Sắp xếp</th>
+                                    <th width="5%">Cho trả góp</th>
+                                    @*<th width="5%">Ấn tượng</th>
+                                        <th width="5%">Bán chạy</th>*@
+                                    <th style="width:15%">Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody id="bodydata">
+
+                                @if (Model != null)
+                                {
+                                    var i = 1;
+                                    foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td scope="row"><input onclick="clme(this)" class="myinput" type="checkbox" data-id="@item.ProductId" /></td>
+                                           
+                                            <td>
+                                                @item.ProductTitle
+                                                @if (item.ProductPrice != 0)
+                                                {
+                                                    <div class="text-primary">
+                                                        <strong>
+                                                            Giá : @item.ProductPrice.ToString("#,##0")
+                                                        </strong>
+                                                    </div>
+                                                    <div class="text-info">
+                                                        <strong> Giá giảm: @item.ProductPriceDrop.ToString("#,##0")</strong>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="text-primary">
+                                                        <strong>
+                                                            Giá : Liên hệ
+                                                        </strong>
+                                                    </div>
+
+                                                }
+                                            </td>
+                                            <td class="table_img">
+                                                @if (item.ProductImage != "" && item.ProductImage != null)
+                                                {
+                                                    <img src="/upload/Products/@item.ProductImage" />
+
+                                                }
+                                                else
+                                                {
+                                                    <img src="~/assets/images/Admin/Noimage.png" />
+                                                }
+                                            </td>
+                                            <td>@item.ProductUrl</td>
+                                            <td style="width:15%">
+                                                <a style="color:white" class="btn btn-primary" onclick="chinhsuagia('@item.ProductId','@item.ProductPrice','@item.ProductPriceDrop')">
+                                                    Chỉnh sửa giá
+                                                </a>
+
+                                            </td>
+                                            <td><input class="admin_sort" value="@item.DisplayOrder" onchange="change_displayorder('@item.ProductId',this)" /></td>
+
+                                            <td>
+
+                                                @if (item.Antuong == 1)
+                                                {
+                                                    <p><input checked="checked" type="checkbox" name="check-1" value="@item.ProductId" class="lcs_check1" autocomplete="off" /></p>
+                                                }
+                                                else
+                                                {
+                                                    <p><input type="checkbox" name="check-1" value="@item.ProductId" class="lcs_check1" autocomplete="off" /></p>
+                                                }
+
+                                            </td>
+                                            @*<td>
+
+                                                    @if (item.Banchay == 1)
+                                                    {
+                                                        <p><input checked="checked" type="checkbox" name="check-1" value="@item.ProductId" class="lcs_check2" autocomplete="off" /></p>
+                                                    }
+                                                    else
+                                                    {
+                                                        <p><input type="checkbox" name="check-1" value="@item.ProductId" class="lcs_check2" autocomplete="off" /></p>
+                                                    }
+
+                                                </td>
+                                                <td>
+
+                                                    @if (item.Moinhat == 1)
+                                                    {
+                                                        <p><input checked="checked" type="checkbox" name="check-1" value="@item.ProductId" class="lcs_check3" autocomplete="off" /></p>
+                                                    }
+                                                    else
+                                                    {
+                                                        <p><input type="checkbox" name="check-1" value="@item.ProductId" class="lcs_check3" autocomplete="off" /></p>
+                                                    }
+
+                                                </td>*@
+
+                                            <td>
+                                                <a href="/Administrator/Products/ProductsInsertList?ProductId=@item.ProductId">
+                                                    <i class="lnr-pencil" style="font-size: 13px; color: white; background-color: #16aaff; padding: 10px 10px;"></i>
+                                                </a>
+                                                <a href="javascript:deletes('@item.ProductId','@item.ProductImage')">
+                                                    <i class="lnr-trash" style="font-size: 13px; color: white; margin-left: 5px; background-color: #d92550; padding: 10px 10px;"></i>
+                                                </a>
+                                                <div style="margin:10px 0px;">
+                                                    <a style="background-color:#ff6a00;color:white" class="btn btn-warning" href="/Administrator/Giathamkhao/Getlistthamkhao?ProductId=@item.ProductId" target="_blank">
+                                                        Giá tham khảo
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div>
+                        @if (ViewBag.tongSoTrang != null)
+                        {
+                            <ul class="phantrangsp">
+                                @for (int i = 0; i < ViewBag.tongSoTrang; i++)
+                                {
+                                    <li>
+                                        @if ((i + 1) == ViewBag.pages)
+                                        {
+                                            <a class="pagelistActive" href="/Administrator/Products/ProductsGetList?idcate=@ViewBag.idcate&key=@ViewBag.key&page=@(i+1)">
+                                                @(i + 1)
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <a href="/Administrator/Products/ProductsGetList?idcate=@ViewBag.idcate&key=@ViewBag.key&page=@(i+1)">
+                                                @(i + 1)
+                                            </a>
+                                        }
+                                    </li>
+                                }
+                            </ul>
+
+                        }
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+<script>
+    var selectCate = 0;
+    function searchSP() {
+        window.location.href = "/Administrator/Products/ProductsGetList?idcate=" + selectCate + "&key=" + $("#txtTimkiem").val();
+    }
+    function toget(ids, name) {
+        $("#title_cate").html(name);
+        $(".col_cate_menu").hide();
+        selectCate = ids;
+        //alert(selectCate)
+        // getList(ids);
+    }
+    //getList(0);
+    function getList(id) {
+        var param = {
+            idcate: id
+        };
+        $.ajax({
+            url: '/Administrator/Products/ProductsGetData',
+            data: param,
+            dataType: 'text',
+            type: 'POST',
+            cache: false,
+            success: function (result) {
+                $("#bodydata").empty().html(result)
+            }
+        });
+    }
+    function goto() {
+        window.location.href = "/Administrator/Products/ProductsInsertList";
+    }
+    function open_cate() {
+        $(".col_cate_menu").toggle();
+    }
+</script>
+<script>
+    function deletes(id, name) {
+        $.confirm('Bạn có muốn xóa sản phẩm này?', {
+            em: '', title: 'Cảnh báo!', callEvent: function () {
+
+                $.ajax({
+                    url: '/Tool/DeleteFile.ashx',
+                    data: 'name=' + name + '&folder=' + 'Products',
+                    dataType: 'text',
+                    type: 'GET',
+                    cache: false,
+                    success: function (result) {
+
+                    }
+                });
+                //Lấy list ten hình con
+                var pr =
+                {
+                    "ProductID": id
+                }
+                var lststring;
+                var getstring = "";
+                var lenghst = 0;
+                $.ajax({
+                    url: '/Administrator/Products/GetNameImages',
+                    data: pr,
+                    dataType: 'text',
+                    type: 'POST',
+                    cache: false,
+                    success: function (result) {
+                        getstring = result.toString();
+                        lststring = getstring.split(',');
+
+                        lenghst = lststring.length;
+                        console.log(lststring)
+                        for (i = 0; i < lenghst - 1; i++) {
+                            if (lststring[i] != "") {
+                                $.ajax({
+                                    url: '/Tool/DeleteFile.ashx',
+                                    data: 'name=' + lststring[i] + '&folder=' + 'ProductsImg',
+                                    dataType: 'text',
+                                    type: 'GET',
+                                    cache: false,
+                                    success: function (result) {
+
+                                    }
+                                });
+                            }
+
+                        }
+                    }
+                });
+                //
+                var param =
+                {
+                    "ProductID": id
+                }
+
+                $.ajax({
+                    url: '/Administrator/Products/ProductsDelete',
+                    data: param,
+                    dataType: 'text',
+                    type: 'POST',
+                    cache: false,
+                    success: function (result) {
+                        window.location.reload();
+                    }
+                });
+            }, cancelEvent: function () { }, cancelButton: 'Không'
+        })
+
+
+    }
+
+
+    function change_displayorder(id, dd) {
+        var param =
+        {
+            "id": id,
+            "idorder": $(dd).val()
+        }
+        console.log(param);
+        $.ajax({
+            url: '/Administrator/Products/ProductSort',
+            data: param,
+            dataType: 'text',
+            type: 'POST',
+            cache: false,
+            success: function (result) {
+
+            }
+        });
+    }
+
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function (e) {
+
+        $('input.lcs_check1').lc_switch();
+
+        // triggered each time a field changes status
+        $(document).on('lcs-statuschange', '.lcs_check1', function () {
+            var status = ($(this).is(':checked')) ? 'checked' : 'unchecked',
+                subj = ($(this).attr('type') == 'radio') ? 'radio #' : 'checkbox #',
+                num = $(this).val();
+
+            $('#third_div ul').prepend('<li><em>[lcs-statuschange]</em>' + subj + num + ' changed status: ' + status + '</li>');
+        });
+
+
+        // triggered each time a field is checked
+        $(document).on('lcs-on', '.lcs_check1', function () {
+            updateAnTuong($(this).val(), 1);
+            var subj = ($(this).attr('type') == 'radio') ? 'radio #' : 'checkbox #',
+                num = $(this).val();
+            $('#third_div ul').prepend('<li><em>[lcs-on]</em>' + subj + num + ' is checked</li>');
+        });
+
+
+        // triggered each time a is unchecked
+        $(document).on('lcs-off', '.lcs_check1', function () {
+            updateAnTuong($(this).val(), 0);
+            var subj = ($(this).attr('type') == 'radio') ? 'radio #' : 'checkbox #',
+                num = $(this).val();
+
+            $('#third_div ul').prepend('<li><em>[lcs-off]</em>' + subj + num + ' is unchecked</li>');
+        });
+
+        //
+        $(document).on('lcs-statuschange', '.lcs_check2', function () {
+            var status = ($(this).is(':checked')) ? 'checked' : 'unchecked',
+                subj = ($(this).attr('type') == 'radio') ? 'raitemio #' : 'checkbox #',
+                num = item(this).val();
+
+            $('#third_div ul').prepend('<li><em>[lcs-statuschange]</em>' + subj + num + ' changed status: ' + status + '</li>');
+        });
+
+
+        // triggered each time a field is checked
+        $(document).on('lcs-on', '.lcitem_check2', function () {
+            updateBanchay($(this).val(), 1);
+            var subj = ($(this).attr('type') == 'radio') ? 'radio #' : 'checkbox #',
+                num = $(this).val();
+            $('#third_div ul').prepend('<li><em>[lcs-on]</em>' + subj + num + ' is checked</li>');
+        });
+
+
+        // triggered each time a is unchecked
+        $(document).on('lcs-off', '.lcs_check2', function () {
+            updateBanchay($(this).val(), 0);
+            var subj = ($(this).attr('type') == 'radio') ? 'radio #' : 'checkbox #',
+                num = $(this).val();
+
+            $('#third_div ul').prepend('<li><em>[lcs-off]</em>' + subj + num + ' is unchecked</li>');
+        });
+        //Mới nhất
+        $(document).on('lcs-statuschange', '.lcs_check3', function () {
+            var status = ($(this).is(':checked')) ? 'checked' : 'unchecked',
+                subj = ($(this).attr('type') == 'radio') ? 'radio #' : 'checkbox #',
+                num = $(this).val();
+
+            $('#third_div ul').prepend('<li><em>[lcs-statuschange]</em>' + subj + num + ' changed status: ' + status + '</li>');
+        });
+
+
+        // triggered each time a field is checked
+        $(document).on('lcs-on', '.lcs_check3', function () {
+            updateMoiNhat($(this).val(), 1);
+            var subj = ($(this).attr('type') == 'radio') ? 'radio #' : 'checkbox #',
+                num = $(this).val();
+            $('#third_div ul').prepend('<li><em>[lcs-on]</em>' + subj + num + ' is checked</li>');
+        });
+
+
+        // triggered each time a is unchecked
+        $(document).on('lcs-off', '.lcs_check3', function () {
+            updateMoiNhat($(this).val(), 0);
+            var subj = ($(this).attr('type') == 'radio') ? 'radio #' : 'checkbox #',
+                num = $(this).val();
+
+            $('#third_div ul').prepend('<li><em>[lcs-off]</em>' + subj + num + ' is unchecked</li>');
+        });
+    });
+
+
+
+    // clean events log
+    $('#third_div small').click(function () {
+        $('#third_div ul').empty();
+    });
+    function updateAnTuong(id, status) {
+        var param =
+        {
+            "id": id,
+            "idorder": status
+        }
+        $.ajax({
+            url: '/Administrator/Products/ProductAnTuong',
+            data: param,
+            dataType: 'text',
+            type: 'POST',
+            cache: false,
+            success: function (result) {
+                getList();
+            }
+        });
+    }
+    function updateBanchay(id, status) {
+        var param =
+        {
+            "id": id,
+            "idorder": status
+        }
+        $.ajax({
+            url: '/Administrator/Products/ProductBanChay',
+            data: param,
+            dataType: 'text',
+            type: 'POST',
+            cache: false,
+            success: function (result) {
+                getList();
+            }
+        });
+    }
+
+    function updateMoiNhat(id, status) {
+        var param =
+        {
+            "id": id,
+            "idorder": status
+        }
+        $.ajax({
+            url: '/Administrator/Products/ProductMoiNhat',
+            data: param,
+            dataType: 'text',
+            type: 'POST',
+            cache: false,
+            success: function (result) {
+                getList();
+            }
+        });
+    }
+    function uptop() {
+        var str = "";
+        $(".myinput").each(function () {
+            if ($(this).prop("checked") == true) {
+                var id = $(this).attr("data-id");
+                str += id + ",";
+            }
+        });
+
+
+        var param =
+        {
+            "data": str,
+        }
+        $.ajax({
+            url: '/Administrator/Products/UpTopUpTop',
+            data: param,
+            dataType: 'text',
+            type: 'POST',
+            cache: false,
+            success: function (result) {
+                window.location.reload();
+            }
+        });
+    }
+    function clme() {
+
+    }
+</script>
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Cập nhật giá cả
+                </h5>
+
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal form-validate-jquery" id="priceForm" novalidate="novalidate">
+                    <div class="row form-group">
+                        <div class="col-sm-3">
+                            <label>Giá gốc:</label>
+                        </div>
+                        <div class="col-sm-9">
+                            <input type="hidden" id="proIdd" name="proIdd" value="7335">
+                            <input type="text" id="txtoldpricefix" name="txtoldpricefix" required="required" aria-required="true" class="form-control currency input-sm">
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-sm-3">
+                            <label>Giá khuyến mãi:</label>
+                        </div>
+                        <div class="col-sm-9">
+                            <input type="text" id="txtnewprice" name="txtnewprice" required="required" aria-required="true" class="form-control currency input-sm">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <button onclick="capnhatgiaca()" class="btn btn-primary">Cập nhật giá cả</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+<style>
+    .modal {
+        z-index: 99999999999;
+        top: 127px;
+    }
+
+    .modal-backdrop, .blockOverlay {
+        z-index: 0;
+    }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+<script>
+    function capnhatgiaca() {
+        replaceTe("txtoldpricefix");
+        replaceTe("txtnewprice");
+
+        var param = {
+            "idproduct": $("#proIdd").val(),
+            "ProductPrice": $("#txtoldpricefix").val(),
+            "ProductPriceDrop": $("#txtnewprice").val(),
+        }
+        $.ajax({
+            url: '/Administrator/Products/Capnhatgiaca',
+            data: param,
+            dataType: 'text',
+            type: 'POST',
+            cache: false,
+            success: function (result) {
+                window.location.reload();
+            }
+        });
+    }
+    function chinhsuagia(id, pr, prd) {
+        $("#exampleModal").modal("toggle");
+        $("#proIdd").val(id);
+        $("#txtoldpricefix").val(pr).change();
+        $("#txtnewprice").val(prd).change();
+    }
+    function replaceTe(id) {
+        var str = $("#" + id).val().toString();
+        var kq = "";
+        for (i = 0; i < (str.split(',').length); i++) {
+            kq += (str.split(',')[i]);
+        }
+        $("#" + id).val(kq);
+    }
+</script>

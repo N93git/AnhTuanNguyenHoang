@@ -1,0 +1,346 @@
+﻿<style>
+    body {
+        background-color: #eee;
+    }
+
+    .detail-service {
+        background-color: white;
+        padding: 10px 20px;
+        box-shadow: 0 3px 5px rgb(0 0 0 / 20%);
+    }
+</style>
+<div class="block-breadcrumb">
+    <div class="container">
+        <ul class="breadcrumb">
+            <li>
+                @if (ViewBag.lang == "vn")
+                {
+                    <a href="/?lang=vn">Trang chủ</a>
+                }
+                @if (ViewBag.lang == "en")
+                {
+                    <a href="/?lang=en">Home</a>
+                }
+                @if (ViewBag.lang == "fr")
+                {
+                    <a href="/?lang=fr">Accueil</a>
+                }
+            </li>
+
+            @if (ViewBag.ParentName != null)
+            {
+                foreach (var item in ViewBag.ParentName)
+                {
+
+                    <li>
+                        @if (ViewBag.lang == "vn")
+                        {
+                            <a href="@item.NewsCategoryUrl">@item.NewsCategoryTitle</a>
+                        }
+                        @if (ViewBag.lang == "en")
+                        {
+                            <a href="@item.NewsCategoryUrl">@item.NewsCategoryTitle1</a>
+                        }
+                        @if (ViewBag.lang == "fr")
+                        {
+                            <a href="@item.NewsCategoryUrl">@item.NewsCategoryTitle2</a>
+                        }
+                    </li>
+                }
+            }
+            @foreach (var item in Model)
+            {
+                <li class="active">
+                    @if (ViewBag.lang == "vn")
+                    {
+                        @item.NewsTitle
+                    }
+                    @if (ViewBag.lang == "en")
+                    {
+                        @item.NewsTitle1
+                    }
+                    @if (ViewBag.lang == "fr")
+                    {
+                        @item.NewsTitle2
+                    }
+                </li>
+            }
+
+        </ul>
+    </div>
+</div>
+
+<div class="container">
+    <div class="detail-service py-40" style="margin-top:30px;">
+        <div class="max-960">
+            @if (Model != null)
+            {
+                foreach (var item in Model)
+                {
+                    <div style="display:none;">
+                        @(TempData["dd"] = "http://" + Request.Url.Host + "/Upload/News/" + item.NewsImage);
+                    </div>
+                    <input id="ProductId" value="@item.NewsId" type="hidden" />
+                    <h1 class="h1-detail"><b>@item.NewsTitle</b></h1>
+                    <div id="fb-root"></div>
+                    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v12.0&appId=208417468085570&autoLogAppEvents=1" nonce="K1ZLq5Pt"></script>
+                    <div class="text-right share-detail">
+
+                        <div class="fb-share-button" data-href="@Request.Url.AbsoluteUri" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F@Request.Url.AbsoluteUri" class="fb-xfbml-parse-ignore">Chia sẻ</a></div>
+                        <span> | </span>  <span>Lượt xem : @item.Counts</span>
+                    </div>
+                    <div class="block-editor-content mt-30">
+                        @Html.Raw(item.NewsContents)
+                    </div>
+                }
+            }
+
+        </div>
+        <div class="block-product-rely">
+            <div class="title mb-20" id="target5">
+                <strong>
+                    HỎI/ĐÁP - ĐÁNH GIÁ VỀ BÀI VIẾT
+                </strong>
+
+            </div>
+            <div class="prodductdetail_comment">
+                <textarea pattern=".{100,200}" placeholder="Mời bạn bình luận hoặc đặt câu hỏi. Vui lòng nhập tiếng Việt có dấu" required="" id="txtcontent" name="txtcontent" rows="5" cols="72"></textarea>
+                @*<div>
+                    @if (ViewBag.Cusname != null)
+                    {
+                        <a style=" float: left; background-color: transparent; color: #333;">
+                            <span> @ViewBag.Cusname</span> (Chỉnh sửa)
+                        </a>
+                    }
+
+                </div>*@
+                <a onclick="guibinhluan()">Gửi bình luận</a>
+                <hr />
+                @if (ViewBag.Listcm != null)
+                {
+                    foreach (var it in ViewBag.Listcm)
+                    {
+                        <div class="binhluanbox">
+                            <div class="binhluan_name">
+                                @if (@it.CustomerName != "")
+                                {
+                                    <span class="binhluanfirtname"> @it.CustomerName[0]</span> @it.CustomerName
+
+                                }
+                                else
+                                {
+                                    <span class="binhluanfirtname"> </span>
+
+                                }
+                            </div>
+                            <div class="binhluan_Contents">
+                                @Html.Raw(it.Contents)
+                            </div>
+                            <div class="binhluan_times">
+                                @{
+                                    var hour = TimeSpan.Parse((DateTime.Now - it.CreateDate).ToString());
+                                    if (hour.Days >= 1)
+                                    {
+                                        <a onclick="trloi(@it.CommtentId,'@it.CustomerName')">Trả lời</a> <span>- @hour.Days</span><span>  Ngày trước</span>
+                                    }
+                                    else
+                                    {
+                                        if (hour.Hours >= 1)
+                                        {
+                                            <a onclick="trloi(@it.CommtentId,'@it.CustomerName')">Trả lời</a> <span>-  @hour.Hours</span><span>  Giờ trước</span>
+                                        }
+                                        else
+                                        {
+                                            if (hour.Minutes >= 1)
+                                            {
+                                                <a onclick="trloi(@it.CommtentId,'@it.CustomerName')"> Trả lời  </a> <span>-  @hour.Minutes </span><span>Phút trước </span>
+                                            }
+                                            else
+                                            {
+                                                <a onclick="trloi(@it.CommtentId,'@it.CustomerName')"> Trả lời  </a> <span>-  1</span><span> - Phút trước </span>
+                                            }
+                                        }
+                                    }
+                                }
+                                <div>
+                                    @Html.Action("GetTraloiNews", "Patial", new { CommtentId = it.CommtentId })
+                                </div>
+                            </div>
+                            <div class="hide_tlbox" id="tl_@it.CommtentId">
+                                <textarea id="te_@it.CommtentId" class="hide_tlbox_contents"></textarea>
+                                <div class="hide_tlboxgui">
+                                    <a onclick="guitn(@it.CommtentId)">Gửi</a>
+                                </div>
+                            </div>
+                        </div>
+
+                    }
+                }
+            </div>
+        </div>
+        @Html.Action("Lienhebaogia", "Home")
+        <section class="xaydung_box">
+            <div class="myback">
+                <div class="index_product_title" data-aos="fade-up" data-aos-duration="1000">
+                    <a>
+                        Tin liên quan
+                    </a>
+                </div>
+                <div class="row padding-15">
+                    @*<div class="col-sm-3 hidden-xs">
+                            <div>
+                                <img src="~/Upload/NewsCategories/@ViewBag.Tintuccate.NewsCategoryImage" class="img-responsive" />
+                            </div>
+                        </div>*@
+                    <div class="col-sm-12">
+                        @if (ViewBag.Listlienquan != null)
+                        {
+
+                            <div class="xaydungs2">
+                                @foreach (var item in ViewBag.Listlienquan)
+                                {
+                                    <div class="xaydunglist_box">
+                                        <div class="tintucimg items">
+                                            <a href="@item.NewsUrl" class="tmb-imgcc">
+                                                <img src="~/Upload/News/@item.NewsImage" class="img-responsive" />
+                                            </a>
+                                        </div>
+                                        <div class="xaydung_ct_box news_ctbox">
+                                            <div class="xaydunglist_title">
+                                                <a href="@item.NewsUrl">
+                                                    @item.NewsTitle
+                                                </a>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                }
+                            </div>
+                        }
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </div>
+</div>
+
+<div class="modal fade" id="exampleModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Nhập thông tin
+                </h5>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <input id="CustomerId" type="hidden" value="@ViewBag.Cus" />
+                    <input id="txtName" class="form-control" placeholder="Nhập họ tên (bắt buộc)" />
+                </div>
+                <div class="form-group">
+                    <input id="txtEmails" class="form-control" placeholder="Email" />
+                </div>
+                <div class="form-group">
+                    <input id="txtPhone" class="form-control" placeholder="Số điện thoại" />
+                </div>
+                <div>
+                    <a onclick="capnhat()" class="btn btn-primary" style="width:100%">
+                        Cập nhật
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+
+</div>
+<script>
+    $('.xaydungs2').slick({
+        infinite: true,
+        speed: 300,
+        slidesToShow: 3,
+        slidesToScroll: 1,
+        autoplay: true,
+        arrows: false,
+        responsive: [
+            {
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: 3,
+                    slidesToScroll: 1,
+                }
+            },
+            {
+                breakpoint: 600,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                }
+            },
+            {
+                breakpoint: 480,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    autoplay: true,
+                }
+            }
+        ]
+    });
+
+
+    function guitn(id) {
+        if ('@ViewBag.login' != "1") {
+            $("#exampleModal3").modal("toggle");
+        }
+        else {
+            var params = {
+                "CommtentId": 0,
+                "CustomerId":'@ViewBag.Cus',
+                "Type": 1,
+             "Contents": $("#te_" + id).val(),
+                "ParentID": id,
+                "ProductId": $("#ProductId").val()
+            }
+            $.post("/Home/SendComments", { "data": "" + JSON.stringify(params) + "" }, function (result) {
+                alert("Cảm ơn bạn đã bình luận, chúng tôi sẽ kiểm duyệt và hiển thị sau");
+                window.location.reload();
+            });
+        }
+
+    }
+
+    function guibinhluan() {
+        if ($("#txtcontent").val() == '') {
+            alert("Vui lòng nhập bình luận!")
+            return false;
+        }
+        $("#exampleModal3").modal("toggle");
+    }
+
+    function capnhat() {
+        var params = {
+            "CommtentId": 0,
+            "CustomerId": 0,
+            "Type": 1,
+            "Contents": $("#txtcontent").val(),
+            "ParentID": 0,
+            "NewsID": $("#ProductId").val(),
+            "HoTen": $("#txtName").val(),
+            "Email": $("#txtEmails").val(),
+            "SoDT": $("#txtPhone").val()
+        }
+        $.post("/Home/SendNewComments", { "data": "" + JSON.stringify(params) + "" }, function (result) {
+            alert("Cảm ơn bạn đã bình luận, chúng tôi sẽ kiểm duyệt và hiển thị sau");
+            window.location.reload();
+        });
+    }
+</script>
+<style>
+    .modal-dialog {
+        top: 150px;
+    }
+</style>

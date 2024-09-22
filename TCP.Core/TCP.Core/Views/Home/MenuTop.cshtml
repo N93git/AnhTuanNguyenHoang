@@ -1,0 +1,877 @@
+﻿@using Tool;
+<link href="~/assets/Fonts/font-awesome-4.3.0/css/font-awesome.css" rel="stylesheet" />
+<link rel='stylesheet' href='https://cdn.rawgit.com/daneden/animate.css/v3.1.0/animate.min.css'>
+<script src='https://cdn.rawgit.com/matthieua/WOW/1.0.1/dist/wow.min.js'></script>
+<link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700&family=Montserrat:wght@300;500;600;700&family=Poppins:ital,wght@0,100;0,300;0,400;0,600;0,700;0,800;0,900;1,100;1,300&family=Quicksand:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link href="~/assets/utm_avo/font-avo.css" rel="stylesheet" />
+
+<div class="header_top_box hidden">
+    <div class="container-fluid ">
+        <div class="row">
+            <div class="col-sm-4 hidden-sm hidden-xs">
+
+            </div>
+            <div class="col-sm-4 hidden-sm hidden-xs">
+                <div class="header_top_title">
+
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="header_top_menu">
+                    <ul>
+
+                        <li style="position:relative;" class="hidden-sm hidden-xs">
+                            <a onclick="toogle_search()">
+                                <i class="fa fa-search"></i>
+                            </a>
+                        </li>
+                        <li style="position:relative;">
+                            @if (ViewBag.getuser == null)
+                            {
+
+
+                                <a data-toggle="modal" data-target="#exampleModal">
+                                    <i class="bx bx-user font-medium-5"></i>
+                                    @if (ViewBag.lang == "vn")
+                                    {
+                                        <span>Tài khoản</span>
+                                    }
+                                    @if (ViewBag.lang == "en")
+                                    {
+                                        <span>Account</span>
+                                    }
+                                    @if (ViewBag.lang == "fr")
+                                    {
+                                        <span>Compte</span>
+                                    }
+                                </a>
+                            }
+                            else
+                            {
+                                <a onclick="toggle_ulmenu()">
+                                    @ViewBag.getuser.Name
+                                </a>
+                                <ul class="ulinfo">
+                                    <li>
+                                        <a href="/thong-tin-tai-khoan">
+                                            @if (ViewBag.lang == "vn")
+                                            {
+                                                <span>Thông tin tài khoản</span>
+                                            }
+                                            @if (ViewBag.lang == "en")
+                                            {
+                                                <span>User info</span>
+                                            }
+                                            @if (ViewBag.lang == "fr")
+                                            {
+                                                <span>Informations utilisateur</span>
+                                            }
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a onclick="logout()">
+                                            @if (ViewBag.lang == "vn")
+                                            {
+                                                <span>Đăng xuất</span>
+                                            }
+                                            @if (ViewBag.lang == "en")
+                                            {
+                                                <span>Log out</span>
+                                            }
+                                            @if (ViewBag.lang == "fr")
+                                            {
+                                                <span>Se déconnecter</span>
+                                            }
+                                        </a>
+                                    </li>
+                                </ul>
+                                <script>
+                                    function toggle_ulmenu() {
+                                        $(".ulinfo").toggle();
+                                    }
+                                </script>
+                            }
+                        </li>
+                        <li class="hidden-sm hidden-xs">
+                            |
+                        </li>
+                        <li class="hidden-sm hidden-xs">
+                            <a>
+                                <i class="bx bxs-basket" style="margin-right:3px;"></i>
+                                @if (ViewBag.lang == "vn")
+                                {
+                                    <span> Giỏ hàng</span> <span>( </span><span id="numcarts">0</span><span> )</span>
+                                }
+                                @if (ViewBag.lang == "en")
+                                {
+                                    <span> Cart</span><span>( </span><span id="numcarts">0</span><span> )</span>
+                                }
+                                @if (ViewBag.lang == "fr")
+                                {
+                                    <span>Chariot</span><span>( </span><span id="numcarts">0</span><span> )</span>
+                                }
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="search-form">
+                        <input id="qsearch" type="text" class="search-field" data-holder="Tìm kiếm..." value="" placeholder="Tìm kiếm.." data-default="Tìm kiếm..." onkeyup="suggestSearch()">
+                        <div id="idsearch">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="header_bottom_box stmn" style="background-image: linear-gradient(rgb(255 255 255 /90%), rgb(255 255 255 /90%)), url(/assets/Resource/headerbackground.jfif);">
+    <div class="container-fluid ">
+        <div class="row">
+            <div class="col-xs-3 col-sm-4 hidden-md hidden-lg">
+                <button onclick="ShowMenu()" class="menud hidden-sm hidden-md hidden-lg" type="button"><i class="bx bx-menu"></i></button>
+
+            </div>
+            <div class="col-sm-3 col-xs-6">
+                <div class="header_bottom_logo">
+                    <a href="/">
+                        <img src="~/Upload/Settings/@Utils.GetLogo()" class="img-responsive" />
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-sm-9 text-right hidden-sm hidden-xs">
+                <div class="searchlangbox">
+                    <div class="seachheader">
+                        <img src="~/assets/Resource/ic_headphone.png" style=" width: 24px; position: relative; top: -2px;" /> <span class="mt_hotline">+ 84 913 733 557</span>
+                        <input id="qsearchs" placeholder="" onkeyup="searchkp()" />
+                        <a onclick="searchsp()" style="cursor:pointer">
+                            <i class="fa fa-search"></i>
+                        </a>
+                    </div>
+                    <div class="flagheader">
+                        <span>
+                            <img src="~/assets/Resource/Flags/vn-flag.png" />
+                        </span>
+                        <span>
+                            <img src="~/assets/Resource/Flags/en-flag.png" />
+                        </span>
+                    </div>
+
+                </div>
+                <div class="clearfix">
+
+                </div>
+                <ul>
+                    <li style="position:relative;">
+                        <a href="/">
+                            Trang chủ
+                        </a>
+                    </li>
+                    <li>
+                        <a href="ve-chung-toi">
+                            Về chúng tôi  @*<i class="fa fa-angle-down"></i>*@
+                        </a>
+                        @*<ul class="menu_child">
+                                @if (ViewBag.aboutus != null)
+                                {
+                                    foreach (var item in ViewBag.aboutus)
+                                    {
+                                        <li>
+                                            <a href="@item.NewsUrl?lang=vn">
+                                                @item.NewsTitle
+                                            </a>
+                                        </li>
+                                    }
+                                }
+                            </ul>*@
+                    </li>
+                    <li>
+                        <a href="#">
+                            Lĩnh vực hoạt động  <i class="fa fa-angle-down"></i>
+                        </a>
+                        <div class="menu_child ">
+                            @if (ViewBag.ListProductCate != null)
+                            {
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <a class="menu_head" href="xay-dung">
+                                            Xây dựng
+                                        </a>
+                                        <ul class="mnchild">
+                                            @foreach (var item in ViewBag.Xaydung)
+                                            {
+                                                <li>
+                                                    <a href="@item.NewsCategoryUrl">@item.NewsCategoryTitle</a>
+                                                </li>
+                                            }
+                                        </ul>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <a class="menu_head" href="co-dien-lanh">
+                                            Điện lạnh - Nội thất
+                                        </a>
+                                        <ul class="mnchild">
+                                            @foreach (var item in ViewBag.Codienlanh)
+                                            {
+                                                <li>
+                                                    <a href="@item.ProductCategoryUrl">@item.ProductCategoryTitle</a>
+                                                </li>
+                                            }
+                                        </ul>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <a class="menu_head" href="nong-lam-nghiep">
+                                            Nông - Lâm nghiệp
+                                        </a>
+                                        <ul class="mnchild">
+                                            @foreach (var item in ViewBag.batdongsan)
+                                            {
+                                                <li>
+                                                    <a href="@item.NewsCategoryUrl">@item.NewsCategoryTitle</a>
+                                                </li>
+                                            }
+                                        </ul>
+                                    </div>
+                                </div>
+                            }
+
+                        </div>
+                    </li>
+                    <li>
+                        <a href="/dich-vu">
+                            Dịch vụ
+                        </a>
+                        <ul class=" menu_child2">
+                            <li>
+                                <a href="cong-nghiep-lanh-" title="Công nghiệp lạnh ">
+                                    Công nghiệp lạnh
+                                </a>
+                            </li>
+                            <li>
+                                <a href="lap-dat-may-lanh-dieu-hoa-khong-khi-" title="Thi công và lắp đặt máy lạnh">
+                                    Thi công và lắp đặt máy lạnh
+                                </a>
+                            </li>
+                            <li>
+                                <a href="sua-chua-va-bao-tri-may-lanh-dieu-hoa-khong-khi" title="Sửa chữa và bảo trì máy lạnh">
+                                    Sửa chữa và bảo trì máy lạnh
+                                </a>
+                            </li>
+                            <li>
+                                <a href="sua-chua-va-bao-tri-may-lanh-dieu-hoa-khong-khi" title="Sửa chữa và bảo trì máy lạnh">
+                                    Sửa chữa và bảo trì máy lạnh
+                                </a>
+                            </li>
+                            <li>
+                                <a href="hop-dong-tron-goi" title="Hợp đồng trọn gói">
+                                    Hợp đồng trọn gói
+                                </a>
+                            </li>
+                            <li>
+                                <a href="sua-chua-dien-nuoc-" title="Sửa chữa điện nước ">
+                                    Sửa chữa điện nước
+                                </a>
+                            </li>
+                            <li>
+                                <a href="bang-bao-gia" title="Bảng báo giá">
+                                    Bảng báo giá
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="goc-nhin-tu-chuyen-gia" title="Góc nhìn từ chuyên gia">
+                                    Góc nhìn từ chuyên gia
+                                </a>
+                            </li>
+
+                        </ul>
+
+                    </li>
+                    <li>
+                        <a href="/du-an">
+                            Dự án
+                        </a>
+                    </li>
+                    <li>
+                        <a href="profile" target="_blank">
+                            Profile
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/lien-he">
+                            Liên hệ
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-sm-5 col-xs-3  hidden-md hidden-lg">
+                <a class="btn-searchmb" data-toggle="modal" data-target="#exampleModal2">
+                    <i class="fa fa-search"></i>
+                </a>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+<script>
+    function toogle_langue() {
+        $(".menu_langue").toggle();
+    }
+    $(document).ready(function () {
+        if ('@ViewBag.lang' == "vn") {
+            $("[data-lang=vn]").addClass('activelang');
+        }
+         if ('@ViewBag.lang' == "en") {
+             $("[data-lang=en]").addClass('activelang');
+        }
+         if ('@ViewBag.lang' == "jp") {
+             $("[data-lang=fr]").addClass('activelang');
+        }
+    });
+    function gotolang(dis) {
+        var currentURL = window.location.pathname;
+        var lang = $(dis).attr("data-lang");
+       //window.location.pathname
+        if (lang == "vn") {
+            window.location.href = currentURL + "?lang=vn";
+        }
+        if (lang == "en") {
+            window.location.href = currentURL + "?lang=en";
+        }
+        if (lang == "fr") {
+            window.location.href = currentURL + "?lang=fr";
+        }
+    }
+</script>
+
+<div id="menu-mobile" class="hidden-md hidden-lg w">
+    <div class="headerd">
+        @if (ViewBag.lang == "vn")
+        {
+            <div>Danh mục</div>
+        }
+        @if (ViewBag.lang == "en")
+        {
+            <div>Category</div>
+        }
+        @if (ViewBag.lang == "fr")
+        {
+            <div>Catégorie</div>
+        }
+
+        <a href="javascript:void(0)" data-id="menuss" data-parentid="menu-mobile" id="btn-close-menu-child"><i class="fa fa-times fa-lg"></i></a>
+    </div>
+    <div class="bodyd">
+        <ul class="menu-mobile-s no-ul">
+            <li>
+                <a href="/">
+                    <span>Trang chủ</span>
+                </a>
+            </li>
+            <li>
+                <a href="ve-chung-toi">
+                    Về chúng tôi@*<i class="fa fa-angle-down"></i>*@
+                </a>
+                @*<small id="dmenuchildmible-menuchildmible-510" onclick="TogleChild('menuchildmible-vechungtoi')"><i class="fa fa-chevron-down"></i></small>
+                    <ul class="no-ul menuchildmible" id="menuchildmible-vechungtoi">
+                        @if (ViewBag.aboutus != null)
+                        {
+                            foreach (var item in ViewBag.aboutus)
+                            {
+                                <li>
+                                    <a href="@item.NewsUrl?lang=vn">
+                                        @item.NewsTitle
+                                    </a>
+                                </li>
+                            }
+                        }
+                    </ul>*@
+            </li>
+            <li>
+                <a href="#">
+                    Lĩnh vực hoạt động
+                </a>
+                <small id="dmenuchildmible-menuchildmible-510" onclick="TogleChild('menuchildmible-00_659')"><i class="fa fa-chevron-down"></i></small>
+                <ul class="no-ul menuchildmible" id="menuchildmible-00_659">
+                    <li>
+                        <a href="xay-dung">
+                            Xây dựng
+                        </a>
+                        <small id="dmenuchildmible-menuchildmible-510" onclick="TogleChild('menuchildmible-xaydung')"><i class="fa fa-chevron-down"></i></small>
+                        <ul class="no-ul menuchildmible" id="menuchildmible-xaydung">
+                            @foreach (var item in ViewBag.Xaydung)
+                            {
+                                <li style="margin-left:30px;">
+                                    <a href="@item.NewsCategoryUrl">@item.NewsCategoryTitle</a>
+                                </li>
+                            }
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="co-dien-lanh">
+                            Điện lạnh - Nội thất
+                        </a>
+                        <small id="dmenuchildmible-menuchildmible-510" onclick="TogleChild('menuchildmible-dienlanh')"><i class="fa fa-chevron-down"></i></small>
+                        <ul class="no-ul menuchildmible" id="menuchildmible-dienlanh">
+                            @foreach (var item in ViewBag.Codienlanh)
+                            {
+                                <li style="margin-left:30px;">
+                                    <a href="@item.ProductCategoryUrl">@item.ProductCategoryTitle</a>
+                                </li>
+                            }
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="nong-lam-nghiep">
+                            Nông - Lâm nghiệp
+                        </a>
+                        <small id="dmenuchildmible-menuchildmible-510" onclick="TogleChild('menuchildmible-bds')"><i class="fa fa-chevron-down"></i></small>
+                        <ul class="no-ul menuchildmible" id="menuchildmible-bds">
+                            @foreach (var item in ViewBag.batdongsan)
+                            {
+                                <li style="margin-left:30px;">
+                                    <a href="@item.NewsCategoryUrl">@item.NewsCategoryTitle</a>
+                                </li>
+                            }
+                        </ul>
+                    </li>
+                </ul>
+
+            </li>
+            <li>
+                <a href="/dich-vu">
+                    Dịch vụ
+                </a>
+
+                <small id="dmenuchildmible-menuchildmible-510" onclick="TogleChild('menuchildmible-bds2')"><i class="fa fa-chevron-down"></i></small>
+                <ul class="no-ul menuchildmible" id="menuchildmible-bds2">
+                    <li>
+                        <a href="cong-nghiep-lanh-" title="Công nghiệp lạnh ">
+                            Công nghiệp lạnh
+                        </a>
+                    </li>
+                    <li>
+                        <a href="lap-dat-may-lanh-dieu-hoa-khong-khi-" title="Thi công và lắp đặt máy lạnh">
+                            Thi công và lắp đặt máy lạnh
+                        </a>
+                    </li>
+                    <li>
+                        <a href="sua-chua-va-bao-tri-may-lanh-dieu-hoa-khong-khi" title="Sửa chữa và bảo trì máy lạnh">
+                            Sửa chữa và bảo trì máy lạnh
+                        </a>
+                    </li>
+                    <li>
+                        <a href="sua-chua-va-bao-tri-may-lanh-dieu-hoa-khong-khi" title="Sửa chữa và bảo trì máy lạnh">
+                            Sửa chữa và bảo trì máy lạnh
+                        </a>
+                    </li>
+                    <li>
+                        <a href="hop-dong-tron-goi" title="Hợp đồng trọn gói">
+                            Hợp đồng trọn gói
+                        </a>
+                    </li>
+                    <li>
+                        <a href="sua-chua-dien-nuoc-" title="Sửa chữa điện nước ">
+                            Sửa chữa điện nước
+                        </a>
+                    </li>
+                    <li>
+                        <a href="bang-bao-gia" title="Bảng báo giá">
+                            Bảng báo giá
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="goc-nhin-tu-chuyen-gia" title="Góc nhìn từ chuyên gia">
+                            Góc nhìn từ chuyên gia
+                        </a>
+                    </li>
+
+                </ul>
+            </li>
+            <li>
+                <a href="/du-an">
+                    Dự án
+                </a>
+
+            </li>
+            <li>
+                <a href="profile" target="_blank">
+                    Profile
+                </a>
+            </li>
+            <li>
+                <a href="/lien-he">
+                    Liên hệ
+                </a>
+            </li>
+
+        </ul>
+    </div>
+</div>
+<script>
+    function UpTop() { $('html,body').animate({ scrollTop: 0 }, 'slow'); }
+    $('#imgheader').hide();
+
+    $(window).scroll(function () {
+        if ($(this).scrollTop() > 30) {
+            $('#mn').addClass('mymenu_fixed');
+            if ($(document).width() <= 480)
+                $('#mn2').addClass('mymenu_fixed');
+            $('#imgheader').show();
+        } else {
+
+            $('#mn').removeClass('mymenu_fixed');
+            $('#imgheader').hide();
+            if ($(document).width() <= 480)
+                $('#mn2').removeClass('mymenu_fixed');
+        }
+    });
+    $('#menu-mobile').removeClass('w');
+    function TogleChild(id) {
+        $("#dmenuchildmible-" + id).find("i").toggleClass("fa-chevron-down");
+        $("#dmenuchildmible-" + id).find("i").toggleClass("fa-chevron-up");
+        $("#" + id).slideToggle();
+        $this.css("z-index", "99999")
+    }
+    $("#btn-close-menu-child1").click(function () {
+        var str = $("#btn-close-menu-child1").attr("data-parentId");
+        $('#' + str).removeClass('w');
+        $('.bg-black').removeClass('bg-black-show');
+    });
+    $("#btn-close-menu-child").click(function () {
+        var str = $("#btn-close-menu-child").attr("data-parentId");
+        $('#' + str).removeClass('w');
+        $('.bg-black').removeClass('bg-black-show');
+        $(".btn-menu i").toggleClass("fa-bars");
+        $(".btn-menu i").toggleClass("fa-times");
+    });
+
+    function ShowMenu() {
+        $(".bg-black").toggleClass("bg-black-show");
+        $('#menu-mobile').toggleClass('w');
+        $(".btn-menu i").toggleClass("fa-bars");
+        $(".btn-menu i").toggleClass("fa-times");
+    }
+    function toogle_search() {
+        if ($("#qsearch").css("width") == "0px") {
+            $("#qsearch").css("width", "180px");
+            $("#qsearch").css("padding", "5px 10px");
+        }
+        else {
+            $("#qsearch").css("width", "0px");
+            $("#qsearch").css("padding", "0px");
+        }
+    }
+    $("#qsearchs").on('keyup', function (e) {
+        if (e.key === 'Enter' || e.keyCode === 13) {
+            window.location.href = "/tim-kiem?key=" + $("#qsearchs").val();
+        }
+    });
+    function searchkp() {
+        var getValue = $("#qsearchs").val();
+        var length = getValue.length;
+        //if (length > 2) {
+        //    alert(getValue)
+        //}
+    }
+    function searchsp() {
+        window.location.href = "/tim-kiem?key=" + $("#qsearchs").val();
+    }
+    $(".ulsearch").hide();
+
+    function searchmobile() {
+        window.location.href = "/tim-kiem?key=" + $("#txtSearchMobile").val();
+    }
+    function suggestSearch() {
+        if ($("#qsearch").val().trim().length > 0) {
+            $(".ulsearch").show();
+            var params = {
+                "key": $("#qsearch").val()
+            }
+            $.ajax({
+                url: '/Home/searchajax',
+                data: params,
+                dataType: 'text',
+                type: 'POST',
+                cache: false,
+                success: function (result) {
+                    $("#idsearch").html(result)
+                }
+            });
+        }
+        else {
+            $(".ulsearch").hide();
+        }
+
+    }
+</script>
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document" id="mymodal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="loginform">
+                    <div class="dnhthong">
+                        ĐĂNG NHẬP HỆ THỐNG
+
+                    </div>
+                    <div>
+                        <a id="btnFacebookLogin" class="btn dnfb" style="width: 100%; background-color: #1877f2; color: #fff; font: bolder">
+                            Login with Facebook
+                        </a>
+                    </div>
+                    <div class="form-group">
+                        <div class="g-signin2" data-onsuccess="onSignIn" style="display:none;"></div>
+                        <a onclick="trigger_gg_loginapi()" class="btn dngm" style="width: 100%; background-color: #CE2C27; color: #fff; font: bolder ">
+                            Login with Google+
+                        </a>
+                    </div>
+                    <div>
+                        <input class="form-control" placeholder="Địa chỉ Email" id="txtEmail" />
+                    </div>
+                    <div>
+                        <input class="form-control" placeholder="Mật khẩu" type="password" id="txtPassword" />
+                    </div>
+                    <div class="text-center">
+                        <a class="btn_dangnhap" onclick="dangnhap()">
+                            Đăng nhập
+                        </a>
+                    </div>
+                    <div class="account-menu__form-link mb-3">
+                        <a onclick="toogle_ttk()">
+                            Chưa có tài khoản?
+                            <strong>Tạo ngay</strong>
+                        </a>
+                        <div class="dangkybox">
+                            <div>
+                                <input class="form-control" placeholder="Địa chỉ Email" id="txtEmailCreate" />
+                            </div>
+                            <div>
+                                <input class="form-control" placeholder="Mật khẩu" type="password" id="txtPasswordCreate" />
+                            </div>
+                            <div>
+                                <input class="form-control" placeholder="Nhập lại mật khẩu" type="password" id="txtPasswordCreate" />
+                            </div>
+                            <div>
+                                <a class="btn_dangky" onclick="register()">
+                                    Đăng ký
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <script>
+                        function toogle_ttk() {
+                            $(".dangkybox").toggle();
+                        }
+                    </script>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document" id="mymodal-dialog2">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="loginform">
+                    <input class="form-control" placeholder="Tìm kiếm" id="txtSearchMobile" />
+                    <a onclick="searchmobile()">
+                        <i class="bx bx-right-arrow-alt"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<meta name="google-signin-client_id" content="209599268446-4t1r95ubnji3qenumokdtsqfnd96fims.apps.googleusercontent.com">
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+<script>new WOW().init();</script>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v12.0&appId=689032552059770&autoLogAppEvents=1" nonce="jlbFMkrb"></script>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
+<script>
+    window.fbAsyncInit = function () {
+        FB.init({
+            appId: '689032552059770',
+            cookie: true,
+            xfbml: true,
+            version: 'v12.0'
+        });
+        FB.AppEvents.logPageView();
+    };
+
+
+    (function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) { return; }
+        js = d.createElement(s); js.id = id;
+        js.src = "https://connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+
+    function getFbUserData() {
+        FB.api('/me', { locale: 'en_US', fields: 'id,first_name,last_name,email,link,gender,locale,picture' },
+            function (response) {
+                SendToBackend("Facebook", response.first_name, response.last_name, response.id, response.email, response.picture.data.url);
+            });
+    }
+
+    function SendToBackend(source, firstname, lastname, fbId, email, picture) {
+
+        //var params = {
+        //    "source": source,
+        //    "firstname": firstname,
+        //    "lastname": lastname,
+        //    "fbId": fbId,
+        //    "email": email,
+        //    "picture": picture,
+        //}
+        var params = {
+            "firstname": firstname,
+            "lastname": lastname,
+            "email": email,
+        }
+        console.log(params);
+
+        $.ajax({
+            url: '/Home/Handle_Info_From_Socialmethod',
+            data: params,
+            dataType: "text",
+            type: 'POST',
+            cache: false,
+            success: function (response) {
+                location.reload();
+            }
+        });
+    }
+
+    // Xử lý nút nhấn login fb
+    $("#btnFacebookLogin").click(function () {
+        FB.login(function (response) {
+            if (response.authResponse) {
+                FB.api('/me', { locale: 'en_US', fields: 'id,first_name,last_name,email,link,gender,locale,picture' },
+                    function (response) {
+                        SendToBackend("Facebook", response.first_name, response.last_name, response.id, response.email, response.picture.data.url);
+                    });
+            } else {
+                console.log('User cancelled login or did not fully authorize.');
+            }
+            //if (response.status === 'connected') {
+            //    // Logged into your webpage and Facebook.
+            //    alert("facebook login ok");
+            //    alert("Firstname:" + response.first_name + "/ Lastname:" + response.last_name + " / email:" + response.email + " / avatar:" + response.picture.data.url);
+            //    //getFbUserData();
+            //} else {
+            //    alert("facebook login fail");
+            //    // The person is not logged into your webpage or we are unable to tell.
+            //}
+        }, {
+            scope: 'public_profile,email',
+            auth_type: 'rerequest'
+        });
+    });
+</script>
+
+<script>
+    var flag_gg_logged = "FALSE";
+    function trigger_gg_loginapi() {
+
+        flag_gg_logged = "TRUE";
+        $('.abcRioButtonIcon').click();
+
+    }
+    function onSignIn(googleUser) {
+        var profile = googleUser.getBasicProfile();
+        if (flag_gg_logged == "TRUE") {
+
+            SendToBackend("Google", profile.getGivenName(), profile.getFamilyName(), profile.getId(), profile.getEmail(), profile.getImageUrl());
+        }
+        else {
+            // do nothing
+        }
+    }
+    function dangnhap() {
+        var params = {
+            "email": $("#txtEmail").val(),
+            "password": $("#txtPassword").val()
+        }
+        $.ajax({
+            url: '/Home/Login',
+            data: params,
+            dataType: "text",
+            type: 'POST',
+            cache: false,
+            success: function (response) {
+                if (response == "1") {
+                    alert("Đăng nhập thành công!")
+                    location.reload();
+                }
+                else {
+                    alert("Đăng nhập thất bại!")
+                }
+            }
+        });
+    }
+
+    function register() {
+        if ($(txtEmailCreate).val() == "") {
+            alert("Vui lòng nhập thông tin");
+            return;
+        }
+        var params = {
+            "email": $("#txtEmailCreate").val(),
+            "password": $("#txtPasswordCreate").val()
+        }
+        $.ajax({
+            url: '/Home/Register',
+            data: params,
+            dataType: "text",
+            type: 'POST',
+            cache: false,
+            success: function (response) {
+                if (response == "1") {
+                    alert("Tạo tài khoản thành công!")
+                    location.reload();
+                }
+                else {
+                    alert("Đăng nhập thất bại!")
+                }
+            }
+        });
+    }
+    function logout() {
+        $.ajax({
+            url: '/Home/Logout',
+            data: null,
+            dataType: "text",
+            type: 'POST',
+            cache: false,
+            success: function (response) {
+                location.reload();
+            }
+        });
+    }
+    updatecart()
+    function updatecart() {
+        $.ajax({
+            url: '/Patial/updatenumcart',
+            data: null,
+            dataType: 'text',
+            type: 'POST',
+            cache: false,
+            success: function (result) {
+                $("#numcarts").html(result);
+
+            }
+        });
+    }
+</script>
+

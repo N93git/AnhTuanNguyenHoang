@@ -1,0 +1,112 @@
+﻿
+<div class="block-breadcrumb">
+    <div class="container">
+        <ul class="breadcrumb">
+            <li>
+                <a href="/">Trang chủ</a>
+            </li>
+            <li>
+                <a href="/san-pham">Sản phẩm</a>
+            </li>
+            <li class="active">
+                Mẫu thiết kế ấn tượng
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="page-catalog-product py-40">
+    <div class="container">
+        <div class="text-center">
+            <h1><b>Mẫu thiết kế ấn tượng</b></h1>
+        </div>
+        <div class="row ">
+            <div class="col-lg-12">
+                <div class="box-pro-home mt-30">
+                    <div class="box-item">
+                        <div class="">
+                            <div class="row no-gutters">
+                                @if (Model != null)
+                                {
+                                    foreach (var item in Model)
+                                    {
+                                        <div class="col-lg-5ths col-md-3 col-sm-6 col-xs-6">
+                                            <div class="index_productlist_box">
+                                                <div class="items">
+                                                    <a href="@item.ProductUrl">
+                                                        <img src="~/Upload/Products/@item.ProductImage" class="img-responsive" />
+                                                    </a>
+                                                </div>
+                                                <div class="index_product_contentbox">
+                                                    <div class="index_productlist_title">
+                                                        <a href="@item.ProductUrl">
+                                                            @if (ViewBag.lang == "vn")
+                                                            {
+                                                                @item.ProductTitle
+                                                            }
+                                                            @if (ViewBag.lang == "en")
+                                                            {
+                                                                @item.ProductTitle1
+                                                            }
+                                                            @if (ViewBag.lang == "jp")
+                                                            {
+                                                                @item.ProductTitle2
+                                                            }
+                                                        </a>
+                                                    </div>
+                                                    <div>
+                                                        @if (item.ProductPrice > 0 && item.ProductPriceDrop > 0)
+                                                        {
+                                                            <div class="price_box">
+                                                                <span class="pricenormal">@item.ProductPriceDrop.ToString("#,##0")</span> <span class="drop">@item.ProductPrice.ToString("#,##0")</span>
+                                                            </div>
+                                                        }
+                                                        else
+                                                        {
+                                                            if (item.ProductPrice > 0)
+                                                            {
+                                                                <div class="price_box">
+                                                                    <span class="pricenormal">@item.ProductPrice.ToString("#,##0")</span>
+
+                                                                </div>
+                                                            }
+                                                            else
+                                                            {
+                                                                <div class="price_box">
+                                                                    <a>
+                                                                        @if (ViewBag.lang == "vn")
+                                                                        {
+                                                                            <span>Liên hệ</span>
+                                                                        }
+                                                                        @if (ViewBag.lang == "en")
+                                                                        {
+                                                                            <span>Contact</span>
+                                                                        }
+                                                                    </a>
+                                                                </div>
+                                                            }
+                                                        }
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+
+                            </div>
+                        </div>
+                        <div class="box-pagination mt-30 pb-4"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .index_productlist_box {
+        box-shadow: 3px 3px 6px rgb(0 0 0 / 10%);
+        margin-top: 30px;
+    }
+</style>

@@ -1,0 +1,7 @@
+﻿@if (Model != null)
+{
+    foreach(var item in Model)
+    {
+        @Html.Raw(item.Contents)
+    }
+}

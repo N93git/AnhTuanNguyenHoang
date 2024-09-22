@@ -1,0 +1,675 @@
+﻿@*<script src="~/assets/Js/Slick/slick.min.js"></script>
+<link href="~/assets/Js/Slick/slick.css" rel="stylesheet" />*@
+<div class="block-breadcrumb">
+    <div class="container">
+        <ul class="breadcrumb">
+            <li>
+                <a href="/">Trang chủ</a>
+            </li>
+            @if (ViewBag.Listbreadcum != null)
+            {
+                foreach (var item in ViewBag.Listbreadcum)
+                {
+                    <li>
+                        <a href="@item.ProductCategoryUrl">@item.ProductCategoryTitle</a>
+                    </li>
+                }
+            }
+            @if (ViewBag.Listbreadcum2 != null)
+            {
+                foreach (var item in ViewBag.Listbreadcum2)
+                {
+                    <li>
+                        <a href="@item.ProductCategoryUrl">@item.ProductCategoryTitle</a>
+                    </li>
+                }
+            }
+            <li class="active">@ViewBag.title</li>
+        </ul>
+    </div>
+</div>
+<div class="page-detail-product py-40">
+    <div class="container" style="background-color:#fff;margin-top:30px;">
+        @if (Model != null)
+        {
+            foreach (var item in Model)
+            {
+                <div style="display:none;">
+                    @(TempData["dd"] = "http://" + Request.Url.Host + "/Upload/Products/" + item.ProductImage);
+                </div>
+                <input id="ProductId" value="@item.ProductId" type="hidden" />
+              <div class="row">
+                  <div class="col-sm-6">
+                      <h1 style=" padding: 0px; margin: 5px 0px !important; margin-top: 20px !important;" class=""><span class="myh">@item.ProductTitle</span></h1>
+                      <div style="margin-bottom:10px;    font-size: 13px;
+    line-height: 22px;
+    color: #9cb5bf;">
+                          <span style="    font-size: 13px;
+    line-height: 22px;
+    color: #9cb5bf;">Lượt xem:</span> @item.Age
+                      </div>
+                  </div>
+                  <div class="col-sm-6" style=" position: relative; top: 18px;">
+                      <div id="fb-root"></div>
+                      <script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v12.0&appId=208417468085570&autoLogAppEvents=1" nonce="K1ZLq5Pt"></script>
+                      <div class="text-right">
+                          <div class="fb-like" data-href="@Request.Url.AbsoluteUri" data-width="" data-layout="button" data-action="like" data-size="small" data-share="true"></div>
+                      </div>
+                  </div>
+              </div>
+                <div class="row">
+                    <div class="col-sm-5">
+                        <div class="autoplaymain" id="big">
+                            <div class="item">
+                                <a data-fancybox="gallery" data-caption>
+                                    <img src="~/Upload/Products/@item.ProductImage" class="img-responsive" alt="@item.ProductTitle" />
+                                </a>
+                            </div>
+                            @if (ViewBag.ProductImage != null)
+                            {
+                                foreach (var it in ViewBag.ProductImage)
+                                {
+                                    <div class="item">
+                                        <a href="" data-fancybox="gallery" data-caption>
+                                            <img src="~/Upload/Products/@it.Images" class="img-responsive" alt="" />
+                                        </a>
+                                    </div>
+                                }
+                            }
+                        </div>
+                        <div class="autoplayproduct" style="margin-top:20px;">
+                            <div onclick="slickslide(0)" class="item">
+                                <img src="~/Upload/Products/@item.ProductImage" class="img-responsive" alt="@item.ProductTitle" style="width: 100%;border:1px solid #eee;padding:3px 3px;" />
+                            </div>
+                            @if (ViewBag.ProductImage != null)
+                            {
+                                var i = 1;
+                                foreach (var it in ViewBag.ProductImage)
+                                {
+                                    <div onclick="slickslide(@i)" class="item">
+                                        <img style="width: 100%;border:1px solid #eee;padding:3px 3px;" src="~/Upload/Products/@it.Images" class="img-responsive" alt="" />
+                                    </div>
+                                    i++;
+                                }
+                            }
+                        </div>
+                    </div>
+                    <div class="col-md-7 product-shop">
+                        @if (Model != null)
+                        {
+                            foreach (var it in Model)
+                            {
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="pdthuonghieu mgtmb">
+                                            <strong>Thương hiệu:</strong> <span>@ViewBag.Thuonghieu</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="pdthuonghieu">
+                                            <strong>Model:</strong> <span>@it.ProductTitle1</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="pdthuonghieu">
+                                            <strong>Bảo hành:</strong> <span>@it.Phivanchuyen</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                if (item.ProductPrice != 0)
+                                {
+                                    <div class="row" style="margin-top:20px;">
+
+                                        <div class="col-sm-6 mg-20 col-xs-6 col-md-6">
+                                            <span style="width:100px;display:inline-block">Giá niêm yết:</span> <span class="gianiemyet">@item.ProductPrice.ToString("#,##0")<sup>đ</sup></span>
+                                        </div>
+                                        <div class="col-sm-6  mg-20 col-xs-6 col-md-6">
+                                            <div class="tietkiem">
+                                                Tiết kiệm @ViewBag.Percent %
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-6 mg-20 col-xs-6">
+                                            <span style="width:100px;display:inline-block">Giá bán:</span> <span class="giagiam">@item.ProductPriceDrop.ToString("#,##0")<sup>đ</sup></span>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="bestseller">
+                                                <img src="~/assets/images/source.gif" class="img-responsive" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="row">
+                                        <div class="col-sm-6 mg-20 col-xs-6">
+                                            <span>Giá bán:</span> <span class="giagiam">Liên hệ</span>
+                                        </div>
+                                    </div>
+                                }
+
+
+
+                                <div class="vuilongchitiet" style="margin-bottom:20px;">
+                                    <b>Giá trên có thể phát sinh do chi phí vật tư - nhân công lắp đặt.</b><b> Vui lòng xem bảng giá chi tiết <a href="/bang-gia">tại đây</a></b>
+                                </div>
+                                <div class="row col-cate"><div class="col-md-6 col-xs-6 form-group"><a href="tel:02873002006" class="bt-lienlac" style="background-image:url('/assets/frontend/img/phone.png?v=1')"><div>Tổng đài</div><div>028 7300 2006</div></a></div><div class="col-md-6 col-xs-6 form-group"><a href="https://zalo.me/0913733557" class="bt-lienlac" style="background-image:url('/zl.png?v=1')"><div>Phòng dự án</div><div>0913 733 557</div></a></div><div class="col-md-6 col-xs-6 form-group"><a href="https://zalo.me/0909793557" class="bt-lienlac" style="background-image:url('/zl.png?v=1')"><div>Phòng kinh doanh</div><div>0909 793 557</div></a></div><div class="col-md-6 col-xs-6 form-group"><a href="https://zalo.me/0906213557" class="bt-lienlac" style="background-image:url('/zl.png?v=1')"><div>Phòng kỹ thuật</div><div>0906 213 557</div></a></div></div>
+                                if (it.Phivanchuyen1 != null)
+                                {
+                                    <div class="kmtk_box">
+                                        <div class="kmtk_title">
+                                            <i class="fa fa-gift" style=" margin-right: 7px; color: yellow!important;"></i> Khuyến mãi tặng kèm
+                                        </div>
+                                        <div class="kmtk_content">
+                                            @Html.Raw(it.Phivanchuyen1)
+                                        </div>
+                                    </div>
+                                }
+
+                                <div class=" ">
+                                    <div class="row">
+                                        @{
+                                            if ((it.ProductPrice != it.ProductPriceDrop) && (it.ProductPriceDrop != 0))
+                                            {
+                                                <div class="col-sm-6">
+                                                    <div class="muangay">
+                                                        <a style="cursor:pointer" onclick="AddShopCart('@it.ProductId','@(it.ProductPrice - (it.ProductPrice - it.ProductPriceDrop))','@it.ProductImage')" class="btn-dd btn-d-sm">
+                                                            <i class="mdi mdi-cart-outline"></i>Mua ngay
+                                                            <div class="gtn">
+                                                                Giao tân nơi
+                                                            </div>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="col-sm-6">
+                                                    <div class="muangay">
+                                                        <a style="cursor:pointer" id="bt-add-to-cart" onclick="AddShopCart('@it.ProductId','@(it.ProductPrice)','@it.ProductImage')" class="btn-dd btn-d-sm">
+                                                            <i class="mdi mdi-cart-outline"></i> Mua ngay
+                                                            <div class="gtn">
+                                                                Giao tân nơi
+                                                            </div>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            }
+
+
+                                            if (item.Antuong == 1)
+                                            {
+                                                <div class="col-sm-6">
+                                                    <div class="muangay" style="background-color: #3071A9; ">
+                                                        <a style="cursor:pointer" class="btn-dd btn-d-sm" href="tra-gop?ids=@item.ProductId">
+                                                            <i class="mdi mdi-cart-outline"></i>Trả góp
+                                                            <div class="gtn">
+                                                                Lãi suất 0%
+                                                            </div>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            }
+
+
+
+                                        }
+                                    </div>
+                                    <div class="hedtitle">Giá tham khảo</div>
+                                    <div class="brd-d">
+                                        <table class="table table-bordered">
+                                            <tbody>
+                                                @if (ViewBag.Giathamkhao != null)
+                                                {
+                                                    foreach (var its in ViewBag.Giathamkhao)
+                                                    {
+                                                        <tr>
+                                                            <td>
+                                                                <div>
+                                                                    <a rel="nofollow" class="prc-xc-title" target="_blank" href="@its.Url">@its.Name</a>
+                                                                </div>
+                                                                @*<div>
+                                                    <i>Cập nhật: @its.CreateDate</i>
+                                                </div>*@
+                                                            </td>
+                                                            <td><div class="prc-xc text-center">@its.Price.ToString("#,##0")</div></td>
+                                                        </tr>
+                                                    }
+                                                }
+
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            }
+                        }
+
+                    </div>
+                </div> <!-- end row -->
+    <div class="block-product-detail mt-30">
+        <ul class="thongtinchitiet" role="tablist">
+            <li class="nav-item">
+                <a onclick="tab1(this)" class="nav-link active" href="#detailOne"><span>MÔ TẢ CHI TIẾT</span></a>
+            </li>
+            <li class="nav-item">
+                <a onclick="tab2(this)" class="nav-link" href="#detailOne"><span>THÔNG SỐ KỸ THUẬT</span></a>
+            </li>
+            <li class="nav-item">
+                <a onclick="tab5(this)" class="nav-link" href="#detailOne">
+                    <span>
+                        HỎI-ĐÁP/ĐÁNH GIÁ
+                    </span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a onclick="tab4(this)" class="nav-link" href="#detailOne"><span>LIÊN HỆ</span></a>
+            </li>
+            <li class="nav-item">
+                <a onclick="tab3(this)" class="nav-link" href="#detailOne"><span>SẢN PHẨM LIÊN QUAN</span></a>
+            </li>
+        </ul>
+        <div class="">
+            <div class="tab-pane" id="" role="tabpanel">
+                <div class="block-editor-content" id="target1" style="padding-top:30px;">
+                    @Html.Raw(item.ProductContents)
+                </div>
+                <hr />
+                @if (Model != null)
+                {
+                    foreach (var dt in Model)
+                    {
+                        <div class="productInfo my-15">
+                            <div class="code" id="target2">
+                                <strong class="bCode ml-10">@Html.Raw(dt.ProductDesc)</strong>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="productInfo my-15">
+                            <div class="code" id="target4">
+                                <div>@Html.Raw(dt.Phivanchuyen2)</div>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+        <div class="block-product-rely">
+            <div class="title mb-20" id="target5">
+                <strong>
+                    HỎI/ĐÁP - ĐÁNH GIÁ VỀ SẢN PHẨM
+                </strong>
+
+            </div>
+            <div class="prodductdetail_comment">
+                <textarea pattern=".{100,200}" placeholder="Mời bạn thảo luận về sản phẩm, vui lòng nhập tiếng Việt có dấu." required="" id="txtcontent" name="txtcontent" rows="5" cols="72"></textarea>
+                <div>
+                    @if (ViewBag.Cusname != null)
+                    {
+                        <a style=" float: left; background-color: transparent; color: #333;">
+                            <span> @ViewBag.Cusname</span> (Chỉnh sửa)
+                        </a>
+                    }
+
+                </div>
+                <a onclick="guibinhluan()">Gửi bình luận</a>
+                <hr />
+                @if (ViewBag.Listcm != null)
+                {
+                    foreach (var it in ViewBag.Listcm)
+                    {
+                        <div class="binhluanbox">
+                            <div class="binhluan_name">
+                                @if (@it.CustomerName != "")
+                                {
+                                    <span class="binhluanfirtname"> @it.CustomerName[0]</span> @it.CustomerName
+
+                                }
+                                else
+                                {
+                                    <span class="binhluanfirtname"> </span> 
+
+                                }
+                            </div>
+                            <div class="binhluan_Contents">
+                                @Html.Raw(it.Contents)
+                            </div>
+                            <div class="binhluan_times">
+                                @{
+                                    var hour = TimeSpan.Parse((DateTime.Now - it.CreateDate).ToString());
+                                    if (hour.Days >= 1)
+                                    {
+                                        <a onclick="trloi(@it.CommtentId,'@it.CustomerName')">Trả lời</a> <span>- @hour.Days</span><span>  Ngày trước</span>
+                                    }
+                                    else
+                                    {
+                                        if (hour.Hours >= 1)
+                                        {
+                                            <a onclick="trloi(@it.CommtentId,'@it.CustomerName')">Trả lời</a> <span>-  @hour.Hours</span><span>  Giờ trước</span>
+                                        }
+                                        else
+                                        {
+                                            if (hour.Minutes >= 1)
+                                            {
+                                                <a onclick="trloi(@it.CommtentId,'@it.CustomerName')"> Trả lời  </a> <span>-  @hour.Minutes </span><span>Phút trước </span>
+                                            }
+                                            else
+                                            {
+                                                <a onclick="trloi(@it.CommtentId,'@it.CustomerName')"> Trả lời  </a> <span>-  1</span><span> - Phút trước </span>
+                                            }
+                                        }
+                                    }
+                                }
+                                <div>
+
+                                    @Html.Action("GetTraloi", "Patial", new { CommtentId = it.CommtentId })
+                                </div>
+                            </div>
+                            <div class="hide_tlbox" id="tl_@it.CommtentId">
+                                <textarea id="te_@it.CommtentId" class="hide_tlbox_contents"></textarea>
+                                <div class="hide_tlboxgui">
+                                    <a onclick="guitn(@it.CommtentId)">Gửi</a>
+                                </div>
+                            </div>
+                        </div>
+
+                    }
+                }
+            </div>
+        </div>
+        <hr />
+        <div class="block-product-rely mt-30">
+            <h2 class="title mb-20" id="target3">
+                <strong>
+                    Sản phẩm liên quan
+                </strong>
+            </h2>
+            <div class="row">
+                @if (ViewBag.ListLienquan != null)
+                {
+                    foreach (var item2 in ViewBag.ListLienquan)
+                    {
+                        <div class="col-sm-3 col-xs-6 col-sm-6">
+                            <div class="xaydunglist_boxs">
+                                <div class="xaydungxemthem">
+                                    <a href="@item.ProductUrl">
+                                        Xem thêm
+                                    </a>
+                                </div>
+                                <div class="">
+                                    <a href="@item2.ProductUrl">
+                                        <img src="~/Upload/Products/@item2.ProductImage" class="img-responsive" />
+                                    </a>
+                                </div>
+                                <div class="xaydung_ct_box text-center">
+                                    <div class="xaydunglist_title2">
+                                        <a href="@item2.ProductUrl">
+                                            @item2.ProductTitle
+                                        </a>
+                                    </div>
+                                    <div class="">
+                                        @if (item2.ProductPrice > 0 && item2.ProductPriceDrop > 0)
+                                        {
+                                            <div class="productdetail_price_box">
+                                                <span class="productdetail_pricenormal">@item2.ProductPriceDrop.ToString("#,##0")</span><sup class="sup2">đ</sup>  <span class="productdetail_drop">@item2.ProductPrice.ToString("#,##0")</span><sup class="sup1">đ</sup>
+                                            </div>
+
+                                        }
+                                        else
+                                        {
+                                            if (item2.ProductPrice > 0)
+                                            {
+                                                <div class="productdetail_price_box">
+                                                    <span class="productdetail_pricenormal">@item2.ProductPrice.ToString("#,##0")</span><sup>đ</sup>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="productdetail_price_box">
+                                                    <a>
+                                                        <span>Liên hệ</span>
+                                                    </a>
+                                                </div>
+                                            }
+                                        }
+                                    </div>
+                                    @if (item.Phivanchuyen1 != null)
+                                    {
+                                        <div class="coquatang"><i class="fa fa-gift"></i> Có quà tặng</div>
+                                    }
+                                </div>
+
+                            </div>
+                        </div>
+                    }
+                }
+
+            </div>
+        </div>
+        @Html.Action("Lienhebaogia", "Home")
+    </div>
+            }
+        }
+
+
+    </div> <!-- end container -->
+
+</div>
+
+<style>
+    body{
+        background-color:#eee;
+    }
+    span.amount {
+        color: var(--color-button);
+        font-family: 'Roboto', sans-serif;
+        font-size: 1.8rem;
+    }
+
+    .autoplaydetail .slick-slide {
+        margin: 0 5px;
+    }
+    /* the parent */
+    .autoplaydetail .slick-list {
+        margin: 0 -5px;
+    }
+</style>
+<script src="~/assets/Js/Slick/truot.js"></script>
+<script>
+    function slickslide(id) {
+        //$("#com_prod_detail").slickGoTo(2);
+        //$('#com_prod_detail').slick('slickPrev');
+        $(".autoplaymain").slickGoTo(id);
+    }
+    function AddShopCart(ProductId, ProductPrice, ProductImage) {
+        var param = {
+            "ProductId": ProductId,
+            "ProductTitle": $(".myh").text(),
+            "ProductPrice": ProductPrice,
+            "ProductImage": ProductImage,
+            "Amount": 1,
+        }
+        $.ajax({
+            url: '/Patial/AddDatabaleOrder',
+            data: param,
+            dataType: 'text',
+            type: 'POST',
+            cache: false,
+            success: function (result) {
+                window.location.href = "/gio-hang";
+            }
+        });
+    }
+    function tab1(dis) {
+        $(".nav-link").removeClass("active");
+        $(dis).addClass("active");
+        var offset =40; // sticky nav height
+        var el = document.getElementById('target1'); // element you are scrolling to
+        window.scroll({ top: (el.offsetTop - offset), left: 0, behavior: 'smooth' });
+    }
+    function tab2(dis) {
+        $(".nav-link").removeClass("active");
+        $(dis).addClass("active");
+        var offset =40; // sticky nav height
+        var el = document.getElementById('target2'); // element you are scrolling to
+        window.scroll({ top: (el.offsetTop - offset), left: 0, behavior: 'smooth' });
+    }
+    function tab3(dis) {
+        $(".nav-link").removeClass("active");
+        $(dis).addClass("active");
+        var offset =50; // sticky nav height
+        var el = document.getElementById('target3'); // element you are scrolling to
+        window.scroll({ top: (el.offsetTop - offset), left: 0, behavior: 'smooth' });
+    }
+    function tab4(dis) {
+        $(".nav-link").removeClass("active");
+        $(dis).addClass("active");
+        var offset = 60; // sticky nav height
+        var el = document.getElementById('target4'); // element you are scrolling to
+        window.scroll({ top: (el.offsetTop - offset), left: 0, behavior: 'smooth' });
+    }
+    function tab5(dis) {
+        $(".nav-link").removeClass("active");
+        $(dis).addClass("active");
+        var offset = 60; // sticky nav height
+        var el = document.getElementById('target5'); // element you are scrolling to
+        window.scroll({ top: (el.offsetTop - offset), left: 0, behavior: 'smooth' });
+    }
+    $('.autoplayproduct').slick({
+        infinite: true,
+        speed: 300,
+        slidesToShow: 4,
+        slidesToScroll: 1,
+        autoplay: false,
+        arrows: true,
+        responsive: [
+
+            {
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: 4,
+                    slidesToScroll: 1,
+
+                }
+            },
+            {
+                breakpoint: 600,
+                settings: {
+                    slidesToShow: 3,
+                    slidesToScroll: 1,
+
+                }
+            },
+            {
+                breakpoint: 480,
+                settings: {
+                    slidesToShow: 3,
+                    arrows: false,
+                    slidesToScroll: 1,
+                }
+            }
+        ]
+    });
+    $("table").addClass("table table-bordered table-hover");
+</script>
+
+
+<link href="~/assets/Resource/jquery.fancybox.min.css" rel="stylesheet" />
+<script src="~/assets/Resource/jquery.fancybox.min.js"></script>
+
+<div class="modal fade" id="exampleModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Nhập thông tin
+                </h5>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <input id="CustomerId" type="hidden" value="@ViewBag.Cus" />
+                    <input id="txtName" class="form-control" placeholder="Nhập họ tên (bắt buộc)" />
+                </div>
+                <div class="form-group">
+                    <input id="txtEmails" class="form-control" placeholder="Email" />
+                </div>
+                <div class="form-group">
+                    <input id="txtPhone" class="form-control" placeholder="Số điện thoại" />
+                </div>
+                <div>
+                    <a onclick="capnhat()" class="btn btn-primary" style="width:100%">
+                       Cập nhật
+                    </a>
+                </div>
+            </div> 
+        </div>
+    </div>
+</div>
+<script>
+
+
+    $("document").ready(function () {
+
+        if ('@ViewBag.login' == "1") {
+            $("#CustomerId").val('@ViewBag.CustomerID')
+        }
+    });
+    function guibinhluan() {
+       if ($("#txtcontent").val() == '') {
+            alert("Vui lòng nhập bình luận!")
+            return false;
+        }
+        $("#exampleModal3").modal("toggle");
+    }
+    function capnhat() {
+        var params = {
+            "CustomerId": 0,
+            "Type": 1,
+            "Contents": $("#txtcontent").val(),
+                "Name": $("#txtName").val(),
+                "Phone": $("#txtPhone").val(),
+            "ParentID": 0,
+            "ProductId": $("#ProductId").val(),
+            "HoTen": $("#txtName").val(),
+            "Email": $("#txtEmails").val(),
+            "SoDT": $("#txtPhone").val()
+
+            }
+
+        $.post("/Home/SendComments", { "data": "" + JSON.stringify(params) + "" }, function (result) {
+                alert("Cảm ơn bạn đã bình luận, chúng tôi sẽ kiểm duyệt và hiển thị sau");
+                window.location.reload();
+            });
+    }
+    function trloi(id,name) {
+        $("#tl_" + id).show()
+        $("#te_" + id).val('@@' + name + ':')
+        $("#te_" + id).focus();
+    }
+    function guitn(id) {
+        if ('@ViewBag.login' != "1") {
+            $("#exampleModal3").modal("toggle");
+        }
+        else {
+            var params = {
+                "CommtentId": 0,
+                "CustomerId":'@ViewBag.Cus',
+                "Type": 1,
+             "Contents": $("#te_" + id).val(),
+                "ParentID": id,
+                "ProductId": $("#ProductId").val()
+            }
+            $.post("/Home/SendComments", { "data": "" + JSON.stringify(params) + "" }, function (result) {
+                alert("Cảm ơn bạn đã bình luận, chúng tôi sẽ kiểm duyệt và hiển thị sau");
+                window.location.reload();
+            });
+        }
+
+    }
+</script>
+<style>
+    .modal {
+        top: 67px;
+    }
+</style>

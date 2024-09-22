@@ -1,0 +1,41 @@
+﻿
+@{
+    ViewBag.Title = "Handle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+@{
+    string strViewName = "Index";
+    string strControllerName = "Home";
+    string strUrl = "/";
+    int intObId = 0;
+    string strTitle = "Trang chủ";
+    string strBanner = "";
+    if (Model != null && Model.Count > 0)
+    {
+        foreach (var it in Model)
+        {
+            if (it.ViewName == "Index")
+            {
+                ViewBag.Title = Tool.Utils.GetTitle();
+            }
+            else
+            {
+                ViewBag.Title = it.Title;
+            }
+            ViewBag.meta = Html.Raw(it.MetaDescription);
+            ViewBag.keywords = Html.Raw(it.MetaKeywords);
+            strViewName = it.ViewName;
+            strControllerName = it.ControllerName;
+            strUrl = it.Url;
+            intObId = it.RelateId;
+            strTitle = it.Title;
+            ViewBag.url = it.Url;
+        }
+        @(Html.Action(strViewName, strControllerName, new { url = strUrl, id = intObId, name = strTitle }))
+    }
+}
+
+

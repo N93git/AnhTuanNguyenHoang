@@ -1,0 +1,61 @@
+﻿
+@{
+    Layout = null;
+}
+@if (Model != null)
+    {
+        <div class="xaydungs22">
+            @foreach (var item in Model)
+            {
+                <div class="xaydunglist_boxs">
+                    <div class="xaydungxemthem">
+                        <a href="@item.ProductUrl">
+                            Xem thêm
+                        </a>
+                    </div>
+                    <div class="">
+                        <a href="@item.ProductUrl">
+                            <img src="~/Upload/Products/@item.ProductImage" class="img-responsive" /> 
+                        </a>
+                    </div>
+                    <div class="xaydung_ct_box text-center" style="min-height:130px">
+                        <div class="xaydunglist_title2" style="height:40px;overflow:hidden">
+                            <a href="@item.ProductUrl">
+                                @item.ProductTitle
+                            </a>
+                        </div>
+                        <div class="">
+                            @if (item.ProductPrice > 0 && item.ProductPriceDrop > 0)
+                            {
+                                <div class="productdetail_price_box">
+                                    <span class="productdetail_pricenormal">@item.ProductPriceDrop.ToString("#,##0")</span><sup class="sup2">đ</sup>  <span class="productdetail_drop">@item.ProductPrice.ToString("#,##0")</span><sup class="sup1">đ</sup>
+                                </div>
+
+                            }
+                            else
+                            {
+                                if (item.ProductPrice > 0)
+                                {
+                                    <div class="productdetail_price_box">
+                                        <span class="productdetail_pricenormal">@item.ProductPrice.ToString("#,##0")</span><sup>đ</sup>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="productdetail_pricenormal">
+                                        <span>Liên hệ</span>
+                                    </div>
+                                }
+                            }
+                        </div>
+                        @if (item.Phivanchuyen1 != null)
+                        {
+                            <div class="coquatang"><i class="fa fa-gift"></i> Có quà tặng</div>
+                        }
+                    </div>
+                  
+                </div>
+
+            }
+        </div>
+    }

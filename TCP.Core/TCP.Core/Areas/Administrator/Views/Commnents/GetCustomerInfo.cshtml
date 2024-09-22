@@ -1,0 +1,24 @@
+﻿@if (Model != null)
+{
+    foreach (var item in Model)
+    {
+        <div class="col-sm-3">
+            <label>Họ tên:</label>
+        </div>
+        <div class="col-sm-9">
+            <label>@item.Name</label>
+        </div>
+        <div class="col-sm-3">
+            <label>Phone:</label>
+        </div>
+        <div class="col-sm-9">
+            <label>@item.Phone</label>
+        </div>
+        <div class="col-sm-3">
+            <label>Email:</label>
+        </div>
+        <div class="col-sm-9">
+            <label>@item.Email</label>
+        </div>
+    }
+}

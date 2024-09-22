@@ -1,0 +1,13 @@
+﻿
+@{
+    Layout = null;
+}
+
+@foreach (var item in Model)
+{
+    <div>
+        <a href="@item.ProductCategoryUrl">
+            @item.ProductCategoryTitle
+        </a>
+    </div>
+}

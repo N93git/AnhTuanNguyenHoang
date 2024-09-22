@@ -1,0 +1,140 @@
+﻿<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<div class="block-breadcrumb">
+    <div class="container">
+        <ul class="breadcrumb">
+            <li>
+                <a href="/">Trang chủ</a>
+            </li>
+            <li class="active">
+                Tìm kiếm
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="page-catalog-product py-40">
+    <div class="container">
+        <div class="text-left">
+            <h1><b>Kết quả tìm kiếm</b></h1>
+            <div class="alert alert-info">Đã tìm thấy <strong>@ViewBag.count</strong> kết quả</div>
+        </div>
+        <div class="row ">
+            <div class="col-lg-12">
+                <div class="box-pro-home mt-30">
+                    <div class="box-item-search">
+                        <div class="">
+                            <div class="row no-gutters">
+                                @if (Model != null)
+                                {
+                                    var i = 0;
+                                    foreach (var item in Model)
+                                    {
+
+                                        var name = "";
+                                        if (i % 2 == 0)
+                                        {
+                                            name = "searchbox";
+                                        }
+                                        else
+                                        {
+                                            name = "searchbox2";
+                                        }
+                                        <div class="col-sm-12 col-xs-12 col-sm-12">
+                                            <div class="@name" data-aos="fade-up" data-aos-duration="1000">
+                                                <div class="searchleft">
+                                                    <a href="@item.url">
+                                                        @if (item.type == 1)
+                                                        {
+                                                            <img src="~/Upload/News/@item.image" class="img-responsive" />
+                                                        }
+                                                        else
+                                                        {
+                                                            <img src="~/Upload/Products/@item.image" class="img-responsive" />
+                                                        }
+                                                    </a>
+                                                </div>
+                                                <div class="searchright">
+                                                    <div class="row">
+                                                        <div class="col-sm-8">
+                                                            <div class="searchright_title">
+                                                                <a href="@item.url">
+                                                                    @item.title
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-4">
+                                                            <div class="searchright_xemthem">
+                                                                <a href="@item.url">
+                                                                    Xem thêm
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="clearfix">
+
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                        i++;
+                                    }
+                                }
+
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <ul id="pagination" class="pagination">
+                                        @*<li class="active"><a href="trai-cay-cac-loai?price=&amp;hangsanxuat=&amp;chungloai=&amp;page=1">1</a></li>*@
+                                        @if (ViewBag.tongSoTrang != null)
+                                        {
+
+                                            for (int i = 0; i < ViewBag.tongSoTrang; i++)
+                                            {
+                                                if (ViewBag.pages == (i + 1))
+                                                {
+                                                    <li class="active">
+                                                        <a href="/@ViewBag.url?key=@ViewBag.key&page=@(i+1)">@(i + 1)</a>
+                                                    </li>
+
+                                                }
+                                                else
+                                                {
+                                                    <li>
+                                                        <a href="/@ViewBag.url?key=@ViewBag.key&page=@(i+1)">@(i + 1)</a>
+                                                    </li>
+
+                                                }
+
+                                            }
+                                        }
+                                    </ul>
+                                    <div class="clr">
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box-pagination mt-30 pb-4"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .index_productlist_box {
+        box-shadow: 3px 3px 6px rgb(0 0 0 / 10%);
+        margin-top: 30px;
+    }
+</style>
+<script>
+    AOS.init({
+        once: true,
+    });
+</script>

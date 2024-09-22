@@ -1,0 +1,110 @@
+﻿
+@{
+
+    Layout = null;
+}
+
+
+@{
+    Layout = null;
+}
+
+
+@if (Model != null)
+{
+    var i = 1;
+    foreach (var item in Model)
+    {
+<tr>
+    <td scope="row"><input  class="myinput" type="checkbox" data-id="@item.NewsId" /></td>
+    <td>@item.NewsTitle</td>
+    <td class="table_img">
+        @if (item.NewsImage != null && item.NewsImage != "")
+        {
+
+            <img src="/upload/News/@item.NewsImage" />
+        }
+        else
+        {
+            <img src="~/assets/images/Admin/Noimage.png" />
+
+        }
+    </td>
+    <td>@item.NewsUrl</td>
+    <td><input class="admin_sort" value="@item.DisplayOrder" onchange="change_displayorder('@item.NewsId',this)" /></td>
+    @*<td>@item.IsShow</td>*@
+    <td>
+        <a href="/Administrator/News/NewsInsertList?NewsId=@item.NewsId">
+            <i class="lnr-pencil" style="font-size: 13px; color: white; background-color: #16aaff; padding: 10px 10px;"></i>
+        </a>
+        <a href="javascript:deletes('@item.NewsId','@item.NewsImage')">
+            <i class="lnr-trash" style="font-size: 13px; color: white; margin-left: 5px; background-color: #d92550; padding: 10px 10px;"></i>
+        </a>
+
+    </td>
+</tr>
+
+    }
+}
+<script>
+    function deletes(id, name) {
+        $.confirm('Bạn có muốn xóa bản tin này?', {
+            em: '', title: 'Cảnh báo!', callEvent: function () {
+
+                $.ajax({
+                    url: '/Tool/DeleteFile.ashx',
+                    data: 'name=' + name + '&folder=' + 'News',
+                    dataType: 'text',
+                    type: 'GET',
+                    cache: false,
+                    success: function (result) {
+
+                    }
+                });
+                //Lấy list ten hình con
+                var param =
+                {
+                    "NewsID": id
+                }
+                var lststring;
+                var getstring = "";
+                var lenghst = 0;
+
+
+                $.ajax({
+                    url: '/Administrator/News/NewsDelete',
+                    data: param,
+                    dataType: 'text',
+                    type: 'POST',
+                    cache: false,
+                    success: function (result) {
+                        window.location.reload();
+                    }
+                });
+               
+            }, cancelEvent: function () { }, cancelButton: 'Không'
+        })
+    }
+
+    function change_displayorder(id, dd) {
+        var param =
+        {
+            "id": id,
+            "idorder": $(dd).val()
+        }
+        console.log(param);
+        $.ajax({
+            url: '/Administrator/News/NewsSort',
+            data: param,
+            dataType: 'text',
+            type: 'POST',
+            cache: false,
+            success: function (result) {
+
+            }
+        });
+    }
+</script>
+
+
+

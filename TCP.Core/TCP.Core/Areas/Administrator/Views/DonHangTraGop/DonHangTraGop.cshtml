@@ -1,0 +1,137 @@
+﻿
+
+@{
+    ViewBag.Title = "Quản lý danh sách liên hệ";
+    Layout = "~/Areas/Administrator/Views/Shared/_Layout.cshtml";
+}
+<div class="app-main__inner">
+    <div class="app-page-title">
+        <div class="page-title-wrapper">
+            <div class="page-title-heading">
+                <div class="page-title-icon">
+                    <i class="pe-7s-drawer icon-gradient bg-happy-itmeo"></i>
+                </div>
+                <div>
+                    Đơn hàng trả góp
+                </div>
+            </div>
+            <div class="page-title-actions">
+
+                <div class="d-inline-block dropdown">
+
+                </div>
+            </div>
+        </div>
+    </div>        <div class="row">
+        <div class="col-lg-12">
+            <div class="main-card mb-3 card">
+                <div class="card-body">
+                    <h5 class="card-title">Danh sách liên hệ</h5>
+                    <div class="table-responsive">
+                        <table class="mb-0 table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th width="15%">Họ tên</th>
+                                    <th>Sản phẩm</th>
+                                    <th>Ngày mua</th>
+                                    <th>Tháng</th>
+                                    <th>Trả trước</th>
+                                    <th>
+                                       Tình trạng
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody id="bodydata">
+                                @if (Model != null)
+                                {
+                                    foreach (var item in Model)
+                                    {
+                                <tr>
+                                    <td>
+
+                                    </td>
+                                    <td>
+                                        <a href="/Administrator/donhangtragop/DonHangTraGopById?id=@item.ID">
+                                            @item.Name
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="/Administrator/donhangtragop/DonHangTraGopById?id=@item.ID">
+                                            @item.ProductTitle
+                                        </a>
+                                       
+                                    </td>
+                                    <td>
+                                        @item.NgayTao
+                                    </td>
+                                    <td>
+                                        @item.ThoiHan tháng
+                                    </td>
+                                    <td>
+                                        @item.Tratruoc%
+                                    </td>
+                                    <td>
+                                        @if (item.Duyet == 1)
+                                        {
+                                        <label class="label label-success">Đã xử lý</label>
+                                        }
+                                        else
+                                        {
+                                            <label class="label label-warning">Chưa xử lý</label>
+                                        }
+                                    </td>
+                                </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+    function goto() {
+        window.location.href = "/Administrator/Slideshows/SlideshowInsertList";
+    }
+
+</script>
+<style>
+    .label-success {
+        border-color: #4caf50;
+    }
+
+    .label {
+        display: inline-block;
+        font-weight: 500;
+        padding: 1px 4px 0 4px;
+        line-height: 1.5384616;
+        border: 1px solid transparent;
+        text-transform: uppercase;
+        font-size: 10px;
+        letter-spacing: .1px;
+        border-radius: 2px;
+    }
+
+    .label-success {
+        background-color: #4caf50;
+    }
+    .label-warning {
+        background-color: #ff5722;
+    }
+    .label {
+        display: inline;
+        padding: 0.2em 0.6em 0.3em;
+        font-size: 10px !important;
+        font-weight: bold;
+        line-height: 1;
+        color: #fff;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: baseline;
+        border-radius: 0.25em;
+    }
+</style>

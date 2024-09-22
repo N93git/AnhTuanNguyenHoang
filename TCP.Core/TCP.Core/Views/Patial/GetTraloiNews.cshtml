@@ -1,0 +1,88 @@
+﻿
+@if (Model != null)
+{
+    foreach (var it in Model)
+    {
+        if (it.Type == 2)
+        {
+            <div class="qtvbox">
+                <div class="binhluan_name">
+                    <img src="~/assets/Resource/quantrivienlogo.png" class="img-responsive" />     <span class="qtv">Quản trị viên</span>
+                </div>
+                <div class="binhluan_Contents">
+                    @Html.Raw(it.Contents)
+                </div>
+                <div class="binhluan_times">
+                    @{
+                        var hour = TimeSpan.Parse((DateTime.Now - it.CreateDate).ToString());
+                        if (hour.Days >= 1)
+                        {
+                            <a onclick="trloi('@it.ParentID','Quản trị viên')">Trả lời</a> <span>- @hour.Days</span><span>  Ngày trước</span>
+                        }
+                        else
+                        {
+                            if (hour.Hours >= 1)
+                            {
+                                <a onclick="trloi('@it.ParentID','Quản trị viên')">Trả lời</a> <span>-  @hour.Hours</span><span>  Giờ trước</span>
+                            }
+                            else
+                            {
+                                if (hour.Minutes >= 1)
+                                {
+                                    <a onclick="trloi('@it.ParentID','Quản trị viên')"> Trả lời  </a> <span>-  @hour.Minutes </span><span>Phút trước </span>
+                                }
+                                else
+                                {
+                                    <a onclick="trloi('@it.ParentID','Quản trị viên')"> Trả lời  </a> <span>-  1</span><span> - Phút trước </span>
+                                }
+                            }
+                        }
+                    }
+
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="" style="margin-top:10px">
+                <div class="binhluan_name">
+                    <span class="binhluanfirtname"> @it.CustomerName[0]</span>  @it.CustomerName
+                </div>
+                <div class="binhluan_Contents">
+                    @it.Contents
+                </div>
+                <div class="binhluan_times">
+                    @{
+                        var hour = TimeSpan.Parse((DateTime.Now - it.CreateDate).ToString());
+                        if (hour.Days >= 1)
+                        {
+                            <a onclick="trloi('@it.ParentID','@it.CustomerName')">Trả lời</a> <span>- @hour.Days</span><span>  Ngày trước</span>
+                        }
+                        else
+                        {
+                            if (hour.Hours >= 1)
+                            {
+                                <a onclick="trloi('@it.ParentID','@it.CustomerName')">Trả lời</a> <span>-  @hour.Hours</span><span>  Giờ trước</span>
+                            }
+                            else
+                            {
+                                if (hour.Minutes >= 1)
+                                {
+                                    <a onclick="trloi('@it.ParentID','@it.CustomerName')"> Trả lời  </a> <span>-  @hour.Minutes </span><span>Phút trước </span>
+                                }
+                                else
+                                {
+                                    <a onclick="trloi('@it.ParentID','@it.CustomerName')"> Trả lời  </a> <span>-  1</span><span> - Phút trước </span>
+                                }
+                            }
+                        }
+                    }
+
+                </div>
+            </div>
+        }
+
+    }
+}
+<script>
+</script>

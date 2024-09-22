@@ -1,0 +1,14 @@
+﻿@{
+    if (Model != null)
+    {
+        <ul class="mnchild">
+            @foreach (var item in Model)
+            {
+                <li>
+                    <a href="@item.ProductCategoryUrl">@item.ProductCategoryTitle</a>
+                </li>
+            }
+        </ul>
+
+    }
+}

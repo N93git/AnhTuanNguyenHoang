@@ -1,0 +1,36 @@
+﻿
+@{
+    Layout = null;
+}
+
+@if (Model != null)
+{
+    foreach (var item in Model)
+    {
+        var dd = item.Images.Replace(".", "");
+        <div class="col-sm-2 mb-20" id="@dd">
+            <div class="myimage">
+                @if (!item.Images.Contains(".mp4"))
+                {
+                    <img src="~/Upload/ProductsImg/@item.Images" class="img-fluid" />
+                }
+                else
+                {
+                    <video src="~/Upload/ProductsImg/@item.Images" autoplay  />
+                }
+
+                <a onclick="img_click2('@item.Images','ProductsImg','@dd')">
+                    x
+                </a>
+            </div>
+
+        </div>
+    }
+}
+<style>
+    video{
+        height:105px;
+        width:100%;
+        object-fit:cover;
+    }
+</style>

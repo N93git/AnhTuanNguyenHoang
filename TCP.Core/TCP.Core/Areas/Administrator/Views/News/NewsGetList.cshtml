@@ -1,0 +1,216 @@
+﻿    
+@{
+    ViewBag.Title = "Quản lý danh sách bài viết";
+    Layout = "~/Areas/Administrator/Views/Shared/_Layout.cshtml";
+}
+<div class="app-main__inner">
+    <div class="app-page-title">
+        <div class="page-title-wrapper">
+            <div class="page-title-heading">
+                <div class="page-title-icon">
+                    <i class="pe-7s-drawer icon-gradient bg-happy-itmeo"></i>
+                </div>
+                <div>
+                    Quản lý danh sách bài viết
+
+                </div>
+                <div class="page-title-subheading">
+                    <div class="box_search">
+                        <div class="col_cate">
+                            <div onclick="open_cate()" class="dmt">
+                                <span id="title_cate">
+                                    -Danh mục tin-
+                                </span>
+                                <i class="pe-7s-angle-down"></i>
+                            </div>
+                            <div class="col_cate_menu">
+                                <ul>
+                                    @if (ViewBag.Listcate != null)
+                                    {
+                                        <li>
+                                            <a onclick="toget(0,' Tất cả danh mục tin')">
+                                                Tất cả danh mục tin
+                                            </a>
+                                        </li>
+                                        foreach (var item in ViewBag.Listcate)
+                                        {
+                                            <li>
+                                                <a onclick="toget('@item.NewsCategoryId','@item.NewsCategoryTitle')">
+                                                    @item.NewsCategoryTitle
+                                                </a>
+                                            </li>
+                                        }
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col_search">
+                            <input placeholder="Tìm kiếm..." id="txtTimkiem" />
+                        </div>
+                        <div class="col_button">
+                            <a onclick="searchnews()" style="cursor:pointer;">
+                                <i class="pe-7s-search"></i>
+                            </a>
+                        </div>
+                        <div class="clearfix">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="page-title-actions">
+                @*<button type="button" data-toggle="tooltip" title="" data-placement="bottom" class="btn-shadow mr-3 btn btn-dark" data-original-title="Example Tooltip">
+                        <i class="fa fa-star"></i>
+                    </button>*@
+                <div class="d-inline-block dropdown">
+                    <button class="btn-shadow  btn btn-danger" type="button" onclick="uptop()">
+                        Up top
+                    </button>
+                    <button onclick="goto()" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn-shadow  btn btn-info">
+                        @*<span class="btn-icon-wrapper pr-2 opacity-7">
+                <i class="fa fa-business-time fa-w-20"></i>
+            </span>*@
+                        Thêm
+                    </button>
+                    @*<div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right">
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link">
+                        <i class="nav-link-icon lnr-inbox"></i>
+                        <span> Inbox</span>
+                        <div class="ml-auto badge badge-pill badge-secondary">86</div>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link">
+                        <i class="nav-link-icon lnr-book"></i>
+                        <span> Book</span>
+                        <div class="ml-auto badge badge-pill badge-danger">5</div>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link">
+                        <i class="nav-link-icon lnr-picture"></i>
+                        <span> Picture</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a disabled="" class="nav-link disabled">
+                        <i class="nav-link-icon lnr-file-empty"></i>
+                        <span> File Disabled</span>
+                    </a>
+                </li>
+            </ul>
+        </div>*@
+                </div>
+            </div>
+        </div>
+    </div>        <div class="row">
+        <div class="col-lg-12">
+            <div class="main-card mb-3 card">
+                <div class="card-body">
+                    <h5 class="card-title">Danh sách</h5>
+                    <div class="table-responsive">
+                        <table class="mb-0 table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th width="20%">Tên bài viết</th>
+                                    <th>Hình ảnh</th>
+                                    <th width="20%">URL</th>
+                                    <th>sắp xếp</th>
+                                    @*<th>Hiển thị</th>*@
+                                    <th>Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody id="bodydata">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function toget(ids, name) {
+        $("#title_cate").html(name);
+        $(".col_cate_menu").hide();
+        getList(ids);
+    }
+    getList(0);
+    var getid = 0;
+    function searchnews() {
+        var param = {
+            idcate: getid,
+            key: $("#txtTimkiem").val()
+        };
+        $.ajax({
+            url: '/Administrator/News/NewsGetData',
+            data: param,
+            dataType: 'text',
+            type: 'POST',
+            cache: false,
+            success: function (result) {
+                $("#bodydata").empty().html(result)
+            }
+        });
+    }
+    function getList(id) {
+        getid = id;
+        var param = {
+            idcate: id,
+            key: $("#txtTimkiem").val()
+        };
+        $.ajax({
+            url: '/Administrator/News/NewsGetData',
+            data: param,
+            dataType: 'text',
+            type: 'POST',
+            cache: false,
+            success: function (result) {
+                $("#bodydata").empty().html(result)
+            }
+        });
+    }
+    function goto() {
+        window.location.href = "/Administrator/news/NewsInsertList";
+    }
+    function open_cate() {
+        $(".col_cate_menu").toggle();
+    }
+
+    function uptop() {
+        var str = "";
+        $(".myinput").each(function () {
+            if ($(this).prop("checked") == true) {
+                var id = $(this).attr("data-id");
+                str += id + ",";
+            }
+        });
+
+
+        var param =
+        {
+            "data": str,
+        }
+        $.ajax({
+            url: '/Administrator/Products/UpTopUpTop2',
+            data: param,
+            dataType: 'text',
+            type: 'POST',
+            cache: false,
+            success: function (result) {
+                window.location.reload();
+            }
+        });
+    }
+</script>
+<style>
+    .app-page-title .page-title-subheading {
+        padding: 3px 0 0;
+        font-size: .88rem;
+        opacity: 1;
+    }
+
+</style>

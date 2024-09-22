@@ -1,0 +1,302 @@
+﻿
+@{
+    Layout = null;
+}
+<div class="block-breadcrumb">
+    <div class="container">
+        <ul class="">
+            <li>
+                @if (ViewBag.lang == "vn")
+                {
+                    <a href="/?lang=vn">Trang chủ</a>
+                }
+                @if (ViewBag.lang == "en")
+                {
+                    <a href="/?lang=en">Home</a>
+                }
+                @if (ViewBag.lang == "fr")
+                {
+                    <a href="/?lang=fr">Accueil</a>
+                }
+            </li>
+            <li>
+                <i class="fa fa-angle-right"></i>
+            </li>
+
+            <li class="active">
+                @if (ViewBag.lang == "vn")
+                {
+                    <span>
+                        Thông tin tài khoản
+                    </span>
+                }
+                @if (ViewBag.lang == "en")
+                {
+                    <span>
+                        User info
+                    </span>
+                }
+
+                @if (ViewBag.lang == "fr")
+                {
+                    <span>
+                        Informations utilisateur
+                    </span>
+                }
+            </li>
+        </ul>
+    </div>
+</div>
+@if (ViewBag.getuser != null)
+{
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="left-menu">
+                    <h3>My account</h3>
+                    <ul>
+                        <li>
+                            @if (ViewBag.lang == "vn")
+                            {
+                                <a id="identity-link" href="/thong-tin-tai-khoan?lang=vn">
+                                    <span class="link-item">
+                                        Thông tin tài khoản
+                                    </span>
+                                </a>
+                            }
+                            @if (ViewBag.lang == "en")
+                            {
+                                <a id="identity-link" href="/thong-tin-tai-khoan?lang=en">
+                                    <span class="link-item">
+                                        User info
+                                    </span>
+                                </a>
+                            }
+                            @if (ViewBag.lang == "fr")
+                            {
+                                <a id="identity-link" href="/thong-tin-tai-khoan?lang=fr">
+                                    <span class="link-item">
+                                        User info
+                                    </span>
+                                </a>
+                            }
+
+                        </li>
+                        <li>
+                            @if (ViewBag.lang == "vn")
+                            {
+                                <a id="history-link" href="lich-su-don-hang?lang=vn">
+                                    <span class="link-item">
+                                        Lịch sử đơn hàng
+                                    </span>
+                                </a>
+                            }
+                            @if (ViewBag.lang == "en")
+                            {
+                                <a id="history-link" href="lich-su-don-hang?lang=en">
+                                    <span class="link-item">
+                                        History order
+                                    </span>
+                                </a>
+                            }
+                            @if (ViewBag.lang == "fr")
+                            {
+                                <a id="history-link" href="lich-su-don-hang?lang=fr">
+                                    <span class="link-item">
+                                        Ordre de l'historique
+                                    </span>
+                                </a>
+                            }
+                        </li>
+
+                        <li>
+                            <a onclick="logout()">
+                                @if (ViewBag.lang == "vn")
+                                {
+                                    <span>Đăng xuất</span>
+                                }
+                                @if (ViewBag.lang == "en")
+                                {
+                                    <span>Log out</span>
+                                }
+                                @if (ViewBag.lang == "fr")
+                                {
+                                    <span>  Se déconnecter</span>
+                                }
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <section id="" class="page-content" style=" border: 1px solid #eee; padding: 20px 20px; ">
+
+                    <div action="https://www.kkfashion.vn/thong-tin-tai-khoan" id="customer-form" class="js-customer-form user-form" method="post">
+                        <div class="form-title">
+                            @if (ViewBag.lang == "vn")
+                            {
+                                <span>Thông tin</span>
+                            }
+                            @if (ViewBag.lang == "en")
+                            {
+                                <span>Information</span>
+                            }
+                            @if (ViewBag.lang == "fr")
+                            {
+                                <span>Information</span>
+                            }
+                        </div>
+                        <section>
+                            <div class="form-body">
+                                <input name="id_customer" type="hidden" value="29476">
+                                <div class="row">
+                                    <div class="form-group">
+                                        <label class="col-sm-4">
+                                            <i class="fa fa-user"></i> @if (ViewBag.lang == "vn")
+                                            {
+                                                <span>Họ tên</span>
+                                            }
+                                            @if (ViewBag.lang == "en")
+                                            {
+                                                <span>Name</span>
+                                            }
+                                            @if (ViewBag.lang == "fr")
+                                            {
+                                        <span>Nom</span>
+                                            }
+                                            <span class="text-danger">*</span>
+                                        </label>
+                                        <div class="col-sm-8">
+                                            <div class="form-wrapper">
+                                                <input type="hidden" value="@ViewBag.getuser.UserID" id="UserID" />
+                                                <input type="hidden" value="@ViewBag.getuser.Password" id="Password" />
+                                                <input id="Name" class="form-control" type="text" value="@ViewBag.getuser.Name" maxlength="128" required="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="row">
+                                    <div class="form-group">
+                                        <label class="col-sm-4"><i class="fa fa-envelope-o"></i>Email<span class="text-danger">*</span></label>
+                                        <div class="col-sm-8">
+                                            <div class="form-wrapper">
+                                                <input class="form-control" id="Email" type="email" disabled value="@ViewBag.getuser.Email" maxlength="128" required="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="row">
+                                    <div class="form-group">
+                                        <label class="col-sm-4"><i class="fa fa-phone"></i>Phone<span class="text-danger">*</span></label>
+                                        <div class="col-sm-8">
+                                            <div class="form-wrapper">
+                                                <input class="form-control" id="Phone" type="text" value="@ViewBag.getuser.Phone" maxlength="128" required="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="row">
+                                    <div class="form-group">
+                                        <label class="col-sm-4">
+                                            <i class="fa fa-map-marker"></i>@if (ViewBag.lang == "vn")
+                                            {
+                                                <span>Địa chỉ</span>
+                                            }
+                                            @if (ViewBag.lang == "en")
+                                            {
+                                                <span>Address</span>
+                                            }
+                                            @if (ViewBag.lang == "fr")
+                                            {
+                                        <span>Adresse</span>
+                                            }<span class="text-danger">*</span>
+                                        </label>
+                                        <div class="col-sm-8">
+                                            <div class="form-wrapper">
+                                                <input class="form-control" id="Adress" type="text" value="@ViewBag.getuser.Adress" maxlength="128" required="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                @*<div class="row">
+                    <div class="form-group">
+                        <label class="col-sm-4"><i class="fa fa-lock"></i>Mật khẩu hiện tại<span class="text-danger">*</span></label>
+                        <div class="col-sm-8">
+                            <div class="form-wrapper">
+                                <input class="form-control" name="password" type="password" value="" maxlength="128" minlength="6" required="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="row">
+                    <div class="form-group">
+                        <label class="col-sm-4"><i class="fa fa-lock"></i>Đổi Mật khẩu mới<span class="text-danger">*</span></label>
+                        <div class="col-sm-8">
+                            <div class="form-wrapper">
+                                <input class="form-control" name="new_password" type="password" value="" maxlength="128" minlength="6">
+                            </div>
+                        </div>
+                    </div>
+                </div>*@
+                                <div class="clearfix"></div>
+                            </div>
+
+
+
+
+                            <footer class="form-footer clearfix">
+                                <input type="hidden" name="submitCreate" value="1">
+
+                                <button class="btn btn-dark form-control-submit float-xs-right" onclick="savedata()">
+                                    @if (ViewBag.lang == "vn")
+                                    {
+                                        <span>Lưu</span>
+                                    }
+                                    @if (ViewBag.lang == "en")
+                                    {
+                                        <span>Save</span>
+                                    }
+                                    @if (ViewBag.lang == "fr")
+                                    {
+                                        <span>Sauvegarder</span>
+                                    }
+                                </button>
+
+                            </footer>
+
+
+                        </section>
+                    </div>
+
+
+
+                </section>
+            </div>
+        </div>
+    </div>
+}
+
+<style>
+    #txtPassword {
+        -webkit-text-security: disc;
+    }
+</style>
+<script>
+    function savedata() {
+        var param = {
+            "UserID": $("#UserID").val(),
+            "Password": $("#Password").val(),
+            "Name": $("#Name").val(),
+            "Email": $("#Email").val(),
+            "Phone": $("#Phone").val(),
+            "Adress": $("#Adress").val(),
+        }
+        $.post("/Home/updateThongtintaikhoan", { "data": "" + JSON.stringify(param) + "" }, function (result) {
+            window.location.reload();
+        });
+    }
+</script>

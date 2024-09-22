@@ -1,0 +1,319 @@
+﻿
+@{
+    ViewBag.Title = "Quản lý danh sách bài viết";
+    Layout = "~/Areas/Administrator/Views/Shared/_Layout.cshtml";
+}
+@using TCP.DTO;
+<div class="app-main__inner">
+    <div class="app-page-title">
+        <div class="page-title-wrapper">
+            <div class="page-title-heading">
+                <div class="page-title-icon">
+                    <i class="pe-7s-drawer icon-gradient bg-happy-itmeo"></i>
+                </div>
+                <div>
+                    Quản lý danh sách comments
+
+                </div>
+                <div class="page-title-subheading">
+
+                </div>
+            </div>
+            <div class="page-title-actions">
+                @*<button type="button" data-toggle="tooltip" title="" data-placement="bottom" class="btn-shadow mr-3 btn btn-dark" data-original-title="Example Tooltip">
+                        <i class="fa fa-star"></i>
+                    </button>*@
+            </div>
+        </div>
+    </div>        <div class="row">
+        <div class="col-lg-12">
+            <div class="main-card mb-3 card">
+                <div class="card-body">
+                    <h5 class="card-title">Danh sách comments</h5>
+                    <div class="row" style="margin-bottom:10px;">
+                        <div class="col-sm-1">
+                            Trạng thái
+                        </div>
+                        <div class="col-sm-2">
+                            <select onchange="slchange()" id="slType" style="width:100%">
+                                <option value="0">
+                                    Tất cả
+                                </option>
+                                <option value="1">
+                                    Chưa duyệt
+                                </option>
+                                <option value="2">
+                                    Duyệt
+                                </option>
+                                <option value="3">
+                                    Chưa trả lời
+                                </option>
+                                <option value="4">
+                                    Đã trả lời
+                                </option>
+                            </select>
+                        </div>
+                        <div class="col-sm-2">
+                            <a style="color:white" onclick="Search()" class="btn btn-sm btn-primary">Tìm</a>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="mb-0 table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Tên khách hàng</th>
+                                    <th>Email</th>
+                                    <th>Số ĐT</th>
+                                    <th>Tên sản phẩm</th>
+                                    <th>Nội dung</th>
+                                    <th>Ngày</th>
+                                    <th>Tình trạng</th>
+                                    <th width="7%">Trả lời</th>
+                                    <th>Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody id="bodydata">
+                                @if (Model != null)
+                                {
+                                    foreach (TCP.DTO.CustomerComments item in Model)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @item.CommtentId
+                                            </td>
+                                            <td>
+                                                <a onclick="tooglecustomer(@item.CustomerId)">
+                                                    @item.HoTen
+                                                </a>
+                                            </td>
+
+                                            <td>
+                                                @item.Email
+                                            </td>
+                                            <td>
+                                                @item.SoDT
+                                            </td>
+                                            <td>
+                                                <a href="https://nguyenhoangcentury.vn/@item.ProductUrl" target="_blank">
+                                                    @item.ProductName
+                                                </a>
+
+                                            </td>
+                                            <td>
+                                                @item.Contents
+                                            </td>
+                                            <td>
+                                                @item.CreateDate
+                                            </td>
+
+                                            <td>
+                                                @if (item.Duyet == 0)
+                                                {
+                                                    @*<span style="color:blue">Chưa duyệt</span>*@
+                                                    <a class="btn btn-sm btn-primary" style="color:white" onclick="Duyet(@item.CommtentId,0)">Duyệt</a>
+                                                }
+                                                else
+                                                {
+                                                    <span style="color:red">Đã duyệt</span>
+                                                }
+                                            </td>
+
+                                            <td>
+                                                @if (item.Reply == 1)
+                                                {
+                                                    <span style="color:blue">Đã trả lời</span>
+                                                }
+                                                else
+                                                {
+                                                    @*<span style="color:blue">Chưa trả lời</span>*@
+                                                    if (item.Duyet != 0)
+                                                    {
+                                                        <a onclick="trloi(@item.CommtentId, '@item.ProductId')" style="color:white;cursor:pointer" class="btn btn-dark btn-sm">Trả lời</a>
+                                                    }
+                                                }
+                                            </td>
+                                            <td>
+                                                <div style=" margin-bottom: 19px;">
+                                                    <a href="/Administrator/Commnents/CommnentsDetail?CommtentId=@item.CommtentId" style="display:block">
+                                                        <i class="lnr-pencil" style="font-size: 13px; color: white; background-color: #16aaff; padding: 10px 10px;"></i>
+                                                    </a>
+                                                </div>
+                                                <div style="margin-top:3px;">
+                                                    <a onclick="DeleteComment(@item.CommtentId)" style="display:block;cursor:pointer">
+                                                        <i class="lnr-trash" style="font-size: 13px; color: white; background-color: red; padding: 10px 10px;"></i>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Thông tin khách hàng
+                </h5>
+
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal form-validate-jquery" id="priceForm" novalidate="novalidate">
+                    <div class="row form-group" id="mocus">
+
+                    </div>
+
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Trả lời
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input id="txtID" type="hidden" value="0" />
+                @*<textarea id="txtContents" class="form-control" placeholder="Nội dung"></textarea>*@
+                <textarea id="editorcm" name="editorcm" class="form-control"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button onclick="answer()" type="button" class="btn btn-primary">Trả lời/Chỉnh sửa</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+<script>
+    $("document").ready(function () {
+      $("#slType").val('@ViewBag.Type').change();
+    });
+    var baseURL = "";
+    function slchange() {
+        baseURL  = window.location.protocol + "//" + window.location.host + window.location.pathname;
+       //
+    }
+    function Search() {
+        window.location.href = baseURL + "?type=" + $("#slType").val();
+    }
+    function trloi(id, pid) {
+        type = 1;
+        ProductId = pid;
+        parentid = id;
+        $("#txtID").val(id);
+        $("#exampleModal").modal('toggle')
+    }
+    function DeleteComment(id) {
+        let text;
+        if (confirm("Bạn muốn xóa Comment này!") == true) {
+            var param =
+            {
+                "id": id,
+            }
+            $.ajax({
+                url: '/Administrator/Commnents/DeleteComment',
+                data: param,
+                dataType: 'text',
+                type: 'POST',
+                cache: false,
+                success: function (result) {
+                    window.location.reload();
+                }
+            });
+        }
+
+    }
+    function Duyet(id, duyet) {
+        var param =
+        {
+            "CommtentId": id,
+            "Duyet": duyet
+        }
+        $.ajax({
+            url: '/Administrator/Commnents/Duyet',
+            data: param,
+            dataType: 'text',
+            type: 'POST',
+            cache: false,
+            success: function (result) {
+                window.location.reload();
+            }
+        });
+    }
+    function tooglecustomer(id) {
+        $("#exampleModal2").modal("toggle");
+        var param = {
+            "CustomerId": id
+        }
+        $.ajax({
+            url: '/Administrator/Commnents/GetCustomerInfo',
+            data: param,
+            dataType: 'text',
+            type: 'POST',
+            cache: false,
+            success: function (result) {
+                $("#mocus").html(result);
+            }
+        });
+    }
+
+    var type = 1;
+    var parentid = 0;
+    var ProductId = 0;
+    function answer() {
+        if (type == 1) {
+            var params = {
+                "CommtentId": 0,
+                "CustomerId": '0',
+                "Type": 2,
+                "Contents": CKEDITOR.instances.editorcm.getData(),
+                "ParentID": parentid,
+                "ProductId": ProductId
+            }
+            $.post("/Administrator/Commnents/SendComments", { "data": "" + JSON.stringify(params) + "" }, function (result) {
+                window.location.reload();
+            });
+        }
+        else {
+            var params = {
+                "CommtentId": $("#txtID").val(),
+                "Contents": CKEDITOR.instances.editorcm.getData()
+            }
+            $.post("/Administrator/Commnents/SendComments", { "data": "" + JSON.stringify(params) + "" }, function (result) {
+                window.location.reload();
+            });
+        }
+
+    }
+
+</script>
+<style>
+    .modal {
+        z-index: 99999999999;
+        top: 46px;
+    }
+
+    .modal-backdrop, .blockOverlay {
+        z-index: 0;
+    }
+</style>

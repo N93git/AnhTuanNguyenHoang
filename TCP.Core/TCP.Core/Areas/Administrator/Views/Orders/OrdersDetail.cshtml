@@ -1,0 +1,149 @@
+﻿
+@{
+    ViewBag.Title = "Quản lý danh sách bài viết";
+    Layout = "~/Areas/Administrator/Views/Shared/_Layout.cshtml";
+}
+
+    <div class="app-main__inner">
+        <div class="app-page-title">
+            <div class="page-title-wrapper">
+                <div class="page-title-heading">
+                    <div class="page-title-icon">
+                        <i class="pe-7s-drawer icon-gradient bg-happy-itmeo"></i>
+                    </div>
+                    <div>
+                        CHI TIẾT ĐƠN HÀNG
+
+                    </div>
+                </div>
+                <div class="page-title-actions">
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+
+                <div class="tab-content">
+                    <div class="tab-pane tabs-animation fade show active" id="tab-content-0" role="tabpanel">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="main-card mb-3 card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Thông tin khách hàng</h5>
+                                        <div class="">
+                                            <!--Tiêu đề-->
+                                            @if (Model != null)
+                                            {
+                                                foreach (var item in Model)
+                                                {
+                                                    <div class="position-relative form-group">
+                                                        <div>
+                                                            <i class="pe-7s-users ordericon"></i>  <label for="exampleEmail" class=""><strong>Họ tên</strong> : </label><span class="tt_order"> @item.Name</span>
+                                                        </div>
+                                                        <div>
+                                                            <i class="pe-7s-call ordericon"></i> <label for="exampleEmail" class=""><strong>Phone</strong> : </label><span class="tt_order"> @item.Phone</span>
+
+                                                        </div>
+                                                        <div>
+                                                            <i class="pe-7s-map-marker ordericon"></i> <label for="exampleEmail" class=""><strong>Địa chỉ</strong> : </label><span class="tt_order"> @item.Adress</span>
+
+                                                        </div>
+                                                        <div>
+                                                            <i class="pe-7s-date ordericon"></i>   <label for="exampleEmail" class=""><strong>Ngày đặt</strong> : </label><span class="tt_order"> @item.DateCreated</span>
+                                                        </div>
+                                                        <div>
+                                                            <i class="pe-7s-note2 ordericon"></i>   <label for="exampleEmail" class=""><strong>Ghi chú</strong> : </label><span class="tt_order"> @item.Desciptions</span>
+                                                        </div>
+                                                    </div>
+
+                                                }
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="main-card mb-3 card">
+                    <div class="card-body">
+                        <h5 class="card-title">Chi tiết đơn hàng</h5>
+                        <div class="table-responsive">
+                            <table class="mb-0 table">
+                                <thead>
+                                    <tr>
+                                        <th>Tên sản phẩm</th>
+                                        <th>Hình ảnh</th>
+                                        <th>Màu sắc</th>
+                                        <th>Size</th>
+                                        <th>Giá</th>
+                                        <th>Số lượng</th>
+                                        <th>Tổng cộng</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="bodydata">
+                                    @if (ViewBag.OrderDetails != null)
+                                    {
+                                        foreach(var item in ViewBag.OrderDetails)
+                                        {
+                                    <tr>
+                                        <td>
+                                            <strong> @item.ProductTitle</strong>
+                                        </td>
+                                        <td>
+                                            <img src="~/Upload/Products/@item.ProductImage" class="img-fluid img-thumbnail" style="width:50px;" />
+                                        </td>
+                                        <td>
+                                            <div style="background-color:@item.Colors;height:20px;width:20px;">
+
+                                            </div>
+                                        </td>
+                                        <td>
+                                            @item.Size  
+                                        </td>
+                                        <td>
+                                            @(string.Format("{0:N0}",item.Prices).ToString())<sup>đ</sup>
+                                        </td>
+                                        <td>
+                                            @item.Amount
+                                        </td>
+                                        <td>
+                                            @(string.Format("{0:N0}",item.Total).ToString())<sup>đ</sup>
+                                        </td>
+                                    </tr>
+                                        }
+                                    }
+                                <tr>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                        <strong style="color:red">
+                                            @(string.Format("{0:N0}",ViewBag.Total).ToString())<sup>đ</sup>
+                                        </strong>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

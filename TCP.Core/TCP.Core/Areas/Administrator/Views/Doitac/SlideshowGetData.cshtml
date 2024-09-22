@@ -1,0 +1,72 @@
+﻿
+@{
+    Layout = null;
+}
+
+
+@if (Model != null)
+{
+    var i = 1;
+    foreach (var item in Model)
+    {
+        <tr>
+            <td scope="row">@item.DoitacID</td>
+            <td>@item.Name</td>
+            <td class="table_img">
+                <img src="/upload/Doitac/@item.Images" />
+            </td>
+            <td>@item.DisplayOrder</td>
+            <td>
+                <a href="/Administrator/Doitac/DoitacInsertList?DoitacID=@item.DoitacID">
+                    <i class="lnr-pencil" style="font-size: 13px; color: white; background-color: #16aaff; padding: 10px 10px;"></i>
+                </a>
+                <a href="javascript:deletes('@item.DoitacID','@item.Images')">
+                    <i class="lnr-trash" style="font-size: 13px; color: white; margin-left: 5px; background-color: #d92550; padding: 10px 10px;"></i>
+                </a>
+            </td>
+        </tr>
+        i++;
+    }
+}
+<script>
+    function deletes(id, name) {
+        $.confirm('Bạn có muốn xóa khách hàng này?', {
+            em: '', title: 'Cảnh báo!', callEvent: function () {
+
+                $.ajax({
+                    url: '/Tool/DeleteFile.ashx',
+                    data: 'name=' + name + '&folder=' + 'Doitac',
+                    dataType: 'text',
+                    type: 'GET',
+                    cache: false,
+                    success: function (result) {
+
+                    }
+                });
+                //
+                var param =
+                {
+                    "SlideshowId": id
+                }
+
+                $.ajax({
+                    url: '/Administrator/Doitac/SlideshowDelete',
+                    data: param,
+                    dataType: 'text',
+                    type: 'POST',
+                    cache: false,
+                    success: function (result) {
+                        window.location.href = "/Administrator/Doitac/DoitacGetList";
+                    }
+                });
+
+            }, cancelEvent: function () { }, cancelButton: 'Không'
+        })
+
+
+      
+    }
+</script>
+
+
+

@@ -1,0 +1,257 @@
+﻿<div class="block-breadcrumb">
+    <div class="container">
+        <ul class="breadcrumb">
+            <li>
+
+                <a href="/">Trang chủ</a>
+            </li>
+          
+            <li class="active">
+               @ViewBag.title
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="page-catalog-product py-40">
+    <div class="container">
+        <div class="text-center">
+            <h1>
+                <b>
+                    @ViewBag.title
+                </b>
+            </h1>
+        </div>
+        @if (ViewBag.Listparent!=null) {
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="boxseo_ul">
+                    <div class="row">
+                        @if (ViewBag.Listparent != null)
+                        {
+                            foreach (var item in ViewBag.Listparent)
+                            {
+                                <div class="col-sm-6 col-xs-6 col-md-3">
+                                    <a href="@item.ProductCategoryUrl" data-id="@item.ProductCategoryId">
+                                        <i class="fa fa-caret-right"></i>   @item.ProductCategoryTitle
+                                    </a>
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        }
+        <div class="thumbnail" style="margin-top:20px;">
+            <div class="caption">
+                <div class="news-detail">
+                    @Html.Raw(ViewBag.seo)
+                </div>
+            </div>
+            
+        </div>
+        <div class="row ">
+            <div class="col-lg-12">
+                <div class="box-pro-home mt-30">
+                    <div class="box-item">
+                        <div class="">
+                            <div class="row no-gutters">
+                                @if (Model != null)
+                                {
+                                    foreach (var item in Model)
+                                    {
+                                <div class="col-sm-3 col-xs-6 col-sm-6">
+                                    <div class="xaydunglist_boxs">
+                                        <div class="xaydungxemthem">
+                                            <a href="@item.ProductUrl">
+                                                Xem thêm
+                                            </a>
+                                        </div>
+                                        <div class="">
+                                            <a href="@item.ProductUrl">
+                                                <img src="~/Upload/Products/@item.ProductImage" class="img-responsive" />
+                                            </a>
+                                        </div>
+                                        <div class="xaydung_ct_box text-center" style="min-height:130px">
+                                            <div class="xaydunglist_title2" style="height:40px;overflow:hidden">
+                                                <a href="@item.ProductUrl">
+                                                    @item.ProductTitle
+                                                </a>
+                                            </div>
+                                            <div class="">
+                                                @if (item.ProductPrice > 0 && item.ProductPriceDrop > 0)
+                                                {
+                                                    <div class="productdetail_price_box">
+                                                        <span class="productdetail_pricenormal">@item.ProductPriceDrop.ToString("#,##0")</span><sup class="sup2">đ</sup>  <span class="productdetail_drop">@item.ProductPrice.ToString("#,##0")</span><sup class="sup1">đ</sup>
+                                                    </div>
+
+                                                }
+                                                else
+                                                {
+                                                    if (item.ProductPrice > 0)
+                                                    {
+                                                        <div class="productdetail_price_box">
+                                                            <span class="productdetail_pricenormal">@item.ProductPrice.ToString("#,##0")</span><sup>đ</sup>
+                                                        </div>
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="productdetail_pricenormal">
+                                                            <span>Liên hệ</span>
+                                                        </div>
+                                                    }
+                                                }
+                                            </div>
+                                            @if (item.Phivanchuyen1 != null)
+                                            {
+                                                <div class="coquatang"><i class="fa fa-gift"></i> Có quà tặng</div>
+                                            }
+                                        </div>
+
+                                    </div>
+                                </div>
+                                    }
+                                }
+
+                            </div>
+                        </div>
+                        <div class="box-pagination mt-30 pb-4"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <ul id="pagination" class="pagination">
+                    @*<li class="active"><a href="trai-cay-cac-loai?price=&amp;hangsanxuat=&amp;chungloai=&amp;page=1">1</a></li>*@
+                    @if (ViewBag.tongSoTrang != null)
+                    {
+
+                        for (int i = 0; i < ViewBag.tongSoTrang; i++)
+                        {
+                            if (ViewBag.pages == (i + 1))
+                            {
+                                <li class="active">
+                                    <a href="/@ViewBag.url?page=@(i+1)">@(i + 1)</a>
+                                </li>
+
+                            }
+                            else
+                            {
+                                <li>
+                                    <a href="/@ViewBag.url?page=@(i+1)">@(i + 1)</a>
+                                </li>
+
+                            }
+
+                        }
+                    }
+                </ul>
+                <div class="clr">
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .index_productlist_box {
+        box-shadow: 3px 3px 6px rgb(0 0 0 / 10%);
+        margin-top: 30px;
+    }
+</style>
+<script>
+    function toggle_order() {
+        $("#ulprice").toggle();
+    }
+    function toggle_order2() {
+        $("#ulprice1").toggle();
+    }
+    function toggle_order3() {
+        $("#ulprice2").toggle();
+    }
+    var filter1 = 0;
+    var filter2 = 0;
+    var filter3 = 0;
+    function clickorder(dis, id) {
+        filter1 = id;
+        var text = $(dis).children().text();
+        $(".ordervalue").html(text);
+        @*var currentURL = window.location.pathname;
+        var lang = '?lang=' + '@ViewBag.lang';
+        window.location.href = currentURL + lang + '&price=' + id;*@
+
+    }
+    function clickorder2(dis, id) {
+        filter2 = id;
+        $(".ordervalue2").html(dis);
+        @*var currentURL = window.location.pathname;
+        var lang = '?lang=' + '@ViewBag.lang';
+        window.location.href = currentURL + lang + '&price=' + id;*@
+
+    }
+    function clickorder3(dis, id) {
+        filter3 = id;
+        $(".ordervalue3").html(dis);
+        @*var currentURL = window.location.pathname;
+        var lang = '?lang=' + '@ViewBag.lang';
+        window.location.href = currentURL + lang + '&price=' + id;*@
+
+    }
+    function getParameterByName(name, url = window.location.href) {
+        name = name.replace(/[\[\]]/g, '\\$&');
+        var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, ' '));
+    }
+    $(document).ready(function () {
+        var curprice = getParameterByName('price');
+        var curcolor = getParameterByName('color');
+        var curSize = getParameterByName('size');
+        filter1 = curprice;
+        filter2 = curcolor;
+        filter3 = curSize;
+        if (curprice != null) {
+            $(".ordervalue").html($("[data-price=" + curprice + "]").children().text());
+
+        }
+        if (curcolor != null) {
+            $(".ordervalue2").html($("[data-color=" + curcolor + "]").text());
+
+        }
+        if (curSize != null) {
+            $(".ordervalue3").html($("[data-size=" + curSize + "]").children().text());
+
+        }
+    });
+    function filterpd() {
+        var currentURL = window.location.pathname;
+        var lang = '?lang=' + '@ViewBag.lang';
+        window.location.href = currentURL + lang + '&price=' + filter1 + '&color=' + filter2 + '&size=' + filter3;
+    }
+    $("[data-id=" + '@ViewBag.Current' + "]").addClass("clactive");
+</script>
+<style>
+    body{
+        background-color:#eee;
+    }
+    .clactive {
+        color: #23b14d!important;
+    }
+    img{
+        max-width:100%;
+    }
+    .thumbnail .caption {
+        padding: 9px;
+        color: #333;
+    }
+    .news-detail {
+        font-size: 14px;
+        line-height: 1.7;
+    }
+</style>

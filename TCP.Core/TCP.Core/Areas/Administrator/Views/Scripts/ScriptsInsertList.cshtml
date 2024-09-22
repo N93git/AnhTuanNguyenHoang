@@ -1,0 +1,179 @@
+﻿
+@{
+    ViewBag.Title = "InsertList";
+    Layout = "~/Areas/Administrator/Views/Shared/_Layout.cshtml";
+}
+<input type="hidden" id="typeimage" value="1" />
+@*@Html.Action("Test", "NewsCategory", new { parentId = 1, exexcep = 2 })*@
+<div class="app-main__inner">
+    <div class="app-page-title">
+        <div class="page-title-wrapper">
+            <div class="page-title-heading">
+                <div class="page-title-icon">
+                    <i class="pe-7s-drawer icon-gradient bg-happy-itmeo"></i>
+                </div>
+                <div>
+                    CHI TIẾT DANH MỤC TIN TỨC
+                    @*<div class="page-title-subheading">Tables are the backbone of almost all web applications.</div>*@
+                </div>
+            </div>
+            <div class="page-title-actions">
+                <button onclick="back()" type="button" data-toggle="tooltip" title="" data-placement="bottom" class="btn-shadow mr-3 btn btn-dark" >
+                  Quay lại
+                </button>
+                <button class="mt-1 btn btn-danger" data-toggle="tooltip" data-placement="bottom" onclick="SaveData()" >Lưu</button>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            @*<div class="inputWrapper">
+                    <input type="file" id="fu" multiple>
+                </div>
+                <div id="dd">
+
+                </div>*@
+            <div class="tab-content">
+                <div class="tab-pane tabs-animation fade show active" id="tab-content-0" role="tabpanel">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="main-card mb-3 card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Nội dung</h5>
+                                    <div class="">
+                                        <!--Tiêu đề-->
+                                        <div class="position-relative form-group">
+                                            <label for="exampleEmail" class="">Tiêu đề <span style="color:red">(*)</span></label>
+                                            @if (Model != null && Model.Count > 0)
+                                            {
+                                                foreach (var item in Model)
+                                                {
+                                                    <input name="txtName" id="txtName" placeholder="" type="text" class="form-control" value="@item.Name">
+                                                    <input type="hidden" id="txtID" name="txtID" value="@item.ScriptID" />
+                                                }
+
+                                            }
+                                            else
+                                            {
+                                                <input name="txtName" id="txtName" placeholder="" type="text" class="form-control">
+                                                <input type="hidden" id="txtID" name="txtID" value="0" />
+                                            }
+
+                                        </div>
+
+
+                                        <!--Mô tả ngắn-->
+                                        <!--Nội dung-->
+                                        <div class="position-relative form-group">
+                                            <label for="examplePassword" class="">Nội dung</label>
+                                            @if (Model != null && Model.Count > 0)
+                                            {
+                                                foreach (var item in Model)
+                                                {
+                                                    <textarea class="form-control" rows="10" name="textarecontent" id="textarecontent">@item.Contents</textarea>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <textarea class="form-control" rows="10" id="textarecontent" name="textarecontent" class="form-control"></textarea>
+                                            }
+                                        </div>
+                                        <!--Position-->
+                                        <div class="position-relative form-group">
+                                            <label for="examplePassword" class="">Nội dung</label>
+                                            @if (Model != null && Model.Count > 0)
+                                            {
+                                                foreach (var item in Model)
+                                                {
+                                                    <select id="slMeta">
+                                                        @if (item.Position == 1)
+                                                        {
+                                                            <option value="1" selected>
+                                                                Meta
+                                                            </option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="1">
+                                                                Meta
+                                                            </option>
+                                                        }
+
+                                                        @if (item.Position == 2)
+                                                        {
+                                                            <option value="2" selected>
+                                                                Trong header
+                                                            </option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="2">
+                                                                Trong header
+                                                            </option>
+                                                        }
+
+
+                                                        @if (item.Position == 3)
+                                                        {
+                                                            <option value="3" selected>
+                                                                Dưới thẻ header
+                                                            </option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="3">
+                                                                Dưới thẻ header
+                                                            </option>
+                                                        }
+                                                    </select>
+                                                }
+                                            }
+                                           
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="btn_Save_Fixed">
+                @*<button class="mt-1 btn btn-primary" onclick="SaveData()">Submit</button>*@
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    textarea {
+        width: 100%;
+        padding: 20px;
+        height: 300px;
+    }
+</style>
+
+<script>
+
+    function SaveData() { 
+        console.log($("#textarecontent").val());
+        var param = {
+            "ScriptID": $("#txtID").val(),
+            "Name": $("#txtName").val(),
+            "Contents": $("#textarecontent").val(),
+             "Position":$( "#slMeta option:selected").val(),   
+        }
+        $.post("/Administrator/Scripts/TCP_Scipts_SAVE", { "data": "" + JSON.stringify(param) + "" }, function (result) {
+            window.location.href = "/Administrator/Scripts/Index";
+        });
+    }
+    function back() {
+        window.location.href = "/Administrator/Scripts/Index";
+    }
+</script>

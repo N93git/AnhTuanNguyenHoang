@@ -1,0 +1,23 @@
+﻿
+@{
+    Layout = null;
+}
+
+@if (Model != null)
+{
+
+<div class="container-fluid">
+    <div class="autoplay3">
+        @foreach (var item in Model)
+        {
+            <div class="">
+                <img src="~/Upload/News/@item.NewsImage" class="img-responsive" alt="@item.NewsTitle" />
+            </div>
+        }
+    </div>
+</div>
+
+}
+<div class="clearfix">
+
+</div>

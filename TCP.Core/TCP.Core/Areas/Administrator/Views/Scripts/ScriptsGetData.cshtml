@@ -1,0 +1,48 @@
+﻿
+@{
+    Layout = null;
+}
+
+
+@if (Model != null)
+{
+    var i = 1;
+    foreach (var item in Model)
+    {
+    <tr>
+        <td scope="row">@item.ScriptID</td>
+        <td>@item.Name</td>
+        <td>
+            <a href="/Administrator/Scripts/ScriptsInsertList?ScriptID=@item.ScriptID">
+                <i class="lnr-pencil" style="font-size: 13px; color: white; background-color: #16aaff; padding: 10px 10px;"></i>
+            </a>
+            <a href="javascript:deletes('@item.ScriptID')">
+                <i class="lnr-trash" style="font-size: 13px; color: white; margin-left: 5px; background-color: #d92550; padding: 10px 10px;"></i>
+            </a>
+        </td>
+    </tr>
+    }
+}
+<script>
+    function deletes(id) {
+       
+        var param =
+        {
+            "ScriptsId": id
+        }
+
+        $.ajax({
+            url: '/Administrator/Scripts/ScriptsDelete',
+            data: param,
+            dataType: 'text',
+            type: 'POST',
+            cache: false,
+            success: function (result) {
+                window.location.reload();
+            }
+        });
+    }
+</script>
+
+
+

@@ -1,0 +1,1086 @@
+﻿@using Tool;
+<section id="slideshow" class="figureparent hidden-xs hidden-md">
+    @if (ViewBag.Slideshow != null)
+    {
+        <div class="autoplay">
+            @{
+                var i = 0;
+            }
+
+            @foreach (var item in ViewBag.Slideshow)
+            {
+                if (i == 0)
+                {
+                    <div data-index="@i" class="figurechung figure_@i" style="background:url(/Upload/Slideshow/@item.Images)">
+                    </div>
+                }
+                else
+                {
+                    <div data-index="@i" class="figurechung figure_@i" style="background:url(/Upload/Slideshow/@item.Images);opacity:0">
+                    </div>
+                }
+
+                i++;
+            }
+            <a class="slide_next" onclick="slickslide(2)">
+                <i class="fa fa-angle-right"></i>
+            </a>
+            <a class="slide_previous" onclick="slickslide(1)">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        </div>
+    }
+</section>
+<div class="clearfix">
+
+</div>
+@*<link rel="stylesheet"  href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />*@
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<meta name=description content="@Tool.Utils.GetMeta()">
+<section id="slideshow" class="figureparent hidden-md hidden-lg">
+    @if (ViewBag.Slideshow != null)
+    {
+        <div class="autoplay">
+            @{
+                var i = 0;
+            }
+
+            @foreach (var item in ViewBag.Slideshow)
+            {
+                <div>
+                    <img src="/Upload/Slideshow/@item.Images" class="img-responsive"  />
+                </div>
+            }
+
+        </div>
+    }
+</section>
+@*<div class="linhvuchd_box">
+        <div class="container">
+            <div class="linhvuchd_title">
+                NHC Group
+            </div>
+            <div class="linhvuchd_title2">
+                <span class="sp1">  Lĩnh vực </span><span class="sp2">hoạt động</span>
+            </div>
+            <div class="linhcuhd_content">
+                Trong xu thế toàn cầu hóa và cuộc cách mạng công nghệ đang từng bước làm thay đổi diện mạo các nền kinh tế thế giới, NHC Group luôn nỗ lực phát huy tối đa tiềm năng và nguồn lực, bứt phá ngoạn mục, vươn lên trở thành Tập đoàn kinh tế đa ngành hàng đầu tại Việt Nam trong với các lĩnh vực: Xây dựng, Điện lạnh -  nội thất, Bât động sản
+            </div>
+        </div>
+    </div>*@
+<div class="index_product_box">
+    <div class="vechungtoibox hidden">
+        <div class="container">
+            @if (ViewBag.Vechungtoi != null)
+            {
+                <div class="row">
+                    <div class="col-md-3" data-aos="fade-right" data-aos-duration="1000">
+                        <img src="~/Upload/NewsCategories/@ViewBag.Vechungtoi.NewsCategoryImage" class="img-responsive" />
+                    </div>
+                    <div class="col-md-9">
+                        <div class="vechungtoititle" data-aos="fade-up" data-aos-duration="1000" style="color: #2980b9">
+                            Về chúng tôi
+                        </div>
+                        <div class="vechungtoicontents" data-aos="fade-up" data-aos-duration="1000">
+                            @Html.Raw(ViewBag.Vechungtoi.NewsCategoryDesc)
+                        </div>
+                        <div class="btnxemthem">
+                            <a href="gioi-thieu-chung">
+                                Xem thêm <i class="fa fa-angle-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+    <div class="tamnhin_sumenh hidden" style="background-image:url('/Upload/NewsCategories/@ViewBag.Tamnhin.NewsCategoryImage')">
+        <div class="tamnhinsument_title" data-aos="fade-up" data-aos-duration="1000">
+            Tầm nhìn - sứ mệnh
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="tamnhinbox">
+                        <div class="tamnhinbox_title" data-aos="fade-up" data-aos-duration="1000">
+                            Tầm nhìn
+                        </div>
+                        <div class="tamnhin_contents" data-aos="fade-up" data-aos-duration="1000">
+                            @if (ViewBag.Tamnhin != null)
+                            {
+                                @Html.Raw(ViewBag.Tamnhin.NewsCategoryDesc)
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="tamnhinbox">
+                        <div class="tamnhinbox_title" data-aos="fade-up" data-aos-duration="1000">
+                            Sứ mệnh
+                        </div>
+                        <div class="tamnhin_contents" data-aos="fade-up" data-aos-duration="1000">
+                            @if (ViewBag.Sumenh != null)
+                            {
+                                @Html.Raw(ViewBag.Sumenh.NewsCategoryDesc)
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="giatricotloi hidden" style="background-image:url('/Upload/NewsCategories/@ViewBag.Giatricotloi.NewsCategoryImage')">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6">
+
+                </div>
+                <div class="col-sm-6">
+                    <div class="vechungtoititle " data-aos="fade-up" data-aos-duration="1000">
+                        Giá trị cốt lõi
+                    </div>
+                    <div class="giatricotloi_contents chart-box" data-aos="fade-up" data-aos-duration="1000">
+                        @if (ViewBag.Giatricotloi != null)
+                        {
+                            @Html.Raw(ViewBag.Giatricotloi.NewsCategoryDesc)
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <section class="lvthree_box">
+
+        <div class="container myback" style="padding-top:20px;">
+            <div class="index_product_title" data-aos="fade-up" data-aos-duration="1000">
+                <a>
+                    Lĩnh vực họat động
+                </a>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="">
+                        <div class="lvthree_title">
+                            <a href="xay-dung">
+                                Xây dựng
+                            </a>
+                        </div>
+                        <div class="lvthree_box_img">
+                            <a href="xay-dung">
+                                <img src="~/assets/Resource/Linhvuchoatdong/xaydung.jpg" style="" class="img-responsive" />
+                            </a>
+                            <div class="lvthreee_xemthem">
+                                <a href="xay-dung">
+                                    <img src="~/assets/Resource/icon-image.svg" />  Xem thêm
+                                </a>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="">
+                        <div class="lvthree_title">
+                            <a href="co-dien-lanh">
+                                Điện lạnh - Nội thất
+                            </a>
+                        </div>
+                        <div class="lvthree_box_img">
+                            <a href="co-dien-lanh">
+                                <img src="~/assets/Resource/Linhvuchoatdong/codienlanh.png" style="" class="img-responsive" />
+                            </a>
+                            <div class="lvthreee_xemthem">
+                                <a href="co-dien-lanh">
+                                    <img src="~/assets/Resource/icon-image.svg" />  Xem thêm
+                                </a>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="">
+                        <div class="lvthree_title">
+                            <a href="nong-lam-nghiep">
+                                Nông - Lâm nghiệp
+                            </a>
+                        </div>
+                        <div class="lvthree_box_img">
+                            <a href="nong-lam-nghiep">
+                                <img src="~/assets/Resource/Linhvuchoatdong/batdongsan.jpg" style="" class="img-responsive" />
+                            </a>
+                            <div class="lvthreee_xemthem">
+                                <a href="bat-dong-san">
+
+                                    <img src="~/assets/Resource/icon-image.svg" />  Xem thêm
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    @*Dự án tiêu biêu*@
+    <section class="xaydung_box">
+        <div class="container myback">
+
+            <div class="index_product_title" data-aos="fade-up" data-aos-duration="1000">
+                <a href="/du-an">
+                    Dự án tiêu biểu
+                </a>
+            </div>
+            <div class="row">
+                @*<div class="col-sm-3 hidden-xs">
+                        <div>
+                            <img src="~/Upload/NewsCategories/@ViewBag.DuAncate.NewsCategoryImage" class="img-responsive" />
+                        </div>
+                    </div>*@
+                <div class="col-sm-12">
+                    @if (ViewBag.DuAn != null)
+                    {
+                        <div class="xaydungs3">
+                            @foreach (var item in ViewBag.DuAn)
+                            {
+                                <div class="xaydunglist_box">
+                                    <div class="tintucimg items">
+                                        <a href="@item.NewsUrl" class="tmb-imgcc">
+                                            <img src="~/Upload/News/@item.NewsImage" class="img-responsive" />
+                                        </a>
+                                    </div>
+                                    <div class="xaydung_ct_box news_ctbox">
+                                        <div class="xaydunglist_title">
+                                            <a href="@item.NewsUrl">
+                                                @item.NewsTitle
+                                            </a>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </section>
+
+    @*Xây dựng*@
+    <section class="xaydung_box">
+        <div class="container myback">
+            <div class="index_product_title" data-aos="fade-up" data-aos-duration="1000">
+                <a href="@ViewBag.Xaydung.NewsCategoryUrl">
+                    @ViewBag.Xaydung.NewsCategoryTitle
+                </a>
+            </div>
+            <div class="row ">
+                @*<div class="col-sm-3 hidden-xs">
+                        <div>
+                            <img src="~/Upload/NewsCategories/@ViewBag.Xaydung.NewsCategoryImage" class="img-responsive" />
+                        </div>
+                    </div>*@
+                <div class="col-sm-12">
+                    @if (ViewBag.Xaydungchild != null)
+                    {
+                        <div class="xaydungslick">
+                            @foreach (var item in ViewBag.Xaydungchild)
+                            {
+                                <div>
+                                    <a href="@item.NewsCategoryUrl">
+                                        @item.NewsCategoryTitle
+                                    </a>
+                                </div>
+                            }
+
+                        </div>
+                    }
+                    @if (ViewBag.Xaydunglist != null)
+                    {
+                        <div class="xaydungs2">
+                            @foreach (var item in ViewBag.Xaydunglist)
+                            {
+                                <div class="xaydunglist_box">
+                                    <div class="items">
+                                        <a href="@item.NewsUrl" class="tmb-imgcc tmb-imgcc-1">
+                                            <img src="~/Upload/News/@item.NewsImage" class="img-responsive" />
+                                        </a>
+                                    </div>
+                                    <div class="xaydung_ct_box news_ctbox">
+                                        <div class="xaydunglist_title">
+                                            <a href="@item.NewsUrl">
+                                                @item.NewsTitle
+                                            </a>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </section>
+	
+	<section id="three_kd">
+        <section class="lvthree_box">
+
+            <div class="container myback">
+                <div class="index_product_title" data-aos="fade-up" data-aos-duration="1000">
+                    <a>
+                        Điện lạnh nội thất
+                    </a>
+                </div>
+                <div class="row">
+                    @if (ViewBag.Codienlanh != null)
+                    {
+                        <div class="codienlanh">
+                            @foreach (var item in ViewBag.Codienlanh)
+                            {
+                            <div class="lvthree_box_img lvthree_box_img2">
+                                <a href="xay-dung">
+                                    <img src="~/Upload/ProductCategories/@item.ProductCategoryImage" style="" class="img-responsive" />
+                                </a>
+                                <div class="lvthree_sp">
+                                    @item.ProductCategoryTitle
+                                </div>
+                                <div class="lvthreee_xemthem">
+                                    <div class="lvthree_dt">
+                                        @Html.Raw(item.ProductCategoryDesc)
+                                    </div>
+                                    <a href="@item.ProductCategoryUrl">
+                                        <img src="~/assets/Resource/icon-image.svg" />  Xem thêm
+                                    </a>
+
+                                </div>
+                            </div>
+
+                            }
+                        </div>
+                      
+
+                    }
+
+                </div>
+            </div>
+        </section>
+    </section>
+
+    @*Bất động sản*@
+    <section class="xaydung_box">
+        <div class="container myback">
+            <div class="index_product_title" data-aos="fade-up" data-aos-duration="1000">
+                <a href="@ViewBag.Batdongsan.NewsCategoryUrl">
+                    @ViewBag.Batdongsan.NewsCategoryTitle
+                </a>
+            </div>
+            <div class="row ">
+                @*<div class="col-sm-3 hidden-xs">
+                        <div>
+                            <img src="~/Upload/NewsCategories/@ViewBag.Batdongsan.NewsCategoryImage" class="img-responsive" />
+                        </div>
+                    </div>*@
+                <div class="col-sm-12">
+                    @if (ViewBag.Batdongsanchild != null)
+                    {
+                        <div class="xaydungslick">
+                            @foreach (var item in ViewBag.Batdongsanchild)
+                            {
+                                <div>
+                                    <a href="@item.NewsCategoryUrl">
+                                        @item.NewsCategoryTitle
+                                    </a>
+                                </div>
+                            }
+                        </div>
+                        if (ViewBag.Batdongsanlist != null)
+                        {
+                            <div class="xaydungs2">
+                                @foreach (var item in ViewBag.Batdongsanlist)
+                                {
+                                    <div class="xaydunglist_box">
+                                        <div class="items">
+                                            <a href="@item.NewsUrl" class="tmb-imgcc tmb-imgcc-1">
+                                                <img src="~/Upload/News/@item.NewsImage" class="img-responsive" />
+                                            </a>
+                                        </div>
+                                        <div class="xaydung_ct_box news_ctbox">
+                                            <div class="xaydunglist_title">
+                                                <a href="@item.NewsUrl">
+                                                    @item.NewsTitle
+                                                </a>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                }
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+
+    
+
+
+    @*Dịch vụ*@
+    <section class="xaydung_box">
+        <div class="container myback">
+            <div class="index_product_title" data-aos="fade-up" data-aos-duration="1000">
+                <a href="@ViewBag.Dichvucate.NewsCategoryUrl">
+                    @ViewBag.Dichvucate.NewsCategoryTitle
+                </a>
+            </div>
+            <div class="row padding-15">
+                @*<div class="col-sm-3 hidden-xs">
+                        <div>
+                            <img src="~/Upload/NewsCategories/@ViewBag.Dichvucate.NewsCategoryImage" class="img-responsive" />
+                        </div>
+                    </div>*@
+                <div class="col-sm-12">
+                    @if (ViewBag.Dichvu != null)
+                    {
+
+                        if (ViewBag.Dichvu != null)
+                        {
+                            <div class="xaydungs2">
+                                @foreach (var item in ViewBag.Dichvu)
+                                {
+                                    <div class="xaydunglist_box">
+                                        <div class="items">
+                                            <a href="@item.NewsUrl" class="tmb-imgcc">
+                                                <img src="~/Upload/News/@item.NewsImage" class="img-responsive" />
+                                            </a>
+                                        </div>
+                                        <div class="xaydung_ct_box news_ctbox">
+                                            <div class="xaydunglist_title">
+                                                <a href="@item.NewsUrl">
+                                                    @item.NewsTitle
+                                                </a>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                }
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    @*Tin tức*@
+    <section class="xaydung_box">
+        <div class="container myback">
+            <div class="index_product_title" data-aos="fade-up" data-aos-duration="1000">
+                <a href="@ViewBag.Tintuccate.NewsCategoryUrl">
+                    @ViewBag.Tintuccate.NewsCategoryTitle
+                </a>
+            </div>
+            <div class="row padding-15">
+                @*<div class="col-sm-3 hidden-xs">
+                        <div>
+                            <img src="~/Upload/NewsCategories/@ViewBag.Tintuccate.NewsCategoryImage" class="img-responsive" />
+                        </div>
+                    </div>*@
+                <div class="col-sm-12">
+                    @if (ViewBag.TinTuc != null)
+                    {
+
+                        if (ViewBag.TinTuc != null)
+                        {
+                            <div class="xaydungs2">
+                                @foreach (var item in ViewBag.TinTuc)
+                                {
+                                    <div class="xaydunglist_box">
+                                        <div class="tintucimg items">
+                                            <a href="@item.NewsUrl" class="tmb-imgcc">
+                                                <img src="~/Upload/News/@item.NewsImage" class="img-responsive" />
+                                            </a>
+                                        </div>
+                                        <div class="xaydung_ct_box news_ctbox">
+                                            <div class="xaydunglist_title">
+                                                <a href="@item.NewsUrl">
+                                                    @item.NewsTitle
+                                                </a>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                }
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+
+    @*Đánh giá khách hàng*@
+    <section class="xaydung_box">
+        <div class="container myback">
+            <div class="index_product_title" data-aos="fade-up" data-aos-duration="1000">
+                <a href="y-kien-khach-hang">
+                    Đánh giá khách hàng
+                </a>
+            </div>
+            <div class="customers testimonials-section">
+                @if (ViewBag.ListcustomerIdea != null)
+                {
+                    foreach (var item in ViewBag.ListcustomerIdea)
+                    {
+                        <div class="slide-item" data-aos="zoom-in" data-aos-duration="1000">
+
+                            <div class="quote"><span class="fa fa-quote-right" style="font-family: 'FontAwesome' !important" ;></span></div>
+                            <div class="author">
+                                <div class="img-box">
+                                    <a href="#">
+                                        <img src="~/Upload/CustomerIdea/@item.Images" style=" object-fit: cover;" class="img-responsive" alt="">
+                                    </a>
+                                </div>
+                                <h4>@item.Name</h4>
+                            </div>
+                            <div class="slide-text ">
+                                @item.Contents
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+
+        </div>
+    </section>
+    <section class="xaydung_box">
+        <div class="container myback">
+            <div class="index_product_title" data-aos="fade-up" data-aos-duration="1000">
+                <a href="#">
+                    Khách hàng tiêu biểu
+                </a>
+            </div>
+            <div class="customers2 testimonials-section khtb">
+                @if (ViewBag.Doitac != null)
+                {
+                    foreach (var item in ViewBag.Doitac)
+                    {
+                        <div class="slide-item" data-aos="zoom-in" data-aos-duration="1000">
+
+
+                            <div class="author">
+                                <div class="">
+                                    <a href="#">
+                                        <img src="~/Upload/Doitac/@item.Images" style=" object-fit: cover;" class="img-responsive" alt="">
+                                    </a>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    }
+                }
+            </div>
+
+        </div>
+
+    </section>
+
+</div>
+
+<script>
+    $('.codienlanh').slick({
+        infinite: true,
+        speed: 300,
+        slidesToShow: 3,
+        slidesToScroll: 1,
+        autoplay: true,
+        arrows: false,
+        responsive: [
+            {
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 1,
+                }
+            },
+            {
+                breakpoint: 640,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 1,
+                }
+            },
+            {
+                breakpoint: 480,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 1,
+                    autoplay: true,
+                }
+            }
+        ]
+    });
+    $('.autoplay').slick({
+        infinite: true,
+        speed: 300,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        autoplay: true,
+        arrows: false,
+        fade: true,
+        draggable: true,
+        easing: 'easeOutElastic',
+
+        responsive: [
+            {
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                }
+            },
+            {
+                breakpoint: 600,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    arrows: true,
+                }
+            },
+            {
+                breakpoint: 480,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    autoplay: true,
+                    arrows: true,
+                }
+            }
+        ]
+    });
+    $('.slideslick').slick({
+        infinite: true,
+        speed: 300,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        autoplay: true,
+        arrows: true,
+        responsive: [
+            {
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                }
+            },
+            {
+                breakpoint: 600,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                }
+            },
+            {
+                breakpoint: 480,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    autoplay: true,
+                }
+            }
+        ]
+    });
+    $('.slideproduct').slick({
+        infinite: true,
+        speed: 1000,
+        slidesToShow: 5,
+        slidesToScroll: 1,
+        autoplay: false,
+        arrows: true,
+        responsive: [
+            {
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: 4,
+                    slidesToScroll: 1,
+                }
+            },
+            {
+                breakpoint: 600,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 1,
+                }
+            },
+            {
+                breakpoint: 480,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 1,
+                    autoplay: true,
+                }
+            }
+        ]
+    });
+    $('.slidenews').slick({
+        infinite: true,
+        speed: 300,
+        slidesToShow:4,
+        slidesToScroll: 1,
+        autoplay: true,
+        arrows: true,
+        responsive: [
+            {
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: 3,
+                    slidesToScroll: 1,
+                }
+            },
+            {
+                breakpoint: 600,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                }
+            },
+            {
+                breakpoint: 480,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    autoplay: true,
+                }
+            }
+        ]
+    });
+    $('.xaydungs').slick({
+        infinite: true,
+        speed: 300,
+        slidesToShow:5,
+        slidesToScroll: 1,
+        autoplay: true,
+        arrows: false,
+        responsive: [
+            {
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: 3,
+                    slidesToScroll: 1,
+                }
+            },
+            {
+                breakpoint: 600,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 1,
+                }
+            },
+            {
+                breakpoint: 480,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 1,
+                    autoplay: true,
+                }
+            }
+        ]
+    });
+    $('.xaydungs2').slick({
+        infinite: true,
+        speed: 300,
+        slidesToShow:3,
+        slidesToScroll: 1,
+        autoplay: true,
+        arrows: false,
+        responsive: [
+            {
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow:3,
+                    slidesToScroll: 1,
+                }
+            },
+            {
+                breakpoint: 600,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                }
+            },
+            {
+                breakpoint: 480,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    autoplay: true,
+                }
+            }
+        ]
+    });
+    $('.xaydungs22').slick({
+        infinite: true,
+        speed: 600,
+        slidesToShow:3,
+        slidesToScroll: 1,
+        autoplay: true,
+        arrows: false,
+        responsive: [
+            {
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: 3,
+                    slidesToScroll: 1,
+                }
+            },
+            {
+                breakpoint: 600,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 1,
+                }
+            },
+            {
+                breakpoint: 480,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 1,
+                    autoplay: true,
+                }
+            }
+        ]
+    });
+    $('.xaydungs3').slick({
+        infinite: true,
+        speed: 300,
+        slidesToShow:3,
+        slidesToScroll: 1,
+        autoplay: true,
+        arrows: false,
+        responsive: [
+            {
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow:3,
+                    slidesToScroll: 1,
+                }
+            },
+            {
+                breakpoint: 600,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                }
+            },
+            {
+                breakpoint: 480,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    autoplay: true,
+                }
+            }
+        ]
+    });
+    //xaydungslick
+    $('.xaydungslick').slick({
+        infinite: true,
+        speed: 300,
+        slidesToShow: 5,
+        slidesToScroll: 1,
+        autoplay: true,
+        arrows: false,
+        responsive: [
+            {
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 1,
+                }
+            },
+            {
+                breakpoint: 640,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 1,
+                }
+            },
+            {
+                breakpoint: 480,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 1,
+                    autoplay: true,
+                }
+            }
+        ]
+    });
+    $('.customers').slick({
+        infinite: true,
+        speed: 300,
+        slidesToShow:3,
+        slidesToScroll: 1,
+        autoplay: true,
+        arrows: true,
+        responsive: [
+            {
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 1,
+                }
+            },
+            {
+                breakpoint: 600,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                }
+            },
+            {
+                breakpoint: 480,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    autoplay: true,
+                }
+            }
+        ]
+    });
+    $('.customers2').slick({
+        infinite: true,
+        speed: 300,
+        slidesToShow:5,
+        slidesToScroll: 1,
+        autoplay: true,
+        arrows: true,
+        responsive: [
+            {
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 1,
+                }
+            },
+            {
+                breakpoint: 600,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                }
+            },
+            {
+                breakpoint: 480,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    autoplay: true,
+                }
+            }
+        ]
+    });
+    var gettimeoutid;
+    slickslide(0)
+    function slickslide(type) {
+        window.clearTimeout(gettimeoutid);
+        var slcount = '@ViewBag.SlCount';
+        var dataId = $(".slick-active");
+        var dataindex = parseInt($(dataId).attr("data-index"))
+        var backindex = dataindex;
+        if (type == 2) {
+            dataindex += 1;
+            if (dataindex == slcount) {
+                dataindex = 0;
+            }
+        }
+        else {
+            dataindex -= 1;
+            if (dataindex < 0) {
+                dataindex = slcount - 1;
+            }
+        }
+
+        $(".figurechung").css("opacity", "0");
+        $(".figure_" + (dataindex)).css("opacity", "1");
+        $(".figurechung").toggle().toggle();
+        //reset_animation('figure_" + dataindex');
+        $(".autoplay").slickGoTo(dataindex, 1000);
+        console.log(dataindex)
+        gettimeoutid = setTimeout(function () { slickslide(dataindex) },9000);
+    }
+    function reset_animation(name) {
+        var el = document.getElementsByClassName(name);
+        el.style.animation = "";
+        el.offsetHeight; /* trigger reflow */
+        el.style.animation = null;
+    }
+   // scrollid();
+    function scrollid() {
+        //var elmnt = document.getElementById("target1");
+        //elmnt.scrollIntoView();
+
+        document.getElementById('target1').scrollIntoView({
+            behavior: 'smooth'
+        });
+    }
+</script>
+<script>
+    AOS.init({
+        once: true,
+    });
+</script>
+<style>
+
+    .header_bottom_box {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        z-index: 999999;
+    }
+</style>
+
+<div class="blackback d-none" onclick="closeall()" style="display:none">
+    <div class="popup_index">
+        <div class="popup_close">
+            <a>
+                <i class="fa fa-close"></i>
+            </a>
+        </div>
+        <div class="popoup_content" style="display:none">
+            <a href="https://nguyenhoangcentury.vn/luxury-services--goi-dich-vu-antivirus-ve-sinh-may-lanh-bang-nuoc-nong-">
+                <img src="~/assets/images/Home/bannerhome1.jpg" class="img-fluid" />
+            </a>
+        </div>
+    </div>
+</div>
+<script>
+    function closeall() {
+        $(".blackback").hide();
+    }
+</script>
+<style>
+    .codienlanh .slick-slide {
+        margin: 0 10px;
+    }
+
+    /* the parent */
+    .slick-list {
+        margin: 0 -10px;
+    }
+</style>

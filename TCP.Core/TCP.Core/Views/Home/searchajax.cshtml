@@ -1,0 +1,13 @@
+﻿<ul class="ulsearch">
+    @if (Model != null)
+    {
+        foreach (var item in Model)
+        {
+            <li>
+                <a href="@item.ProductUrl">
+                    <img src="~/Upload/Products/@item.ProductImage" class="img-responsive"  /> <span>@item.ProductTitle</span>
+                </a>
+            </li>
+        }
+    }
+</ul>

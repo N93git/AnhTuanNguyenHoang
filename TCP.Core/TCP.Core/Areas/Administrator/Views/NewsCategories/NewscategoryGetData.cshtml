@@ -1,0 +1,169 @@
+﻿
+@{
+    Layout = null;
+}
+
+
+@if (Model != null)
+{
+    var i = 1;
+    foreach (var item in Model)
+    {   
+    <tr>
+        <td scope="row">@item.NewsCategoryId</td>
+        <td>@item.NewsCategoryTitle</td>
+        <td class="table_img">
+            @if (item.NewsCategoryImage != null && item.NewsCategoryImage != "")
+            {
+                <img src="/upload/NewsCategories/@item.NewsCategoryImage" />
+
+            }
+            else
+            {
+                <img src="~/assets/images/Admin/Noimage.png" />
+            }
+        </td>
+        <td>@item.NewsCategoryUrl</td>
+        <td><input class="admin_sort" value="@item.DisplayOrder" onchange="change_displayorder('@item.NewsCategoryId',this)" /></td>
+        <td>
+
+            @if (item.IsShow == 1)
+            {
+                <p><input checked="checked" type="checkbox" name="check-1" value="@item.NewsCategoryId" class="lcs_check" autocomplete="off" /></p>
+            }
+            else
+            {
+                <p><input type="checkbox" name="check-1" value="@item.NewsCategoryId" class="lcs_check" autocomplete="off" /></p>
+            }
+
+        </td>
+        <td>
+            <a href="/Administrator/NewsCategories/NewscategoryInsertList?ProductCategoryId=@item.NewsCategoryId">
+                <i class="lnr-pencil" style="font-size: 13px; color: white; background-color: #16aaff; padding: 10px 10px;"></i>
+            </a>
+            <a href="javascript:deletes('@item.NewsCategoryId','@item.NewsCategoryImage')">
+                <i class="lnr-trash" style="font-size: 13px; color: white; margin-left: 5px; background-color: #d92550; padding: 10px 10px;"></i>
+            </a>
+        </td>
+    </tr>
+        @Html.Action("NewscategoryGetDataChild", "NewsCategories", new { parentId = item.NewsCategoryId })
+        i++;
+    }
+}
+<script>
+    function deletes(id, name) {
+        $.confirm('Bạn có muốn xóa danh mục này không?', {
+            em: '', title: 'Cảnh báo!', callEvent: function () {
+
+                $.ajax({
+                    url: '/Tool/DeleteFile.ashx',
+                    data: 'name=' + name + '&folder=' + 'NewsCategories',
+                    dataType: 'text',
+                    type: 'GET',
+                    cache: false,
+                    success: function (result) {
+
+                    }
+                });
+                //
+                var param =
+                {
+                    "NewsCategoryId": id
+                }
+
+                $.ajax({
+                    url: '/Administrator/NewsCategories/NewscategoryDelete',
+                    data: param,
+                    dataType: 'text',
+                    type: 'POST',
+                    cache: false,
+                    success: function (result) {
+                        window.location.reload();
+                    }
+                });
+
+            }, cancelEvent: function () { }, cancelButton: 'Không'
+        })
+
+    }
+    function change_displayorder(id, dd) {
+        var param =
+        {
+            "id": id,
+            "idorder": $(dd).val()
+        }
+        console.log(param);
+        $.ajax({
+            url: '/Administrator/NewsCategories/NewsCategoriesSort',
+            data: param,
+            dataType: 'text',
+            type: 'POST',
+            cache: false,
+            success: function (result) {
+
+            }
+        });
+    }
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function (e) {
+        $('input').lc_switch();
+
+        // triggered each time a field changes status
+        $(document).on('lcs-statuschange', '.lcs_check', function () {
+            var status = ($(this).is(':checked')) ? 'checked' : 'unchecked',
+                subj = ($(this).attr('type') == 'radio') ? 'radio #' : 'checkbox #',
+                num = $(this).val();
+
+            $('#third_div ul').prepend('<li><em>[lcs-statuschange]</em>' + subj + num + ' changed status: ' + status + '</li>');
+        });
+
+
+        // triggered each time a field is checked
+        $(document).on('lcs-on', '.lcs_check', function () {
+            updateDisplay($(this).val(), 1);
+            var subj = ($(this).attr('type') == 'radio') ? 'radio #' : 'checkbox #',
+                num = $(this).val();
+
+            $('#third_div ul').prepend('<li><em>[lcs-on]</em>' + subj + num + ' is checked</li>');
+        });
+
+
+        // triggered each time a is unchecked
+        $(document).on('lcs-off', '.lcs_check', function () {
+            updateDisplay($(this).val(), 0);
+            var subj = ($(this).attr('type') == 'radio') ? 'radio #' : 'checkbox #',
+                num = $(this).val();
+
+            $('#third_div ul').prepend('<li><em>[lcs-off]</em>' + subj + num + ' is unchecked</li>');
+        });
+    });
+
+
+
+    // clean events log
+    $('#third_div small').click(function () {
+        $('#third_div ul').empty();
+    });
+    function updateDisplay(id, status) {
+        var param =
+        {
+            "id": id,
+            "idorder": status
+        }
+        $.ajax({
+            url: '/Administrator/NewsCategories/NewscategoryShow',
+            data: param,
+            dataType: 'text',
+            type: 'POST',
+            cache: false,
+            success: function (result) {
+                window.location.reload();
+            }
+        });
+    }
+</script>
+
+
+

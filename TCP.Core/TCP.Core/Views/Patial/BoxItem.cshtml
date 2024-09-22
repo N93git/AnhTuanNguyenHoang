@@ -1,0 +1,32 @@
+﻿
+@{
+    Layout = null;
+}
+
+<div class="row no-gutters">
+    @if (Model != null)
+    {
+        foreach (var item in Model)
+        {
+            <div class="col-lg-4 col-md-4">
+                <div class="item text-center product-box">
+                    <div class="items">
+                        <a href="@item.ProductUrl">
+                            <img class="bg-img" src="/upload/products/@item.ProductImage" />
+                        </a>
+                    </div>
+                    <div class="info">
+                        <h3 class="line-2">
+                            <a href="@item.ProductUrl">
+                                @item.ProductTitle
+                            </a></h3>
+                        <div class="box-price">
+                            <span class="price-new">Liên hệ</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+
+</div>

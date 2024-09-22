@@ -1,0 +1,62 @@
+﻿@if (Model != null)
+{
+    foreach (var item in Model)
+    {
+        if (item.Type == 2)
+        {
+            <div class="position-relative form-group">
+
+                <div>
+                    <label for="exampleEmail" class=""><span>Nội dung</span> : </label><span class="tt_order" id="cm_@item.CommtentId"> @Html.Raw(item.Contents)</span>
+                </div>
+                <div>
+                    <label for="exampleEmail" class=""><span style="color:red">Quản trị viên </span> : </label><span class="tt_order"> @item.CreateDate</span>
+
+                </div>
+                <div>
+                    <a style="color:white" onclick="chinhsua(@item.CommtentId)" class="btn btn-info">Chỉnh sửa</a>
+                </div>
+            </div>
+            <hr />
+        }
+        else
+        {
+            <div class="position-relative form-group">
+                <label for="exampleEmail" class=""><span>Tên khách hàng</span> : </label><span class="tt_order"> @item.CustomerName</span>
+                <div>
+                    <label for="exampleEmail" class=""><span>Ngày comment</span> : </label><span class="tt_order"> @item.CreateDate</span>
+                </div>
+                <div>
+                    <label for="exampleEmail" class=""><span>Nội dung</span> : </label><span class="tt_order"> @item.Contents</span>
+                </div>
+                <div>
+                    <a style="color:white" onclick="trloi(@item.CommtentId)" class="btn btn-info">Trả lời</a>
+                    @if (item.Duyet == 0)
+                    {
+                        <a style="color:white" onclick="Duyet(@item.CommtentId,0)" class="btn btn-primary">Duyệt</a>
+                        <input id="duyets" value="0" type="hidden" />
+                    }
+                    else
+                    {
+
+                        <input id="duyets" value="1" type="hidden" />
+                        <a style="color:white" onclick="Duyet(@item.CommtentId,1)" class="btn btn-primary">Ẩn</a>
+                    }
+
+                </div>
+            </div>
+            <hr />
+        }
+    }
+}
+<script>
+    function chinhsua(id) {
+        type = 2;
+        $("#exampleModal").modal('toggle');
+        $("#txtID").val(id);
+        $("#editorcm").val($("#cm_" + id).val())
+        CKEDITOR.instances.editorcm.setData($("#cm_" + id).html());
+
+    }
+
+</script>

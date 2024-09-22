@@ -1,0 +1,51 @@
+﻿
+@{
+    Layout = null;
+}
+
+<div class="block-breadcrumb">
+    <div class="container">
+        <ul class="breadcrumb">
+            <li>
+                <a href="/">Trang chủ</a>
+            </li>
+
+            <li class="active">
+                Điện lạnh - Nội thất
+
+            </li>
+        </ul>
+    </div>
+</div>
+
+<section class="xaydung_box">
+    <div class="container myback">
+        <div class="index_product_title" data-aos="fade-up" data-aos-duration="1000">
+            <a href="#">
+                Điện lạnh - Nội thất
+
+            </a>
+        </div>
+        <div class="row">
+            @if (Model != null)
+            {
+                foreach (var item in Model)
+                {
+                    <div class="col-sm-3">
+                        <div class="lvhd_box">
+                            <div class="lvhd_title">
+                                <a href="@item.ProductCategoryUrl">
+                                    @item.ProductCategoryTitle
+                                </a>
+                            </div>
+                            <a href="@item.ProductCategoryUrl">
+                                <img src="~/Upload/ProductCategories/@item.ProductCategoryImage" class="img-responsive" style="width:100%" />
+                            </a>
+                        </div>
+                    </div>
+                }
+            }
+
+        </div>
+    </div>
+</section>

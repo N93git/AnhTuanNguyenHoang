@@ -1,0 +1,389 @@
+﻿
+@{
+
+    ViewBag.Title = "InsertList";
+    Layout = "~/Areas/Administrator/Views/Shared/_Layout.cshtml";
+}
+
+<input type="hidden" id="typeimage" value="1" />
+@*@Html.Action("Test", "NewsCategory", new { parentId = 1, exexcep = 2 })*@
+<div class="app-main__inner">
+    <div class="app-page-title">
+        <div class="page-title-wrapper">
+            <div class="page-title-heading">
+                <div class="page-title-icon">
+                    <i class="pe-7s-drawer icon-gradient bg-happy-itmeo"></i>
+                </div>
+                <div>
+                    CHI TIẾT DANH MỤC TIN TỨC
+                    @*<div class="page-title-subheading">Tables are the backbone of almost all web applications.</div>*@
+                </div>
+            </div>
+            <div class="page-title-actions">
+                <button type="button" data-toggle="tooltip" title="" data-placement="bottom" class="btn-shadow mr-3 btn btn-dark">
+                    <i class="fa fa-star"></i>
+                </button>
+                <button class="mt-1 btn btn-danger" data-toggle="tooltip" data-placement="bottom" onclick="SaveData()">Lưu</button>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            @*<div class="inputWrapper">
+                    <input type="file" id="fu" multiple>
+                </div>
+                <div id="dd">
+
+                </div>*@
+            <div class="tab-content">
+                <div class="tab-pane tabs-animation fade show active" id="tab-content-0" role="tabpanel">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="main-card mb-3 card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Nội dung</h5>
+                                    <div class="">
+                                        <div class="position-relative form-group">
+                                            <label for="txt" class="">Title web <span style="color:red">(*)</span></label>
+                                            @if (Model != null && Model.Count > 0)
+                                            {
+                                                foreach (var item in Model)
+                                                {
+                                                    <input name="txtTitle" id="txtTitle" placeholder="" type="text" class="form-control" value="@item.Title">
+                                                }
+
+                                            }
+                                            else
+                                            {
+                                                <input name="txtTitle" id="txtTitle" placeholder="" type="text" class="form-control">
+                                            }
+
+                                        </div>
+                                        <div class="position-relative form-group">
+                                            <label for="txt" class="">
+                                                Meta Description
+                                                <span style="color:red">(*)</span>
+                                            </label>
+                                            @if (Model != null && Model.Count > 0)
+                                            {
+                                                foreach (var item in Model)
+                                                {
+                                                    <textarea name="txtMetadecription" id="txtMetadecription" placeholder="" type="text" class="form-control">@item.Metadecription</textarea>
+                                                }
+
+                                            }
+                                            else
+                                            {
+                                                <textarea name="txtMetadecription" id="txtMetadecription" placeholder="" type="text" class="form-control"></textarea>
+                                            }
+
+                                        </div>
+
+                                        <!--Hình ảnh-->
+                                        <div class="position-relative form-group">
+                                            <label for="exampleFile" class="">Hình ảnh</label>
+                                            @if (Model != null && Model.Count > 0)
+                                            {
+                                                foreach (var item in Model)
+                                                {
+                                                    <input name="file" id="fu" type="file" class="form-control-file">
+                                                    <input type="hidden" id="hdFileName" value="@item.Logo" />
+                                                    <div id="dd" onchange="ChangeDD()">
+                                                        @*<img src="~/Upload/ProductCategories/@item.NewsCategoryImage" />
+                        <a onclick="img_click('@item.ProductImage','Products','')">
+                            x
+
+                        </a>*@
+
+                                                        @if (item.Logo != "")
+                                                        {
+                                                            <div class="myimage">
+                                                                <img src="~/Upload/Settings/@item.Logo" class="img-fluid" />
+                                                                <a onclick="img_click('@item.Logo','Logo','')">
+                                                                    x
+
+                                                                </a>
+                                                            </div>
+                                                        }
+                                                    </div>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <input name="file" id="fu" type="file" class="form-control-file">
+                                                <input type="hidden" id="hdFileName" />
+                                                <div id="dd" onchange="ChangeDD()">
+
+                                                </div>
+                                            }
+
+                                            <small class="form-text text-muted">
+                                                Vui lòng chọn hình ảnh có kích thước <strong>600x600px</strong>
+                                            </small>
+                                        </div>
+                                        <!--Hình ảnh-->
+                                        <div class="position-relative form-group">
+                                            <label for="exampleFile" class="">Favicon</label>
+                                            @if (Model != null && Model.Count > 0)
+                                            {
+                                                foreach (var item in Model)
+                                                {
+                                                    <input name="file3" id="fu3" type="file" class="form-control-file">
+                                                    <input type="hidden" id="hdFileName2" value="@item.Favicon" />
+                                                    <div id="dd2" onchange="ChangeDD()">
+                                                        @*<img src="~/Upload/ProductCategories/@item.NewsCategoryImage" />
+                        <a onclick="img_click('@item.ProductImage','Products','')">
+                            x
+
+                        </a>*@
+
+                                                        @if (item.Favicon != "")
+                                                        {
+                                                            <div class="myimage">
+                                                                <img src="~/Upload/Settings/@item.Favicon" class="img-fluid" style="width:100px;" />
+                                                                <a onclick="img_click('@item.Favicon','Favicon','')">
+                                                                    x
+
+                                                                </a>
+                                                            </div>
+                                                        }
+                                                    </div>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <input name="file" id="fu3" type="file" class="form-control-file">
+                                                <input type="hidden" id="hdFileName2" />
+                                                <div id="dd2" onchange="ChangeDD()">
+
+                                                </div>
+                                            }
+
+                                            @*<small class="form-text text-muted">
+                Vui lòng chọn hình ảnh có kích thước <strong>650x600px</strong>
+            </small>*@
+                                        </div>
+                                        <div class="position-relative form-group">
+                                            <label for="exampleFile" class="">Banner 1</label>
+                                            @if (Model != null && Model.Count > 0)
+                                            {
+                                                foreach (var item in Model)
+                                                {
+                                                    <input name="file4" id="fu4" type="file" class="form-control-file">
+                                                    <input type="hidden" id="hdFileName4" value="@item.Banner1" />
+                                                    <div id="dd4" onchange="ChangeDD()">
+                                                        @*<img src="~/Upload/ProductCategories/@item.NewsCategoryImage" />
+                        <a onclick="img_click('@item.ProductImage','Products','')">
+                            x
+
+                        </a>*@
+
+                                                        @if (item.Banner1 != "")
+                                                        {
+                                                            <div class="myimage">
+                                                                <img src="~/Upload/Settings/@item.Banner1" class="img-fluid" style="width:200px;" />
+                                                                <a onclick="img_click('@item.Banner1','Favicon','')">
+                                                                    x
+
+                                                                </a>
+                                                            </div>
+                                                        }
+                                                    </div>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <input name="file" id="fu4" type="file" class="form-control-file">
+                                                <input type="hidden" id="hdFileName4" />
+                                                <div id="dd4" onchange="ChangeDD()">
+
+                                                </div>
+                                            }
+
+                                            <small class="form-text text-muted">
+                                                Vui lòng chọn hình ảnh có kích thước <strong>650x250px</strong>
+                                            </small>
+                                        </div>
+                                        <div class="position-relative form-group">
+                                            <label for="txt" class="">URL 1</label>
+                                            @if (Model != null && Model.Count > 0)
+                                            {
+                                                foreach (var item in Model)
+                                                {
+                                                    <input name="currencyUSA" id="currencyUSA" placeholder="" type="text" class="form-control" value="@item.currencyUSA">
+                                                }
+
+                                            }
+                                            else
+                                            {
+                                                <input name="currencyUSA" id="currencyUSA" placeholder="" type="text" class="form-control">
+                                            }
+
+                                        </div>
+                                        <div class="position-relative form-group">
+                                            <label for="exampleFile" class="">Banner 2</label>
+                                            @if (Model != null && Model.Count > 0)
+                                            {
+                                                foreach (var item in Model)
+                                                {
+                                                    <input name="file5" id="fu5" type="file" class="form-control-file">
+                                                    <input type="hidden" id="hdFileName5" value="@item.Banner2" />
+                                                    <div id="dd5" onchange="ChangeDD()">
+                                                        @*<img src="~/Upload/ProductCategories/@item.NewsCategoryImage" />
+                        <a onclick="img_click('@item.ProductImage','Products','')">
+                            x
+
+                        </a>*@
+
+                                                        @if (item.Banner2 != "")
+                                                        {
+                                                            <div class="myimage">
+                                                                <img src="~/Upload/Settings/@item.Banner2" class="img-fluid" style="width:200px;" />
+                                                                <a onclick="img_click('@item.Banner1','Favicon','')">
+                                                                    x
+
+                                                                </a>
+                                                            </div>
+                                                        }
+                                                    </div>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <input name="file5" id="fu5" type="file" class="form-control-file">
+                                                <input type="hidden" id="hdFileName5" />
+                                                <div id="dd5" onchange="ChangeDD()">
+
+                                                </div>
+                                            }
+
+                                            <small class="form-text text-muted">
+                                                Vui lòng chọn hình ảnh có kích thước <strong>650x250px</strong>
+                                            </small>
+                                        </div>
+
+                                        <div class="position-relative form-group">
+                                            <label for="txt" class="">Url 2</label>
+                                            @if (Model != null && Model.Count > 0)
+                                            {
+                                                foreach (var item in Model)
+                                                {
+                                                    <input name="currencyFrance" id="currencyFrance" placeholder="" type="text" class="form-control" value="@item.currencyFrance">
+                                                }
+
+                                            }
+                                            else
+                                            {
+                                                <input name="currencyFrance" id="currencyFrance" placeholder="" type="text" class="form-control">
+                                            }
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="btn_Save_Fixed">
+                    @*<button class="mt-1 btn btn-primary" onclick="SaveData()">Submit</button>*@
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script>
+
+    function SaveData() {
+        var param = {
+            "Logo": $("#hdFileName").val(),
+            "Favicon": $("#hdFileName2").val(),
+            "Banner1": $("#hdFileName4").val(),
+            "Banner2": $("#hdFileName5").val(),
+            "Title": $("#txtTitle").val(),
+            "currencyUSA": $("#currencyUSA").val(),
+            "currencyFrance": $("#currencyFrance").val(),
+            "Metadecription": $("#txtMetadecription").val()
+        }
+        $.post("/Administrator/Settings/TCP_Setting_SAVE", { "data": "" + JSON.stringify(param) + "" }, function (result) {
+            //window.location.href = "/Administrator/NewsCategories/NewCategoriesGetList";
+            window.location.reload();
+        });
+    }
+</script>
+<script src="~/assets/uploads/jquery.html5uploader.min.js"></script>
+<script src="~/assets/uploads/elnino.drag-upload.js"></script>
+<script type="text/javascript">
+    pnlContainer = 'pnlTemplateFile';
+    pnlDragUpload = 'pnlDragTemplateFile';
+        fileUploadControl = 'fu';
+        fileUploadControl2 = 'fu2';
+        fileUploadControl3 = 'fu3';
+        fileUploadControl4 = 'fu4';
+        fileUploadControl5 = 'fu5';
+    ReloadDragUpload();
+    $("#ddl-productCate").val($("#txtparentId").val());
+    $("#ddlshowmenu").val($("#txtshowmenuId").val());
+    $("#ddlisshowhome").val($("#txtisshowhomeId").val());
+    function ChangeDD() {
+    }
+    //$('#dd').bind('DOMSubtreeModified', function () {
+    //    alert('changed');
+    //});
+
+    $(document).ready(function () {
+        //alert("ready!");
+        var vb = '@ViewBag.Selected';
+        $("#slPoductCategory").val(vb).change();
+    });
+
+
+        var bien = 0;
+    var savedd = "";
+        $("#fu3").on("change", function () {
+
+            $("#typeimage").val(3);
+          /*  alert($("#typeimage").val())*/
+            dd = "";
+        });
+        $("#fu").on("change", function () {
+            $("#typeimage").val(1);
+            dd = "";
+        });
+        $("#fu4").on("change", function () {
+            $("#typeimage").val(4);
+            dd = "";
+        });
+        $("#fu5").on("change", function () {
+            $("#typeimage").val(5);
+            dd = "";
+        });
+    function img_click(name, folder, name2) {
+
+
+        $("#dd").html('');
+        $("#hdFileName").val('');
+        //if()
+        //Ajax xóa
+
+        $.ajax({
+            url: '/Tool/DeleteFile.ashx',
+            data: 'name=' + name + '&folder=' + folder,
+            dataType: 'text',
+            type: 'GET',
+            cache: false,
+            success: function (result) {
+
+            }
+        });
+
+    }
+</script>
+

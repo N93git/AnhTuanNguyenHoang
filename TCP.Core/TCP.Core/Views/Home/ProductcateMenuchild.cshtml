@@ -1,0 +1,11 @@
+﻿<ul class="sub-menu menu-odd  menu-depth-1">
+    @if (Model != null)
+    {
+        foreach (var item in Model)
+        {
+            <li id="menu-item-@item.ProductCategoryId" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2800"><a title="@item.ProductCategoryTitle" href="@item.ProductCategoryUrl">@item.ProductCategoryTitle</a></li>
+
+        }
+    }
+
+</ul>

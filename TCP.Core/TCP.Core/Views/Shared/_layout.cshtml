@@ -1,0 +1,77 @@
+﻿<!DOCTYPE html>
+
+<html lang="vi" xmlns="http://www.w3.org/1999/xhtml">
+
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1, initial-scale=1.0">
+    <meta property="og:title" content="@(ViewBag.Title)">
+    <meta property="og:description" content="@(ViewBag.meta)">
+    <link rel="icon" href="~/Upload/Settings/@Tool.Utils.GetFavicon()" sizes="16x16" type="image/png">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;500;700&display=swap" rel="stylesheet">
+    <link href="~/assets/Resource/main.css" rel="stylesheet" />
+    <link href="~/assets/Resource/responsive.css" rel="stylesheet" />
+    <link rel="canonical" href="@Tool.Utils.Getcanonical(Request.Url.AbsoluteUri)" />
+    <link href="~/assets/Fonts/font-avo.css" rel="stylesheet" />
+    @{
+        <meta name="description" content="@ViewBag.meta">
+        <meta name="keywords" content="@ViewBag.keywords">
+    }
+    <meta property="og:title" content="Trang chủ2">
+
+    <title>@(ViewBag.Title)</title>
+    <!-- Facebook Meta Tags -->
+    <meta property="og:url" content="@(Request.Url.AbsoluteUri)">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="@(ViewBag.Title)">
+    <meta property="og:description" content="@(ViewBag.meta)">
+    <meta property="og:image" content="@(TempData["dd"]==null ? "https://" + Request.Url.Host+"/logo.png" : TempData["dd"].ToString())">
+
+    <!-- Twitter Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="@(ViewBag.Title)">
+    <meta name="twitter:description" content="@(ViewBag.meta)">
+    <meta name="twitter:image" content="@(TempData["dd"]==null ? "https://" + Request.Url.Host+"/logo.png" : TempData["dd"].ToString())">
+
+    <meta name="DC.title" content="@(ViewBag.Title)" />
+    <meta name="geo.region" content="VN" />
+    <meta name="geo.placename" content="Ho Chi Minh" />
+    <meta name="geo.position" content="10.9673191;106.4792553" />
+    <meta name="ICBM" content="10.9673191, 106.4792553" />
+    @Html.Action("Getscript", "Patial", new { type = 1 })
+
+    <script src="~/assets/Js/jquery-1.11.1.min.js"></script>
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/main.css" rel="stylesheet" />
+    <link href="~/Content/sweetalert2.min.css" rel="stylesheet" />
+    <script src="~/Content/sweetalert2.all.min.js"></script>
+    @*<link href="~/assets/Fonts/css/all.min.css" rel="stylesheet" />
+        <script src="~/assets/Fonts/js/all.min.js"></script>*@
+    <script src="~/assets/Js/Slick/slick.min.js"></script>
+    <link href="~/assets/Js/Slick/slick.css" rel="stylesheet" />
+    <link href="~/assets/Js/Slick/slick-theme.css" rel="stylesheet" />
+    <script src="~/assets/Js/Slick/truot.js"></script>
+    <script src="~/Content/accounting.js"></script>
+    <link href="~/assets/Js/alert-prompt-confirm-alternative/jquery.alert.css" rel="stylesheet" />
+    <script src="~/assets/Js/alert-prompt-confirm-alternative/jquery.alert.js"></script>
+    <link href="~/assets/Contents/style.min.css" rel="stylesheet" />
+
+    @Html.Action("Getscript", "Patial", new { type = 2 })
+</head>
+<body onload="disableClick()" oncopy="return false" oncut="return false" onpaste="return false" onrightclick="return false" oncontextmenu="return false">
+    @Html.Action("Getscript", "Patial", new { type = 3 })
+    @Html.Action("MenuTop", "Home")
+
+    @RenderBody()
+    @Html.Action("Footer", "Home")
+</body>
+</html>
+<script>
+    function disableClick() { document.onclick = function (event) { if (event.button == 2) { alert('Right Click Message'); return false; } } }
+</script>
+
+

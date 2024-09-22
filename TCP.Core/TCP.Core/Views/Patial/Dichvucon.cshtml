@@ -1,0 +1,28 @@
+﻿
+@{
+    Layout = null;
+}
+@if (Model != null)
+{
+    foreach (var item in Model)
+    {
+
+        <div class="col-lg-3 col-6 ">
+            <div class="item">
+                <div class="item_img">
+                    <a href="@item.NewsUrl"><img width="700" height="525" src="~/Upload/News/@item.NewsImage" class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="@item.NewsTitle" loading="lazy" /></a>
+                </div>
+
+
+                <div class="content__">
+
+                    <h4 class="text_title">
+                        <a href="@item.NewsUrl">
+                           @item.NewsTitle
+                        </a>
+                    </h4>
+                </div>
+            </div>
+        </div>
+    }
+}

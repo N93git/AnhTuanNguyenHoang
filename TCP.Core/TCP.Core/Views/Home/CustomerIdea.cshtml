@@ -1,0 +1,61 @@
+﻿@{ 
+    ViewBag.title = "Đánh giá của khách hàng";
+}
+<div class="block-breadcrumb">
+    <div class="container" style="margin-top:99px;">
+        <ul class="breadcrumb">
+            <li>
+                <a href="/">Trang chủ</a>
+            </li>
+
+            @if (ViewBag.ParentName != null)
+            {
+                foreach (var item in ViewBag.ParentName)
+                {
+                    <li>
+                        <a href="@item.NewsCategoryUrl">@item.NewsCategoryTitle</a>
+                    </li>
+                }
+            }
+
+        <li class="active">
+            Đánh giá của khách hàng
+        </li>
+        </ul>
+    </div>
+</div>
+
+
+<div class="container">
+    <div class="testimonials-section">
+        @if (Model != null)
+        {
+        <div class="row">
+            @foreach (var item in Model)
+            {
+            <div class="col-sm-4">
+                <div class="slide-item" data-aos="fade-up" data-aos-duration="1000">
+                    <div class="slide-text ">
+                        <p>
+                            @Html.Raw(item.Contents)
+                        </p>
+                    </div>
+                    <div class="quote"><span class="fa fa-quote-right" style="font-family: 'FontAwesome' !important;"></span></div>
+                    <div class="author">
+                        <div class="img-box">
+                            <a href="#">
+                                <img src="~/Upload/CustomerIdea/@item.Images" style="width: 70px;height: 70px;" class="img-responsive" alt="">
+                            </a>
+                        </div>
+                        <h4>@item.Name</h4>
+                    </div>
+                </div>
+            </div>
+          
+            }
+        </div>
+        }
+
+    </div>
+
+</div>

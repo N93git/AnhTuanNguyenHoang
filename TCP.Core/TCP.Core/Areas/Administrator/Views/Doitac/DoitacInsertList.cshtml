@@ -1,0 +1,211 @@
+﻿
+@{
+    ViewBag.Title = "InsertList";
+    Layout = "~/Areas/Administrator/Views/Shared/_Layout.cshtml";
+}
+<input type="hidden" id="typeimage" value="1" />
+@*@Html.Action("Test", "NewsCategory", new { parentId = 1, exexcep = 2 })*@
+<div class="app-main__inner">
+    <div class="app-page-title">
+        <div class="page-title-wrapper">
+            <div class="page-title-heading">
+                <div class="page-title-icon">
+                    <i class="pe-7s-drawer icon-gradient bg-happy-itmeo"></i>
+                </div>
+                <div>
+                    CHI TIẾT Khách hàng
+                    @*<div class="page-title-subheading">Tables are the backbone of almost all web applications.</div>*@
+                </div>
+            </div>
+            <div class="page-title-actions">
+                <button type="button" data-toggle="tooltip" title="" data-placement="bottom" class="btn-shadow mr-3 btn btn-dark" onclick="huy()" >
+                  Hủy
+                </button>
+                <button class="mt-1 btn btn-danger" data-toggle="tooltip" data-placement="bottom" onclick="SaveData()" >Lưu</button>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            @*<div class="inputWrapper">
+                    <input type="file" id="fu" multiple>
+                </div>
+                <div id="dd">
+
+                </div>*@
+            <div class="tab-content">
+                <div class="tab-pane tabs-animation fade show active" id="tab-content-0" role="tabpanel">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="main-card mb-3 card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Nội dung</h5>
+                                    <div class="">
+                                        <!--Tiêu đề-->
+                                        <div class="position-relative form-group">
+                                            <label for="exampleEmail" class="">Tên khách hàng<span style="color:red">(*)</span></label>
+                                            @if (Model != null && Model.Count > 0)
+                                            {
+                                                foreach (var item in Model)
+                                                {
+                                                    <input name="txtName" id="txtName" placeholder="" type="text" class="form-control" value="@item.Name">
+                                                    <input type="hidden" id="txtID" name="txtID" value="@item.DoitacID" />
+                                                }
+
+                                            }
+                                            else
+                                            {
+                                                <input name="txtName" id="txtName" placeholder="" type="text" class="form-control">
+                                                <input type="hidden" id="txtID" name="txtID" value="0" />
+                                            }
+
+                                        </div>
+                                        <div class="position-relative form-group d-none">
+
+                                            <label for="examplePassword" class="">Só điện thoại</label>
+                                            @if (Model != null && Model.Count > 0)
+                                            {
+                                                foreach (var item in Model)
+                                                {
+                                                    <input id="txtphone" name="txtphone" class="form-control" value="@item.Contents"/>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <input id="txtphone" name="txtphone" class="form-control" />
+                                            }
+
+                                        </div>
+                                        <!--Hình ảnh-->
+                                        <div class="position-relative form-group">
+                                            <label for="exampleFile" class="">Hình ảnh</label>
+                                            @if (Model != null && Model.Count > 0)
+                                            {
+                                                foreach (var item in Model)
+                                                {
+                                                    <input name="file" id="fu" type="file" class="form-control-file" multiple>
+                                                    <input type="hidden" id="hdFileName" value="@item.Images" />
+                                                    <div id="dd" onchange="ChangeDD()">
+                                                        @*<img src="~/Upload/ProductCategories/@item.NewsCategoryImage" />
+                        <a onclick="img_click('@item.ProductImage','Products','')">
+                            x
+
+                        </a>*@
+
+                                                        @if (item.Images != "")
+                                                        {
+                                                            <div class="myimage">
+                                                                <img src="~/Upload/Doitac/@item.Images" class="img-fluid" />
+                                                                <a onclick="img_click('@item.Images','Slideshow','')">
+                                                                    x
+
+                                                                </a>
+                                                            </div>
+                                                        }
+                                                    </div>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <input name="file" id="fu" type="file" class="form-control-file" multiple>
+                                                <input type="hidden" id="hdFileName" />
+                                                <div id="dd" onchange="ChangeDD()">
+
+                                                </div>
+                                            }
+
+                                            <small class="form-text text-muted">
+                                                Vui lòng chọn hình ảnh có kích thước <strong>600x600px</strong>
+                                            </small>
+                                        </div>
+
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="btn_Save_Fixed">
+                @*<button class="mt-1 btn btn-primary" onclick="SaveData()">Submit</button>*@
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+
+    function SaveData() {
+        var param = {
+            "DoitacID": $("#txtID").val(),
+            "Name": $("#txtName").val(),
+            "Contents": $("#txtphone").val(),
+            "Images": $("#hdFileName").val()
+        }
+        $.post("/Administrator/Doitac/SlideshowCategories", { "data": "" + JSON.stringify(param) + "" }, function (result) {
+            window.location.href = "/Administrator/Doitac/DoitacGetList";
+        });
+    }
+</script>
+<script src="~/assets/uploads/jquery.html5uploader.min.js"></script>
+<script src="~/assets/uploads/elnino.drag-upload.js"></script>
+<script type="text/javascript">
+    pnlContainer = 'pnlTemplateFile';
+    pnlDragUpload = 'pnlDragTemplateFile';
+    fileUploadControl = 'fu';
+    fileUploadControl2 = 'fu2';
+    fileUploadControl3 = 'fu3';
+    fileUploadControl4 = 'fu4';
+    fileUploadControl5 = 'fu5';
+    ReloadDragUpload();
+    $("#ddl-productCate").val($("#txtparentId").val());
+    $("#ddlshowmenu").val($("#txtshowmenuId").val());
+    $("#ddlisshowhome").val($("#txtisshowhomeId").val());
+    function ChangeDD() {
+        alert(dd);
+    }
+    //$('#dd').bind('DOMSubtreeModified', function () {
+    //    alert('changed');
+    //});
+    $(document).ready(function () {
+        //alert("ready!");
+        var vb = '@ViewBag.Selected';
+        $("#slPoductCategory").val(vb).change();
+    });
+    var bien = 0;
+    var savedd = "";
+
+    function img_click(name, folder, name2) {
+
+
+        $("#dd").html('');
+        $("#hdFileName").val('');
+        //if()
+        //Ajax xóa
+
+        $.ajax({
+            url: '/Tool/DeleteFile.ashx',
+            data: 'name=' + name + '&folder=' + folder,
+            dataType: 'text',
+            type: 'GET',
+            cache: false,
+            success: function (result) {
+
+            }
+        });
+
+    }
+    function huy() {
+        window.location.href = "/Administrator/Doitac/DoitacGetList";
+    }
+</script>

@@ -1,0 +1,151 @@
+﻿@using System.Data;
+@{
+    ViewBag.Title = "Giỏ hàng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="block-breadcrumb">
+    <div class="container">
+        <ul class="">
+            <li>
+                <a href="/">Trang chủ</a>
+            </li>
+            <li>
+                <i class="fa fa-angle-right"></i>
+            </li>
+           
+            <li class="active">@ViewBag.title</li>
+        </ul>
+    </div>
+</div>
+
+<div class="container">
+
+    <div id="showcart">
+        <div class="text-center cart-content form-group">
+            <h2>
+                Tổng sản phẩm trong giỏ hàng:
+                @{
+
+                    if (ViewBag.dt != null)
+                    {
+                        <span class="">[@(((DataTable)ViewBag.dt).Rows.Count)]</span> <span>sản phẩm</span>
+                    }
+
+                }
+
+            </h2>
+            <hr>
+            <div class="table-content">
+                <table class="table table-css">
+                    <thead>
+                        <tr>
+                            <th colspan="2" width="50%">Thông tin sản phẩm</th>
+                            <th>Số lượng</th>
+                            <th>Đơn giá</th>
+                            <th>Màu sắc</th>
+                            <th>Size</th>
+                            <th>Thành Tiền</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody_giohang">
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="2" class="alert-td"></td>
+                            <td colspan="6" class="total-price-td">
+                                <div class="price-field total-price-field">
+                                    <div class="lbl-cell">Tổng cộng:</div>
+                                    <div class="p-table info-cell"><span id="spTotal">@(string.Format("{0:N0}", ViewBag.total).ToString())</span><sup>đ</sup></div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <div class="text-center pad-bot-20">
+                <ul class="no-ul two-but">
+                    <li><a href="/cua-hang" class="btn btn-default view-more-btn btn-pill">Tiếp Tục Mua Hàng</a></li>
+                    <li><a href="/thanh-toan" class="btn  view-more-btn btn-pill" style="background-color:#222;color:#fff;border:0px;border-radius:0px;">Đặt Hàng Ngay <i class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
+                </ul>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+<script>
+    LoadGioHang();
+    function LoadGioHang() {
+        $.ajax({
+            url: '/Patial/LoadGioHang',
+            data: null,
+            dataType: 'text',
+            type: 'POST',
+            cache: false,
+            success: function (result) {
+                $("#tbody_giohang").empty().append(result);
+            }
+        });
+    }
+
+    function UpdateCart(i) {
+        var val = $("input[data-id='" + i + "']").val();
+        var param = {
+            "num": i,
+            "val": val,
+        }
+        //if (!isNumber(val)) { return; }
+        $.ajax({
+            url: '/Patial/UpdateShopCart',
+            data: param,
+            dataType: 'text',
+            type: 'POST',
+            cache: false,
+            success: function (result) {
+                $("#spTotal").html(accounting.formatNumber(result));
+
+                LoadGioHang();
+                updatecart()
+            }
+        });
+
+        $.ajax({
+            url: '/Patial/CountShopCart',
+            data: null,
+            dataType: 'text',
+            type: 'POST',
+            cache: false,
+            success: function (result) {
+                $(".numcart").html(result);
+            }
+        });
+    }
+
+    function DeleteShpCrt(id) {
+        var param = {
+            "_id": id,
+        }
+        $.ajax({
+            url: '/Patial/DeleteShopCart',
+            data: param,
+            type: 'POST',
+            cache: false,
+            success: function (result) {
+                $("#spTotal").html(accounting.formatNumber(result));
+                LoadGioHang(); updatecart()
+            }
+        });
+    }
+</script>
+<style>
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    /* Firefox */
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+</style>

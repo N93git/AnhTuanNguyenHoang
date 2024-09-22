@@ -1,0 +1,99 @@
+﻿
+@{
+    Layout = null;
+}
+<div class="gioithieubreadcum" >
+    <img src="/Upload/NewsCategories/@ViewBag.Vechungtoi.NewsCategoryImage" class="img-responsive" />
+    <div class="vechungtoi_title">
+        
+    </div>
+</div>
+<div class="vechungtoiul">
+    <div class="container">
+
+        <ul>
+            <li>
+                <a data-id="1" class="vechungtoi_active achung" onclick="activ(this)">
+                    Giới thiệu chung
+                </a>
+            </li>
+            <li>
+                <a data-id="3" class="achung" onclick="activ(this)">
+                    Tầm nhìn
+                </a>
+            </li>
+            <li>
+                <a data-id="2" class="achung" onclick="activ(this)">
+                    Sứ mệnh
+                </a>
+            </li>
+
+            <li>
+                <a data-id="4" class="achung" onclick="activ(this)">
+                    Giá trị cốt lõi
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="container">
+    <div class="vechungtoi_box">
+        <div id="tab1" class="tabchung">
+            <div class="row">
+                <div class="col-sm-12">
+                    <!--<div class="vechungtoi_box_title">
+                        @ViewBag.Gioithieuchung.NewsDesc
+                    </div>-->
+                    <div class="vechungtoi_box_content">
+                        @Html.Raw(ViewBag.Gioithieuchung.NewsContents)
+                    </div>
+                </div>
+                <!--<div class="col-sm-4">
+                <img src="~/Upload/News/@ViewBag.Gioithieuchung.NewsImage" class="img-responsive" />
+            </div>-->
+            </div>
+        </div>
+        <div id="tab3" class="tabchung">
+            <div class="tab_title">
+                Tầm nhìn
+            </div>
+            @Html.Raw(ViewBag.Tamnhin.NewsContents)
+        </div>
+        <div id="tab2" class="tabchung">
+            <div class="tab_title">
+                Sứ mệnh
+            </div>
+            @Html.Raw(ViewBag.Sumenh.NewsContents)
+        </div>
+
+        <div id="tab4" class="tabchung">
+            <div class="tab_title">
+                Giá trị cốt lõi
+            </div>
+            @Html.Raw(ViewBag.Giatricotloi.NewsContents)
+        </div>
+
+    </div>
+</div>
+<script>
+    function activ(dis) {
+        $(".achung").removeClass("vechungtoi_active");
+        $(dis).addClass("vechungtoi_active");
+        var dataid = $(dis).attr("data-id");
+
+      
+        var offset = 60; // sticky nav height
+        var el = document.getElementById('tab' + dataid); // element you are scrolling to
+        window.scroll({ top: (el.offsetTop - offset), left: 0, behavior: 'smooth' });
+    }
+
+
+
+</script>
+<style>
+    .gioithieubreadcum {
+        height: auto;
+        background-position: bottom;
+        position: relative;
+    }
+</style>

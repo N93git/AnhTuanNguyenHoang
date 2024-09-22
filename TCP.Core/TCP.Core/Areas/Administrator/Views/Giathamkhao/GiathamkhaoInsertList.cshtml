@@ -1,0 +1,155 @@
+﻿
+@{
+    ViewBag.Title = "InsertList";
+    Layout = "~/Areas/Administrator/Views/Shared/_Layout.cshtml";
+}
+<input type="hidden" id="typeimage" value="1" />
+@*@Html.Action("Test", "NewsCategory", new { parentId = 1, exexcep = 2 })*@
+<div class="app-main__inner">
+    <div class="app-page-title">
+        <div class="page-title-wrapper">
+            <div class="page-title-heading">
+                <div class="page-title-icon">
+                    <i class="pe-7s-drawer icon-gradient bg-happy-itmeo"></i>
+                </div>
+                <div>
+                    CHI TIẾT
+                    @*<div class="page-title-subheading">Tables are the backbone of almost all web applications.</div>*@
+                </div>
+            </div>
+            <div class="page-title-actions">
+                <button type="button" data-toggle="tooltip" title="" data-placement="bottom" class="btn-shadow mr-3 btn btn-dark" onclick="huy()">
+                    Hủy
+                </button>
+                <button class="mt-1 btn btn-danger" data-toggle="tooltip" data-placement="bottom" onclick="SaveData()">Lưu</button>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            @*<div class="inputWrapper">
+                    <input type="file" id="fu" multiple>
+                </div>
+                <div id="dd">
+
+                </div>*@
+            <div class="tab-content">
+                <div class="tab-pane tabs-animation fade show active" id="tab-content-0" role="tabpanel">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="main-card mb-3 card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Nội dung</h5>
+                                    <div class="">
+                                        <!--Tiêu đề-->
+                                        <div class="position-relative form-group">
+                                            <input type="hidden" id="ProductId" value="@ViewBag.ProductId" />
+                                            <label for="exampleEmail" class="">Tên<span style="color:red">(*)</span></label>
+                                            @if (Model != null && Model.Count > 0)
+                                            {
+
+                                                foreach (var item in Model)
+                                                {
+                                                    <input name="Name" id="Name" placeholder="" type="text" class="form-control" value="@item.Name">
+                                                    <input type="hidden" id="Id" name="Id" value="@item.Id" />
+
+                                                }
+
+                                            }
+                                            else
+                                            {
+                                                <input name="Name" id="Name" placeholder="" type="text" class="form-control">
+                                                <input type="hidden" id="Id" name="Id" value="0" />
+                                            }
+
+                                        </div>
+                                        <div class="position-relative form-group">
+
+                                            <label for="examplePassword" class="">Đường dẫn:*</label>
+                                            @if (Model != null && Model.Count > 0)
+                                            {
+                                                foreach (var item in Model)
+                                                {
+                                                    <input id="Url" name="Url" class="form-control" value="@item.Url" />
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <input id="Url" name="Url" class="form-control" />
+                                            }
+
+                                        </div>
+                                        <div class="position-relative form-group">
+
+                                            <label for="examplePassword" class="">Giá</label>
+                                            @if (Model != null && Model.Count > 0)
+                                            {
+                                                foreach (var item in Model)
+                                                {
+                                                    <input id="Price" name="Url" class="form-control" value="@item.Price" />
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <input id="Price" name="Price" class="form-control" />
+                                            }
+
+                                        </div>
+                                        <div class="position-relative form-group">
+
+                                            <label for="examplePassword" class="">Ngày tháng</label>
+                                            @if (Model != null && Model.Count > 0)
+                                            {
+                                                foreach (var item in Model)
+                                                {
+                                                    <input type="date" required="" id="CreateDate" name="CreateDate" class="form-control" value="">
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <input type="date" required="" id="CreateDate" name="CreateDate" class="form-control" >
+                                            }
+
+                                        </div>
+                                        <!--Hình ảnh-->
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="btn_Save_Fixed">
+                @*<button class="mt-1 btn btn-primary" onclick="SaveData()">Submit</button>*@
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    $("#CreateDate").val('@ViewBag.Date')
+    function SaveData() {
+        var param = {
+            "Id": $("#Id").val(),
+            "Name": $("#Name").val(),
+            "Url": $("#Url").val(),
+            "CreateDate": $("#CreateDate").val(),
+            "ProductId": $("#ProductId").val(),
+            "Price": $("#Price").val()
+        }
+        $.post("/Administrator/Giathamkhao/GiathamkhaoUpdate", { "data": "" + JSON.stringify(param) + "" }, function (result) {
+            window.location.href = window.location.href = "/Administrator/Giathamkhao/Getlistthamkhao?ProductId=" +'@ViewBag.ProductId';
+        });
+    } function huy() {
+        window.location.href = "/Administrator/Doitac/DoitacGetList";
+    }
+</script>

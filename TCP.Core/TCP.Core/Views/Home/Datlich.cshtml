@@ -1,0 +1,729 @@
+﻿<div class="block-breadcrumb">
+    <div class="container">
+        <ul class="breadcrumb">
+            <li>
+                <a href="/">Trang chủ</a>
+            </li>
+
+            <li class="active">Đặt lịch</li>
+        </ul>
+    </div>
+</div>
+<div class="container">
+    <div class="datlich-ct">
+        <div class="text-center dathen-title">Quý khách có thể gọi nhanh bằng cách bấm nút gọi phía dưới để yêu cầu dịch vụ.</div>
+        <div class="text-center form-group">
+            <div class="gb-button gb-button-b4ae5bdf">
+                <span class="gb-icon">
+                    <svg aria-hidden="true" role="img" height="1em" width="1em" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M493.4 24.6l-104-24c-11.3-2.6-22.9 3.3-27.5 13.9l-48 112c-4.2 9.8-1.4 21.3 6.9 28l60.6 49.6c-36 76.7-98.9 140.5-177.2 177.2l-49.6-60.6c-6.8-8.3-18.2-11.1-28-6.9l-112 48C3.9 366.5-2 378.1.6 389.4l24 104C27.1 504.2 36.7 512 48 512c256.1 0 464-207.5 464-464 0-11.2-7.7-20.9-18.6-23.4z"></path></svg>
+                </span>
+                <a href="tel:02873002006"><span class="gb-button-text">028 7300 2006</span></a>
+                <span style="margin:0 4px;">-</span>
+                <a href="tel:0913733557"><span class="gb-button-text">0913 733 557</span></a>
+            </div>
+
+        </div>
+        <div class="text-center form-group">
+            <i class="fa fa-calendar fa-2x"></i>
+        </div>
+        <div class="text-center form-group">
+            <div class="b-ti">Hoặc điền thông tin để đặt dịch vụ</div>
+        </div>
+        <div class="fr-gorm">
+            <div class="fr-gorm-title"><i class="fa fa-map-marker"></i>Thông tin đặt dịch vụ</div>
+
+            <div class="pd"  >
+                <div class="row">
+                    <div class="col-md-6 form-group">
+                        <div>Tên khách hàng <span class="text-danger">*</span></div>
+                        <div class="icos-s">
+                            <div class="icos-1"><i class="fa fa-user fa-2x"></i></div>
+                            <div class="icos-1"><input required="" type="text" id="txthotent" name="txthotent" fdprocessedid="kmjpyo"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <div>Số điện thoại <span class="text-danger">*</span></div>
+                        <div class="icos-s">
+                            <div class="icos-1"><i class="fa fa-phone fa-2x"></i></div>
+                            <div class="icos-1"><input required="" type="text" id="txtphone" name="txtphone" fdprocessedid="miokz5"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 form-group">
+                        <div>Địa chỉ <span class="text-danger">*</span></div>
+                        <div class="icos-s">
+                            <div class="icos-1"><i class="fa fa-map-marker fa-2x"></i></div>
+                            <div class="icos-1"><input required="" type="text" id="txtaddr" name="txtaddr" fdprocessedid="954lrw"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 form-group">
+                        <div>Công việc cần thực hiện <span class="text-danger">*</span></div>
+                        <div class="icos-s">
+                            <div class="icos-1"><i class="fa fa-users fa-2x"></i></div>
+                            <div class="icos-1"><input required="" type="text" id="txtcv" name="txtcv" placeholder="Ví dụ: Sửa máy giặt, thi công lắp đặt...." fdprocessedid="y19bz"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 form-group">
+                        <div>Ngày thực hiện công việc <span class="text-danger">*</span></div>
+                        <div class="icos-s">
+                            <div class="icos-1"><i class="fa fa-calendar fa-2x"></i></div>
+                            <div class="icos-1"><input required="" type="datetime-local" id="txtdatetime" name="txtdatetime" min="2023-04-22T06:21:43TZD"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 text-center">
+                        <button onclick="SendContact()" class="btdathen" >ĐẶT HẸN</button>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center b-chuti">
+                <i>Chúng tôi sẽ liên hệ lại ngay nếu trong giờ làm việc (08 – 17:00). Trường hợp nếu quý khách gửi thông tin ngoài giờ làm việc, xin hãy kiên nhẫn đợi chúng tôi gọi xác nhận vào giờ làm việc tiếp theo.</i>
+            </div>
+        </div>
+
+    </div>
+</div>
+<style>
+
+/*tra gop*/
+.container.small_con{
+    max-width:900px;
+}
+.installment-product {
+    background-color: #fff;
+    border-radius: 5px;
+    overflow: hidden;
+    padding: 15px;
+}
+    .installment-product .installment-title {
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -moz-flex;
+        display: -ms-flexbox;
+        display: flex;
+        align-items: center;
+        align-content: center;
+        border-bottom: 1px solid #e6e6e6;
+        padding-bottom: 10px;
+        margin-bottom: 10px;
+    }
+        .installment-product .installment-title .icon {
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -moz-flex;
+            display: -ms-flexbox;
+            display: flex;
+            align-items: center;
+            align-content: center;
+            margin-right: 10px;color:#23B14D
+        }
+        .installment-product .installment-title span {
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+    .installment-product figure {
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -moz-flex;
+        display: -ms-flexbox;
+        display: flex;
+    }
+        .installment-product figure div.product-img {
+            width: 100px;
+            height: 100px;
+            border-radius: 5px;
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -moz-flex;
+            display: -ms-flexbox;
+            display: flex;
+            align-items: center;
+            align-content: center;
+            justify-content: center;
+        }
+    .installment-product figcaption {
+        width: calc(100% - 100px);
+        padding-left: 15px;
+    }
+        .installment-product figcaption .product-name {
+            font-size: 16px;
+            line-height: 1.3;
+            font-weight: 500;
+            color: #18a0c6;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            -webkit-transition: all,.5s;
+            -khtml-transition: all,.5s;
+            -moz-transition: all,.5s;
+            -ms-transition: all,.5s;
+            -o-transition: all,.5s;
+            transition: all,.5s;
+            margin-top: 0;
+        }
+        .installment-product figcaption .product-price .new {
+            font-size: 15px;
+            line-height: 1;
+            font-weight: 700;
+            color: #000;
+        }
+.tab-cx {
+    margin-top: 15px;
+}
+            .tab-cx .tab-cx-bt {
+                width: 50%;
+                float: left;
+                border: none;
+                font-size: 14px;
+                color: #333;
+                padding: 7px;
+                background-color: #eee;
+                outline: none;
+            }
+                .tab-cx .tab-cx-bt:hover, .tab-cx .tab-cx-bt.actd {
+                    background-color: #333;
+                    color: #fff;
+                }
+                .tab-cx .tab-cx-bt:first-child {
+                    border-radius: 5px 0 0 5px;
+                }
+                .tab-cx .tab-cx-bt:last-child {
+                    border-radius: 0 5px 5px 0;
+                }
+                .tab-cx .tab-cx-bt img {
+                    width: 30px;
+                    height: 30px;
+                }
+.content-b {
+    padding: 10px 0;
+    font-size: 14px;
+}
+.tb-list-content-b {
+    margin: 10px 0;
+}
+    .tb-list-content-b button {
+        display: inline-block;
+        font-size: 14px;
+        font-weight: 700;
+        text-align: center;
+        line-height: 34px;
+        border-radius: 5px;
+        background-color: #f2f2f2;
+        padding: 0 20px;
+        border: none;
+        margin-right: 10px;
+        outline: none;
+    }
+        .tb-list-content-b button.act {
+            background-color: #333;
+            color: #fff;
+        }
+.text-bluegrey {
+    color: #607d8b !important;
+}
+.installment-table table {
+    border-radius: 5px;
+    overflow: hidden;
+    width: 100%;
+    border: 1px solid #e6e6e6;
+}
+.installment-table table tr:nth-child(odd) {
+    background: #f7f7f7;
+}
+.installment-table table th, .installment-table table td {
+    font-size: 15px;
+    font-weight: normal;
+    padding: 10px;
+    width: 50%;
+}
+.installment-table table th {
+    font-weight: 700;
+    color: #333;
+}
+.bank-list {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flexbox;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -5px;
+}
+.bank-list .item {
+    width: calc(100%/2);
+    padding: 0 5px;
+    margin-bottom: 10px;
+}
+    .bank-list .item .bank-item {
+        height: 60px;
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -moz-flex;
+        display: -ms-flexbox;
+        display: flex;
+        align-items: center;
+        align-content: center;
+        justify-content: center;
+        border-radius: 5px;
+        border: 1px solid #e6e6e6;
+        position: relative;
+        cursor: pointer;
+    }
+        .bank-list .item .bank-item img {
+            max-width: 100px;
+            margin: auto;
+        }
+        .bank-list .item .bank-item:before {
+            content: '\f00c';
+            font: normal normal normal 14px/1 FontAwesome;
+            width: 14px;
+            height: 14px;
+            background: #23B14D;
+            color: #fff;
+            border-radius: 50px;
+            z-index: 1;
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -moz-flex;
+            display: -ms-flexbox;
+            display: flex;
+            font-size: .75rem;
+            align-items: center;
+            align-content: center;
+            justify-content: center;
+            opacity: 0;
+            position: absolute;
+            right: 5px;
+            bottom: 5px;
+        }
+        .bank-list .item .bank-item.installment-bank-selecting {
+            border-color:#23B14D;
+        }
+            .bank-list .item .bank-item.installment-bank-selecting:before {
+                opacity: 1;
+            }
+        .bank-list .item .bank-item img {
+            max-width: 100px;
+            margin: auto;
+        }
+.thumb-product-image .tragop-r {
+    position: absolute;
+    top: 40px;
+    left: 4px;
+    background: rgba(251,188,2,.6);
+    color: #333;
+    z-index: 999;
+    padding: 2px 7px;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 11px;
+}
+.r-vote{
+    margin:6px 0;
+}
+.r-vote label{
+    color:rgba(0,0,0,.5);
+}
+.r-vote .vote{
+    font-size:24px;
+    padding:0 2px;color:rgba(0,0,0,.2);
+}
+.r-vote input,.r-vote textarea,.r-vote select{
+    width: 100%;
+    border: 1px solid #ededed;
+    border-radius: 1px;
+    background-color: #f7f9fa;
+    padding: 10px 25px;
+    font-size: 15px;
+}
+.col-y{
+    color:yellow!important;
+}
+.r-vote input[type=submit]
+{
+    background:#23b14d;color:#fff;
+}
+.si-share-btn {
+    margin-left: -5px;
+}
+.bt-capc {
+    height: 46px;
+    padding: 0 10px;
+    background: none;
+    border: none;
+    outline: none;
+}
+.hedtitle{
+        background:#eee;
+        font-weight:bold;
+        padding:6px 10px;
+        font-size:16px;text-transform:uppercase;
+    }
+.hedtitle.hedkhuyenmai{
+    background-color:#EB1B22;color:#fff;
+}
+.hedtitle.hedkhuyenmai i{
+    margin-right:7px;color:yellow
+}
+.list-comm {
+    margin-bottom: 0;
+    padding: 20px;
+
+}
+    .list-comm:nth-of-type(odd) {
+        background: #f7f9fa !important;
+    }
+   .list-comm.listans{
+        border-bottom:1px dashed #ddd;
+    }
+   .na{
+    display:inline-block;
+    font-weight:bold;
+}
+.na span{
+    font-size:13px;color:rgba(0,0,0,.5);
+    font-style:italic;
+}
+.ans a,.ans button{
+    display:inline-block;
+    padding:5px;color:#333;font-size:13px;
+}
+.ans a i,.ans button i{
+    padding-right:5px;color:red;
+}
+.block-container .segment-head, .detail-mo {
+    font-size: 14px;
+    line-height: 1.6;
+}
+.post_author-admin {
+    padding: 1px 7px;
+    border-radius: 12px;
+    border: 1px solid #fc3907;
+    color: #fc3907;
+    font-size: 12px;
+    margin-top: 3px;
+    display: inline-block;
+    margin-left:5px;margin-right:5px;
+}
+#sea-x-region-result .sea-x:nth-child(2n+1), #sea-x-region .sea-x:nth-child(2n+1) {
+    background-color: #eee;
+}
+ #sea-x-region-result .sea-x, #sea-x-region .sea-x {
+
+    color: #333;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    background-position: left 2px top 3px;
+    background-repeat: no-repeat;
+    background-size: 36px;
+    padding-left: 50px;
+}
+.carets{
+    margin-right:4px;
+}
+  #sea-x-region-result .sea-x a:hover, #sea-x-region .sea-x a:hover
+  {
+      color:#6b980e
+  }
+ #sea-x-region-result .sea-x a span.caret, #sea-x-region .sea-x a span.caret {
+    padding: 0 5px;
+}
+ #sea-x-region-result .sea-x a span.danhcm, #sea-x-region .sea-x a span.danhcm {
+    color: #bda930;
+}
+#sea-x-region-result .xemthem{
+    padding:5px 10px;font-size:13px;
+}
+.list-tab-cogtrinh {
+    display: inline-block;
+}
+.list-tab-cogtrinh a {
+    font-size: 14px;
+    text-transform: uppercase;
+    color: rgba(0,0,0,.5);
+    display: block;
+    margin-right: 10px;
+    font-weight: bold;
+    border-right: 1px solid rgba(0,0,0,.2);
+    padding-right: 10px;
+}
+.list-tab-cogtrinh a:hover,
+.list-tab-cogtrinh a.act{
+    color:#23B14D
+}
+.widget-visible iframe{
+    top:50px!important;
+}
+.sidenav {
+    position: fixed;
+    right: 11px;
+    background: none;
+    border-radius: 5px;
+    width: auto;
+    z-index: 150;
+    bottom: 75px;
+    padding: 10px 0;
+    border: 0px solid #f2f2f2;
+}
+.sidenav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.sidenav ul li {
+    list-style: none!important;
+    margin-bottom:0;
+}
+.sidenav ul>li a {
+    padding: 3px;
+    display: block;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 10px;
+    line-height: 15px;
+    color: #515151;
+    font-weight: 700;
+    max-width: 72.19px;
+    max-height: 54px;
+    text-decoration: none;
+    border: none;
+}
+    .sidenav ul > li a i.ticon-dat-hen,
+    .sidenav ul > li a i.ticon-heart,
+    .sidenav ul > li a i.ticon-goi-circle2,
+    .sidenav ul > li a i.ticon-zalo-circle2,
+    .sidenav ul > li a i.ticon-messenger,
+    .sidenav ul > li a i.fa.fa-envelope,
+    .sidenav ul > li a i.fa.fa-calendar {
+        background-size: contain;
+        background-repeat: no-repeat;
+        width: 40px;
+        height: 40px;
+        display: block;
+    }
+    .sidenav ul > li a i.fa.fa-envelope,
+    .sidenav ul > li a i.fa.fa-calendar{
+        line-height:40px;background-color:#05cbef;color:#fff;border-radius:50%;
+    }
+    .sidenav ul > li a i.fa.fa-calendar{
+        background-color:#f27d31
+    }
+   /* .sidenav ul > li a i.ticon-dat-hen {
+        background-image: url(/assets/frontend/img/dat-hen.png?v=1);
+    }
+    .sidenav ul > li a i.ticon-heart {
+        background-image: url(/assets/frontend/img/icon_map.png?v=1);
+    }
+    .sidenav ul > li a i.ticon-goi-circle2 {
+        background-image: url(/assets/frontend/img/phone.png?v=1);
+    }
+    .sidenav ul > li a i.ticon-zalo-circle2 {
+        background-image: url(/assets/frontend/img/icon_zalo.png?v=1);
+    }
+    .sidenav ul > li a i.ticon-messenger {
+        background-image: url(/assets/frontend/img/icon_messenger.png?v=1);
+    }*/
+    .uoptop{
+        display:block;
+        border:none;padding:0;
+          width: 40px;line-height:40px;
+        height: 40px;color:#fff!important;
+        background:#23B14D;border-radius:50%!important;margin-left:3px;margin-top:3px!important;
+    }
+.sidenav li .button {
+    background: transparent;
+}
+.sidenav li .button .phone_animation {
+    position: absolute;
+    top: -13px;
+    left: 50%;
+    transform: translate(-50%,0);
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+    background: #e73838;
+    line-height: 15px;
+}
+.sidenav ul li .button .phone_animation i {
+    display: inline-block;
+    width: 27px;
+    font-size: 26px;
+    margin-top: 12px;
+}
+.sidenav ul>li a i.icon-phone-w {
+    background: url(icon-phone-w.png) no-repeat;
+    background-size: contain;
+    width: 40px;
+    height: 40px;
+    display: inline-block;
+}
+
+.sidenav ul li .button .btn_phone_txt {
+    position: relative;
+    top: 35px;
+}
+.sidenav ul>li a.chat_animation svg {
+    margin: -13px 0 -20px;
+}
+.sidenav ul>li a i {
+    width: 33px;
+    height: 33px;
+    display: block;
+    margin: auto;
+}
+.sidenav li .button {
+    background: transparent;
+}
+
+.datlich-ct{
+    padding:30px 0;
+}
+.datlich-ct .dathen-title{
+    font-size:16px;margin-bottom:15px;color:#3a3a3a
+}
+.datlich-ct .b-ti{
+    color:#23B14D;font-size:28px;
+}
+div.gb-button.gb-button-b4ae5bdf {
+    background-color: #ff6900;
+    color: #fff;
+    padding: 15px 25px;
+    border-radius: 10px;
+    display: inline-flex;
+    align-items: center;font-size:16px;
+}
+div.gb-button.gb-button-b4ae5bdf:hover{
+    background-color:rgba(0,0,0,.8)
+}
+    div.gb-button.gb-button-b4ae5bdf .gb-icon {
+        padding-right: 0.5em;
+    }
+    div.gb-button.gb-button-b4ae5bdf a{
+        color:#fff;
+    }
+    div.gb-button.gb-button-b4ae5bdf a:hover{font-weight:bold;}
+   .datlich-ct .fr-gorm{
+       border:1px solid #eee;
+       background:#fff;
+   }
+    .datlich-ct .fr-gorm .fr-gorm-title {
+        background: #23B14D;
+        color: #fff;
+        font-size: 20px; padding: 10px;
+        border-bottom: 2px solid rgb(235, 27, 34);
+    }
+        .datlich-ct .fr-gorm .fr-gorm-title i {
+            margin-right: 10px;
+        }
+    .datlich-ct .fr-gorm .fr-gorm-cnt {
+        padding: 25px;font-size:16px;
+    }
+.icos-s {
+    display: table;
+    width: 100%;margin-top:10px;
+}
+    .icos-s .icos-1{
+        display:table-cell;vertical-align:middle; color: #424242;
+    }
+    .icos-s .icos-1 i{
+        color:#757575
+    }
+    .icos-s .icos-1:first-child{
+        width:45px;
+    }
+        .icos-s .icos-1 input {
+            background-color: transparent;
+            border: none;
+            border-bottom: 2px solid rgba(0,0,0,.2);
+            border-radius: 0;
+            outline: none;
+            height: 3em;
+            width: 100%;
+            font-size: 1em;
+            margin: 0;
+            padding: 0;
+            box-shadow: none;
+            box-sizing: content-box;
+            transition: all .3s;cursor:pointer
+
+        }
+         .icos-s .icos-1 input:focus{
+             border-color:#23B14D
+         }
+         .icos-s:hover i{color:#23B14D}
+         .fr-gorm-cnt .form-group{
+             margin-bottom:30px;
+         }
+.btdathen {
+    border-radius: 4px;
+    height: 3em;
+    padding: 0 2em;
+    width: auto;
+    text-align: center;
+    flex: 0 0 auto;
+    word-break: break-all;
+    -webkit-hyphens: auto;
+    -ms-hyphens: auto;
+    hyphens: auto;
+    background: #23B14D;
+    color: #757575;
+    box-shadow: none;border:none;
+    border-radius: 0;color:#fff;
+}
+.btdathen:hover{background-color:#EB1B22}
+.b-chuti{
+    max-width:800px;
+    margin:auto;margin-bottom:20px;font-size:17px;color:#3a3a3a;
+}
+    .pd {
+        padding: 20px 20px;
+    }
+</style>
+
+<script>
+        function SendContact() {
+
+            var param = {
+                "TenKhachHang": $("#txthotent").val(),
+                "SoDienThoai": $("#txtphone").val(),
+                "DiaChi": $("#txtaddr").val(),
+                "GhiChu": $("#txtcv").val(),
+                "NgayThucHien": $("#txtdatetime").val(),
+            }
+            if ($("#txthotent").val() == '') {
+                swal(
+                    '',
+                    'Vui lòng nhập tên!',
+                    'warning'
+                )
+                return false;
+                $("#txthotent").focus();
+
+            }
+            if ($("#txtphone").val() == '') {
+                swal(
+                    '',
+                    'Vui lòng nhập Email!',
+                    'warning'
+                )
+                return false;
+                $("#txtphone").focus();
+
+            }
+            if ($("#GhiChu").val() == '') {
+                swal(
+                    '',
+                    'Vui lòng nhập nội dung!',
+                    'warning'
+                )
+                return false;
+                $("#GhiChu").focus();
+
+            }
+            $.post("/Home/SendDatlich", { "data": "" + JSON.stringify(param) + "" }, function (result) {
+                swal("Đặt lịch thành công. Chúng tôi sẽ liên hệ với bạn sớm!");
+            });
+    }
+    
+    </script>

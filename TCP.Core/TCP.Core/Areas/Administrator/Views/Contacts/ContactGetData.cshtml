@@ -1,0 +1,65 @@
+﻿
+@{
+    Layout = null;
+}
+
+
+@if (Model != null)
+{
+    var i = 1;
+    foreach (var item in Model)
+    {
+    <tr>
+        <td scope="row">@item.ContactId</td>
+        <td>@item.ContactName</td>
+        <td>@item.ContactPhone</td>
+        <td>@item.ContactEmail</td>
+        <td>@item.ContactAddress</td>
+        <td>@item.DanhMuc</td>
+        <td>@item.ContactTime</td>
+        <td>@item.ContactContent</td>
+        @*<td>
+            <a href="/Administrator/Slideshows/SlideshowInsertList?SlideshowId=@item.SlideshowId">
+                <i class="lnr-pencil" style="font-size: 13px; color: white; background-color: #16aaff; padding: 10px 10px;"></i>
+            </a>
+            <a href="javascript:deletes('@item.SlideshowId','@item.Images')">
+                <i class="lnr-trash" style="font-size: 13px; color: white; margin-left: 5px; background-color: #d92550; padding: 10px 10px;"></i>
+            </a>
+        </td>*@
+    </tr>
+        i++;
+    }
+}
+@*<script>
+    function deletes(id,name) {
+        $.ajax({
+            url: '/Tool/DeleteFile.ashx',
+            data: 'name=' + name + '&folder=' + 'Slideshow',
+            dataType: 'text',
+            type: 'GET',
+            cache: false,
+            success: function (result) {
+
+            }
+        });
+        //
+        var param =
+        {
+            "SlideshowId": id
+        }
+
+        $.ajax({
+            url: '/Administrator/Slideshows/SlideshowDelete',
+            data: param,
+            dataType: 'text',
+            type: 'POST',
+            cache: false,
+            success: function (result) {
+                window.location.href = "/Administrator/Slideshows/SlideshowGetList";
+            }
+        });
+    }
+</script>*@
+
+
+

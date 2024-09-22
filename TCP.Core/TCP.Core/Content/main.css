@@ -1,0 +1,8 @@
+﻿#content
+{
+    display:none;
+}
+@font-face {
+    font-family: 'fontawesome-webfont';
+    src: url('../assets/Fonts/fontawesome-webfont.woff2') format('woff2');
+}

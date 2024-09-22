@@ -1,0 +1,119 @@
+﻿<div class="lienhetuvan_box">
+    @*<div class="lienhetutvan_title">
+        LIÊN HỆ TƯ VẤN/ BÁO GIÁ
+    </div>
+    <div class="lienhetutvan_titledes">
+        * Để được hỗ trợ nhanh quý khách hàng có thể liên hệ nhanh qua hotline / Zalo hoặc
+    </div>*@
+    <div class="lienhebaogiaimg">
+        <img src="~/assets/images/lienhebaogia.jpg" />
+    </div>
+    <div class="lienhetuvan_content">
+        <div class="lienhetutvan_input">
+            <input id="ContactName" placeholder="Họ và tên" /><i class="fa fa-user"></i>
+        </div>
+        <div class="lienhetutvan_input">
+            <input id="ContactPhone" placeholder="Số điện thoại" /><i class="fa fa-phone"></i>
+        </div>
+        <div class="lienhetutvan_input">
+            <input id="ContactAddress" placeholder="Địa chỉ" /><i class="fa fa-map-marker"></i>
+        </div>
+        <div class="lienhetutvan_input">
+            <select id="slDanhmuc">
+                <option value="-1">
+                    Vui lòng chọn danh mục
+                </option>
+                <option value="Xây dựng">
+                    Xây dựng
+                </option>
+                <option value="Điện lạnh">
+                    Điện lạnh
+                </option>
+                <option value="Bất động sản">
+                    Bất động sản
+                </option>
+                <option value="Khác">
+                    Khác
+                </option>
+            </select>
+        </div>
+        <div class="lienhetutvan_input">
+            <select id="slTime">
+                <option value="-1">
+                    Vui lòng chọn thời gian liên hệ
+                </option>
+                <option value="Giờ hành chính">
+                    Giờ hành chính
+                </option>
+                <option value="Giờ nghỉ trưa">
+                    Giờ nghỉ trưa
+                </option>
+                <option value=" Sau 17h">
+                    Sau 17h
+                </option>
+                <option value="Trước 21h">
+                    Trước 21h
+                </option>
+            </select>
+        </div>
+        <div class="lienhetutvan_input">
+            <input id="ContactEmail" placeholder="Email" /><i class="fa fa-envelope"></i>
+        </div>
+        <div class="lienhetutvan_input">
+            <textarea id="ContactContent" placeholder="Diễn giải" cols="4"></textarea>
+        </div>
+    </div>
+    <div class="lienhetuvan_btn">
+        <a onclick="SendContact()">
+            Gửi
+        </a>
+    </div>
+</div>
+
+
+<script>
+    function SendContact() {
+
+        var param = {
+            "ContactName": $("#ContactName").val(),
+            "ContactPhone": $("#ContactPhone").val(),
+            "ContactAddress": $("#ContactAddress").val(),
+            "ContactEmail": $("#ContactEmail").val(),
+            "ContactTime": $("#slTime").val(),
+            "ContactContent": $("#ContactContent").val(),
+            "DanhMuc": $("#slDanhmuc").val(),
+        }
+        if ($("#ContactName").val() == '') {
+            swal(
+                '',
+                'Vui lòng nhập họ và tên!',
+                'warning'
+            )
+            return false;
+        }
+        if ($("#ContactPhone").val() == '') {
+            swal(
+                '',
+                'Vui lòng nhập Số điện thoại!',
+                'warning'
+            )
+            return false;
+        }
+        if ($("#ContactContent").val() == '') {
+            swal(
+                '',
+                'Vui lòng nhập nội dung!',
+                'warning'
+            )
+            return false;
+        }
+        $.post("/Home/SendContact", { "data": "" + JSON.stringify(param) + "" }, function (result) {
+            swal(
+                '',
+                'Gửi thành công, chúng tôi sẽ liên hệ với bạn trong thời gian sớm nhất!',
+                'warning'
+            )
+            window.location.reload();
+        });
+    }
+</script>

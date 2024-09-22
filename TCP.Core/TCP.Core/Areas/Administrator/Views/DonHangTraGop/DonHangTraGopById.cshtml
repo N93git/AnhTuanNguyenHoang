@@ -1,0 +1,208 @@
+﻿<div class="content">
+
+    <div class="app-main__inner">
+        <div class="app-page-title">
+            <div class="page-title-wrapper">
+                <div class="page-title-heading">
+                    <div class="page-title-icon">
+                        <i class="pe-7s-drawer icon-gradient bg-happy-itmeo"></i>
+                    </div>
+                    <div>
+                        CHI TIẾT BÀI VIẾT
+
+                    </div>
+                </div>
+                <div class="page-title-actions">
+                    @*<button type="button" data-toggle="tooltip" onclick="returns()" title="" data-placement="bottom" class="btn-shadow mr-3 btn btn-dark" data-original-title="">
+                        Hủy
+                    </button>
+                    <button class="mt-1 btn btn-danger" data-toggle="tooltip" data-placement="bottom" onclick="SaveData()" data-original-title="" title="">Lưu</button>*@
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+
+                <div class="tab-content">
+                    <div class="tab-pane tabs-animation fade show active" id="tab-content-0" role="tabpanel">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="main-card mb-3 card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Nội dung</h5>
+                                        <div class="panel panel-flat">
+                                            <div class="panel-heading">
+                                                <h6 class="panel-title"><span class="text-semibold">Thông tin cá nhân:</span></h6>
+
+                                            </div>
+                                            <div class="panel-body">
+                                                <div class="tab-content">
+                                                    <div class="tab-pane has-padding active" id="tabProductsInfo">
+                                                        @if (Model != null)
+                                                        {
+                                                            foreach (var item in Model)
+                                                            {
+                                                        <div class="">
+
+                                                            <div class="row form-group required">
+                                                                <label class="col-md-2 control-label">
+                                                                    Họ Tên:
+                                                                </label>
+                                                                <div class="col-md-10">
+                                                                    <input type="text" value="@item.Name" class="form-control" disabled="">
+                                                                </div>
+                                                            </div>
+                                                            <div class="row form-group required">
+                                                                <label class="col-md-2 control-label">
+                                                                    Email:
+                                                                </label>
+                                                                <div class="col-md-10">
+                                                                    <input type="text" value="@item.Email" class="form-control" disabled="">
+                                                                </div>
+                                                            </div>
+                                                            <div class="row form-group required">
+                                                                <label class="col-md-2 control-label">
+                                                                    Điện thoại:
+                                                                </label>
+                                                                <div class="col-md-10">
+                                                                    <input type="text" value="@item.Phone" class="form-control" disabled="">
+                                                                </div>
+                                                            </div>
+                                                            <div class="row form-group required">
+                                                                <label class="col-md-2 control-label">
+                                                                    Địa chỉ:
+                                                                </label>
+                                                                <div class="col-md-10">
+                                                                    <textarea class="form-control" disabled="" rows="4">@item.Address</textarea>
+                                                                </div>
+                                                            </div>
+                                                            <h4 class="text-primary">Thông tin đơn hàng:</h4>
+                                                            <div class="form-group"></div>
+                                                            <div class="row form-group required">
+                                                                <label class="col-md-2 control-label">
+                                                                    Tên sản phẩm:
+                                                                </label>
+                                                                <div class="col-md-10">
+                                                                    <input type="text" value="@item.ProductTitle" class="form-control" disabled="">
+                                                                </div>
+                                                            </div>
+                                                            <div class="row form-group required">
+                                                                <label class="col-md-2 control-label">
+                                                                    Link sản phẩm:
+                                                                </label>
+                                                                <div class="col-md-10">
+                                                                    <a href="/@item.ProductUrl" target="_blank">Xem Chi Tiết</a>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row form-group required">
+                                                                <label class="col-md-2 control-label">
+                                                                    Thời hạn trả góp:
+                                                                </label>
+                                                                <div class="col-md-10">
+                                                                    <input type="text" value="@item.ThoiHan tháng" class="form-control" disabled="">
+                                                                </div>
+                                                            </div>
+                                                            <div class="row form-group required">
+                                                                <label class="col-md-2 control-label">
+                                                                    Trả trước:
+                                                                </label>
+                                                                <div class="col-md-10">
+                                                                    <input type="text" value="@item.Tratruoc%" class="form-control" disabled="">
+                                                                </div>
+                                                            </div>
+                                                            <div class="row form-group required">
+                                                                <label class="col-md-2 control-label">
+                                                                    Góp mỗi tháng:
+                                                                </label>
+                                                                <div class="col-md-4">
+                                                                    <input type="text" value="@item.Gopmoithang.ToString("#,##0")" class="form-control" disabled="">
+                                                                </div>
+                                                                <label class="col-md-2 control-label">
+                                                                    Tiền phải trả:
+                                                                </label>
+                                                                <div class="col-md-4">
+                                                                    <input type="text" value="0" class="form-control" disabled="">
+                                                                </div>
+                                                            </div>
+                                                            <div class="row form-group required">
+
+                                                                <label class="col-md-2 control-label">Chênh lệch mua hàng:</label>
+
+
+
+                                                                <div class="col-md-10">
+                                                                    <input type="text" value="0" class="form-control" disabled="">
+
+                                                                </div>
+                                                            </div>
+                                                            <div class="row form-group required">
+                                                                <label class="col-md-2 control-label">
+                                                                    Loại:
+                                                                </label>
+                                                                <div class="col-md-10">
+                                                                    @if (item.Loai == "1")
+                                                                    {
+
+
+                                                                        <input type="text" value="Trả góp không cần thẻ" class="form-control" disabled="">
+
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <input type="text" value="Trả góp qua thẻ ngân hàng" class="form-control" disabled="">
+                                                                        <input type="text" value="@item.BankName" class="form-control" disabled="">
+
+                                                                    }
+                                                                </div>
+                                                            </div>
+                                                            <div>
+                                                                @if (item.Duyet != 1)
+                                                                {
+                                                            <button type="button" class="btn btn-success btn-lg" data-val="1" data-id="23" onclick="UpdateDonHang(@item.ID)">Đã xử lý</button>
+                                                            }
+                                                                <a class="btn btn-default btn-lg" href="/Administrator/donhangtragop/DonHangTraGop">Quay về</a>
+                                                            </div>
+                                                           
+
+
+
+                                                        </div>
+                                                            }
+                                                        }
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                      
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        function UpdateDonHang(id) {
+            var param = {
+                "ID":id
+            }
+            $.ajax({
+                url: '/Administrator/DonHangTraGop/UpdateDonHangTraGop',
+                data: param,
+                dataType: 'text',
+                type: 'POST',
+                cache: false,
+                success: function (result) {
+                    window.location.href = "/Administrator/donhangtragop/DonHangTraGop";
+                }
+            });
+        }
+    </script>
+
+</div>

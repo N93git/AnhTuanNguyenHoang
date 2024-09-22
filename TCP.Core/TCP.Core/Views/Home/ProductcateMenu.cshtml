@@ -1,0 +1,18 @@
+﻿<ul style="margin:0px;padding:0px;">
+    @if (Model != null)
+    {
+        foreach (var item in Model)
+        {
+            <li style="display:block">
+
+                <a style="padding-left:10px;" href="@item.ProductCategoryUrl">
+                    <i class="fa fa-angle-right" style="margin-right:5px;">
+
+                    </i>
+                    @item.ProductCategoryTitle
+                </a>
+            </li>
+        }
+    }
+
+</ul>

@@ -1,0 +1,126 @@
+﻿
+@{
+    Layout = null;
+}
+@if (Model != null)
+{
+    <div class="row">
+        <div class="prodslickdetail col-sm-2" style="padding:0px 10px;">
+            @{
+                var i = 0;
+            }
+            @foreach (var item in Model)
+            {
+                if (item.Images.Contains(".mp4"))
+                {
+                    <div class="productdetailimgdt" style="position:relative;">
+                        <a onclick="slicks(@i)" class="avideos">
+                            <i class="fa fa-play"></i> <span>Video</span>
+                        </a>
+                        @*<img onclick="slicks(@i)" src="~/assets/Resource/play-button-icon-vector-illustration-260nw-1697833306.png" style="width:80px;" />*@
+                    </div>
+                }
+                else
+                {
+                    <div class="productdetailimgdt">
+                        <img onclick="slicks(@i)" src="~/Upload/ProductsImg/@item.Images" class="img-responsive " style="width:80px;" />
+                    </div>
+                }
+                i++;
+            }
+        </div>
+        <div class="prodslick col-sm-10">
+            @foreach (var item in Model)
+            {
+                if (item.Images.Contains(".mp4"))
+                {
+                    <div class="productdetailimg">
+
+                        <video src="~/Upload/ProductsImg/@item.Images" autoplay muted loop />
+                    </div>
+
+                }
+                else
+                {
+                    <div class="productdetailimg imgBox" style="position:relative">
+                        <img src="~/Upload/ProductsImg/@item.Images" data-origin="~/Upload/ProductsImg/@item.Images" class="img-responsive" />
+                    </div>
+                }
+
+            }
+        </div>
+    </div>
+
+
+}
+
+
+<script>
+    $('.prodslick').slick({
+        infinite: true,
+        speed: 300,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        autoplay: false,
+        arrows: true,
+        responsive: [
+            {
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                }
+            },
+            {
+                breakpoint: 600,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                }
+            },
+            {
+                breakpoint: 480,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    autoplay: true,
+                }
+            }
+        ]
+    });
+
+    $('.prodslickdetail').slick({
+        infinite: true,
+        speed: 300,
+        slidesToShow: 4,
+        slidesToScroll: 1,
+        autoplay: false,
+        arrows: true,
+        vertical: true,
+        responsive: [
+            {
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: 4,
+                    slidesToScroll: 1,
+                }
+            },
+            {
+                breakpoint: 600,
+                settings: {
+                    slidesToShow: 4,
+                    slidesToScroll: 1,
+                }
+            },
+            {
+                breakpoint: 480,
+                settings: {
+                    slidesToShow: 4,
+                    slidesToScroll: 1,
+                    autoplay: true,
+                }
+            }
+        ]
+    });
+   
+</script>

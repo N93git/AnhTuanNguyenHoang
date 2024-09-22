@@ -1,0 +1,12 @@
+﻿@if (Model != null)
+{
+    foreach (var item in Model)
+    {
+        <li>
+            <a href="@item.ProductCategoryUrl">
+                @item.ProductCategoryTitle
+            </a>
+        </li>
+
+    }
+}

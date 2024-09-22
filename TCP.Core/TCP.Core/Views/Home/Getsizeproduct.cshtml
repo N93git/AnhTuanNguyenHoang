@@ -1,0 +1,20 @@
+﻿
+@{
+    Layout = null;
+}
+@if (Model != null)
+{
+<ul>
+    @foreach (var item in Model)
+    {
+    <li>
+        <a data-id="@item.ID" data-value="@item.Name" class="asizechung" onclick="activesize(this)">
+            @item.Name
+        </a>
+        <input value="@item.Notes" id="in_@item.ID" type="hidden" />
+
+    </li>
+    }
+</ul>
+   
+}

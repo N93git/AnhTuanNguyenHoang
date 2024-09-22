@@ -1,0 +1,178 @@
+﻿
+@{
+    ViewBag.Title = "Quản lý danh sách bài viết";
+    Layout = "~/Areas/Administrator/Views/Shared/_Layout.cshtml";
+}
+
+<div class="app-main__inner">
+    <div class="app-page-title">
+        <div class="page-title-wrapper">
+            <div class="page-title-heading">
+                <div class="page-title-icon">
+                    <i class="pe-7s-drawer icon-gradient bg-happy-itmeo"></i>
+                </div>
+                <div>
+                    CHI TIẾT COMMENT
+
+                </div>
+            </div>
+            <div class="page-title-actions">
+
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+
+            <div class="tab-content">
+                <div class="tab-pane tabs-animation fade show active" id="tab-content-0" role="tabpanel">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="main-card mb-3 card">
+                                <div class="card-body">
+                                    <h5 class="card-title">
+                                        Chi tiết comment
+                                    </h5>
+                                    <div class="">
+                                        <!--Tiêu đề-->
+                                        @if (Model != null)
+                                        {
+                                            foreach (TCP.DTO.CustomerComments item in Model)
+                                            {
+                                                <div class="position-relative form-group">
+                                                    <div>
+                                                        <input id="firstid" value="@item.CommtentId" type="hidden" />
+                                                        <input id="txtproductID" value="@item.ProductId" type="hidden" />
+                                                        <label for="exampleEmail" class=""><span>Tên khách hàng</span> : </label><span class="tt_order"> @item.HoTen</span>
+                                                    </div>
+                                                    <div>
+                                                        <label for="exampleEmail" class=""><span>Ngày comment</span> : </label><span class="tt_order"> @item.CreateDate</span>
+                                                    </div>
+                                                    <div>
+                                                        <label for="exampleEmail" class=""><span>Tên bài viết</span> : </label><span class="tt_order"> @item.ProductName</span>
+                                                    </div>
+                                                    <div>
+                                                        <label for="exampleEmail" class=""><span>Nội dung</span> : </label><span class="tt_order"> @item.Contents</span>
+                                                    </div>
+                                                    <div>
+                                                        <a style="color:white" onclick="trloi(@item.CommtentId)" class="btn btn-info">Trả lời</a>
+                                                        @if (item.Duyet == 0)
+                                                        {
+                                                            <a style="color:white" onclick="Duyet(@item.CommtentId,0)" class="btn btn-danger">Duyệt</a>
+                                                        }
+                                                        else
+                                                        {
+
+                                                            <a style="color:white" onclick="Duyet(@item.CommtentId,1)" class="btn btn-danger">Ẩn</a>
+                                                        }
+
+                                                    </div>
+                                                </div>
+                                                <hr />
+                                                <div>
+                                                    @Html.Action("CommmentChild", "CommentNews", new { CommtentId = item.CommtentId })
+                                                </div>
+                                            }
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Trả lời
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input id="txtID" type="hidden" value="0" />
+                @*<textarea id="txtContents" class="form-control" placeholder="Nội dung"></textarea>*@
+                <textarea id="editorcm" name="editorcm" class="form-control"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button onclick="answer()" type="button" class="btn btn-primary">Trả lời/Chỉnh sửa</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+<script>
+
+    function trloi(id) {
+        type = 1;
+        $("#txtID").val(id);
+        $("#exampleModal").modal('toggle')
+    }
+    var type = 1;
+    function answer() {
+        if (type == 1) {
+            var params = {
+                "CommtentId": 0,
+                "CustomerId": '0',
+                "Type": 2,
+                "Contents": CKEDITOR.instances.editorcm.getData(),
+                "ParentID": $("#firstid").val(),
+                "NewsID": $("#txtproductID").val()
+            }
+            $.post("/Administrator/CommentNews/SendComments", { "data": "" + JSON.stringify(params) + "" }, function (result) {
+                window.location.reload();
+            });
+        }
+        else {
+            var params = {
+                "CommtentId": $("#txtID").val(),
+                "Contents": CKEDITOR.instances.editorcm.getData()
+            }
+            $.post("/Administrator/CommentNews/SendComments", { "data": "" + JSON.stringify(params) + "" }, function (result) {
+                window.location.reload();
+            });
+        }
+
+    }
+
+    function Duyet(id,duyet) {
+        var param =
+        {
+            "CommtentId": id,
+            "Duyet": duyet
+        }
+        $.ajax({
+            url: '/Administrator/CommentNews/Duyet',
+            data: param,
+            dataType: 'text',
+            type: 'POST',
+            cache: false,
+            success: function (result) {
+                window.location.reload();
+            }
+        });
+    }
+</script>
+<style>
+    .modal {
+        top: 67px;
+        z-index: 99999999;
+    }
+
+    .modal-backdrop, .blockOverlay {
+        z-index: -1;
+    }
+</style>

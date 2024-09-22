@@ -1,0 +1,15 @@
+﻿
+@{
+    Layout = null;
+}
+
+@if (Model != null)
+{
+    foreach (var item in Model)
+    {
+        <option value="@item.ProductCategoryId" data-parent="@item.ParentID">
+            --@item.ProductCategoryTitle
+        </option>
+        @Html.Action("ProductCategoryselect2", "Products", new { parentId = item.ProductCategoryId })
+    }
+}

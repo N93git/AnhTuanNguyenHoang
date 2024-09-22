@@ -1,0 +1,99 @@
+﻿
+@{
+    ViewBag.Title = "Quản lý danh sách bài viết";
+    Layout = "~/Areas/Administrator/Views/Shared/_Layout.cshtml";
+}
+
+<div class="app-main__inner">
+    <div class="app-page-title">
+        <div class="page-title-wrapper">
+            <div class="page-title-heading">
+                <div class="page-title-icon">
+                    <i class="pe-7s-drawer icon-gradient bg-happy-itmeo"></i>
+                </div>
+                <div>
+                    Quản lý danh sách bài viết
+
+                </div>
+                <div class="page-title-subheading">
+                  
+                </div>
+            </div>
+            <div class="page-title-actions">
+                @*<button type="button" data-toggle="tooltip" title="" data-placement="bottom" class="btn-shadow mr-3 btn btn-dark" data-original-title="Example Tooltip">
+                        <i class="fa fa-star"></i>
+                    </button>*@
+            </div>
+        </div>
+    </div>        <div class="row">
+        <div class="col-lg-12">
+            <div class="main-card mb-3 card">
+                <div class="card-body">
+                    <h5 class="card-title">Danh sách đơn hàng</h5>
+                    <div class="table-responsive">
+                        <table class="mb-0 table">
+                            <thead>
+                                <tr>
+                                    <th>Mã đơn hàng</th>
+                                    <th>Tên khách hàng</th>
+                                    <th>Số điện thoại</th>
+                                    <th>Ngày đặt hàng</th>
+                                    <th>Tổng cộng</th>
+                                    <th>Tình trạng</th>
+                                    <th>Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody id="bodydata">
+                                @if (Model != null)
+                                {
+                                    foreach (var item in Model)
+                                    {
+                                <tr>
+                                    <td>
+                                        @item.OrderID
+                                    </td>
+                                    <td>
+                                        @item.Name
+                                    </td>
+                                    <td>
+                                        @item.Phone
+                                    </td>
+
+                                    <td>
+                                        @item.DateCreated
+                                    </td>
+                                    <td>
+                                        <strong style="color:red">
+                                            @(string.Format("{0:N0}", @item.Totals).ToString())<sup>đ</sup>
+                                        </strong>
+                                      
+                                    </td>
+                                    <td>
+                                        @if (item.Status == 0)
+                                        {
+                                            <span style="color:blue">Chưa xử lý</span>
+                                        }
+                                        else
+                                        {
+                                            <span style="color:blue">Đã xử lý</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        <a href="/Administrator/Orders/OrdersDetail?OrderID=@item.OrderID">
+                                            <i class="lnr-pencil" style="font-size: 13px; color: white; background-color: #16aaff; padding: 10px 10px;"></i>
+                                        </a>
+                                        @*<a href="javascript:deletes('14','')">
+                <i class="lnr-trash" style="font-size: 13px; color: white; margin-left: 5px; background-color: #d92550; padding: 10px 10px;"></i>
+            </a>*@
+                                    </td>
+                                </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

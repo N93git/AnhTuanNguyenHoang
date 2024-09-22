@@ -1,0 +1,352 @@
+﻿
+@{
+    ViewBag.Title = "Quản lý màu sắc";
+    Layout = "~/Areas/Administrator/Views/Shared/_Layout.cshtml";
+}
+<input type="hidden" id="typeimage" value="2" />
+<div class="app-main__inner">
+    <div class="app-page-title">
+        <div class="page-title-wrapper">
+            <div class="page-title-heading">
+                <div class="page-title-icon">
+                    <i class="pe-7s-drawer icon-gradient bg-happy-itmeo"></i>
+                </div>
+                <div>
+                    Quản lý màu sắc
+
+                </div>
+
+            </div>
+            <div class="page-title-actions">
+                @*<button type="button" data-toggle="tooltip" title="" data-placement="bottom" class="btn-shadow mr-3 btn btn-dark" data-original-title="Example Tooltip">
+                        <i class="fa fa-star"></i>
+                    </button>*@
+                <div class="d-inline-block dropdown">
+                    <button type="button" aria-haspopup="true" aria-expanded="false" class="btn-shadow  btn btn-info" onclick="toggleprod()">
+
+                        Thêm
+                    </button>
+
+                </div>
+            </div>
+        </div>
+    </div>        <div class="row">
+        <div class="col-lg-12">
+            <div class="main-card mb-3 card">
+                <div class="card-body">
+                    <h5 class="card-title">Danh sách</h5>
+                    <div class="table-responsive">
+                        <table class="mb-0 table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Màu</th>
+                                    <th>Size</th>
+                                    <th>Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody id="bodydata">
+                                @if (Model != null)
+                                {
+                                    foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>@item.ID</td>
+                                            
+                                            <td>
+                                                <div style="width:20px;height:20px;background-color:@item.ColorHex;display:inline-block">
+
+                                                </div>  <span>@item.ColorName</span>
+                                            </td>
+                                            <td>@item.SizeName</td>
+                                            <td style="width:10%">
+                                                <a onclick="toggle_edit(this)" data-id="@item.ID">
+                                                    <i class="lnr-pencil" style="font-size: 13px; color: white; background-color: #16aaff; padding: 10px 10px;"></i>
+                                                </a>
+                                                <a href="javascript:deletes('@item.ID')">
+                                                    <i class="lnr-trash" style="font-size: 13px; color: white; margin-left: 5px; background-color: #d92550; padding: 10px 10px;"></i>
+                                                </a>
+
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+    function goto() {
+        window.location.href = "/Administrator/Colors/ColorsInsertList";
+    }
+    function toggleprod() {
+        $(".toggleprod_box").show();
+    }
+</script>
+<style>
+    .app-page-title .page-title-subheading {
+        padding: 3px 0 0;
+        font-size: .88rem;
+        opacity: 1;
+    }
+</style>
+<div class="toggleprod_box">
+    <div>
+        <div class="position-relative form-group">
+            <a style="position:absolute;right:10px;top:0px;cursor:pointer;" onclick="tg_pup()">
+                <i class="fa fa-times"></i>
+            </a>
+            <label for="exampleSelect" class="">Chọn màu:</label>
+            <input id="txtID" value="0" type="hidden" />
+            <select name="slPoductCategory" id="slPoductCategory" class="form-control">
+                <option value="0">--Root--</option>
+                @if (ViewBag.Listcolor != null)
+                {
+                    foreach (var item in ViewBag.Listcolor)
+                    {
+                        <option value="@item.ID"> @item.Name</option>
+                    }
+                }
+
+            </select>
+        </div>
+        <div class="form-group">
+            <div>
+                <label for="exampleSelect" class="">Chọn size:</label>
+            </div>
+            @if (ViewBag.Listsize != null)
+            {
+                foreach (var item in ViewBag.Listsize)
+                {
+                    <label style="margin-right:5px;display:inline-block">@item.Name</label><input style="margin-right:10px;" type="checkbox" id="ck_@item.ID"   name="chkSize" class="chkSize" data-value="@item.ID" />
+                }
+            }
+        </div>
+        <div class="position-relative form-group">
+            <label for="exampleFile" class="">Thêm Hình ảnh</label>
+            <input name="file2" id="fu2" type="file" class="form-control-file" multiple>
+            <input type="hidden" id="hdFileName" />
+
+            <div id="multidd" class="row">
+
+            </div>
+
+            <small class="form-text text-muted">
+                Vui lòng chọn hình ảnh có kích thước <strong>600x600px</strong>
+            </small>
+        </div>
+        <div class="text-right"> 
+            <a class="btn btn-sm btn-primary" onclick="SaveData()" style="color:white">
+                Save data
+            </a>
+        </div>
+    </div>
+</div>
+<script src="~/assets/uploads/jquery.html5uploader.min.js"></script>
+<script src="~/assets/uploads/elnino.drag-upload.js"></script>
+<script type="text/javascript">
+    pnlContainer = 'pnlTemplateFile';
+    pnlDragUpload = 'pnlDragTemplateFile';
+    fileUploadControl = 'fu';
+    fileUploadControl2 = 'fu2';
+    fileUploadControl3 = 'fu3';
+    fileUploadControl4 = 'fu4';
+    fileUploadControl5 = 'fu5';
+    ReloadDragUpload();
+    $("#ddl-productCate").val($("#txtparentId").val());
+    $("#ddlshowmenu").val($("#txtshowmenuId").val());
+    $("#ddlisshowhome").val($("#txtisshowhomeId").val());
+    function ChangeDD() {
+        alert(dd);
+    }
+    //$('#dd').bind('DOMSubtreeModified', function () {
+    //    alert('changed');
+    //});
+    $(document).ready(function () {
+        //alert("ready!");
+        var vb = '@ViewBag.Selected';
+        $("#slPoductCategory").val(vb).change();
+    });
+
+
+    var bien = 0;
+    var savedd = "";
+
+    function img_click(name, folder,name2) {
+
+
+        $("#dd").html('');
+        $("#hdFileName").val('');
+        //if()
+    //Ajax xóa
+
+        $.ajax({
+            url: '/Tool/DeleteFile.ashx',
+            data: 'name=' + name + '&folder=' + folder ,
+            dataType: 'text',
+            type: 'GET',
+            cache: false,
+            success: function (result) {
+
+            }
+        });
+
+    }
+    $("#fu2").on("change", function () {
+        var numFiles = $(this).get(0).files.length;
+
+
+        $("#typeimage").val(2);
+        bien = numFiles;
+        dd = "";
+    });
+    $("#fu").on("change", function () {
+        $("#typeimage").val(1); dd = "";
+    });
+    function img_click2(name, folder, name2) {
+        $("#" + name2).hide();
+        if (folder == "Temp") {
+            savedd = savedd.replace(name, '');
+        }
+
+        //if()
+        //Ajax xóa
+
+        $.ajax({
+            url: '/Tool/DeleteFile.ashx',
+            data: 'name=' + name + '&folder=' + folder,
+            dataType: 'text',
+            type: 'GET',
+            cache: false,
+            success: function (result) {
+
+            }
+        });
+        //Xóa
+        var params = {
+            'ProductId': $("#txtID").val(),
+            'Images': name
+        }
+        if (folder == "ProductsImg") {
+            $.ajax({
+                url: '/Products/DeleteProductsImage',
+                data: params,
+                dataType: 'text',
+                type: 'POST',
+                cache: false,
+                success: function (result) {
+
+                }
+            });
+        }
+    }
+    function back() {
+        window.location.href = "/Administrator/Products/ProductsGetList";
+    }
+    function SaveData() {
+        var chkSize = "";
+        $('input.chkSize:checkbox:checked').each(function () {
+            var sThisVal = $(this).attr("data-value");
+            chkSize += sThisVal + ",";
+        });
+
+        var param = {
+            "ID": $("#txtID").val(),
+            "IDProduct": '@ViewBag.IDProduct',
+            "IDColor": $("#slPoductCategory").val(),
+            "IDSize": chkSize,
+            "multiImage": savedd
+        }
+        $.post("/Administrator/ProductsColors/UpdateSize", { "data": "" + JSON.stringify(param) + "" }, function (result) {
+            window.location.reload();
+        });
+      
+    }
+    function toggle_edit(dis) {
+        toggleprod();
+        var id = $(dis).attr("data-id");
+
+        $("#txtID").val(id);
+
+        var params = {
+            "id": id,
+            "idproduct":'@ViewBag.IDProduct'
+        }
+        $.ajax({
+            url: '/Administrator/ProductsColors/Getitem',
+            data: params,
+            dataType: 'text',
+            type: 'POST',
+            cache: false,
+            success: function (result) {
+                var data = JSON.parse(result);
+                $("#slPoductCategory").val(data.IDColor);
+                var spl = data.IDSize.split(',');
+                console.log(spl)
+                $(".chkSize").prop("checked", false);
+                for (i = 0; i < spl.length; i++) {
+                    if (spl[i] != "") {
+                        $("#ck_" + spl[i]).prop("checked", true);
+                    }
+                }
+                   
+
+            }
+        });
+        $.ajax({
+            url: '/Administrator/ProductsColors/Getlistimage',
+            data: params,
+            dataType: 'text',
+            type: 'POST',
+            cache: false,
+            success: function (result) {
+                $("#multidd").html(result);
+            }
+        });
+    }
+    function tg_pup() {
+        $(".toggleprod_box").toggle();
+    }
+    function deletes(id) {
+        $.confirm('Bạn có muốn xóa?', {
+            em: '', title: 'Cảnh báo!', callEvent: function () {
+
+                var pr =
+                {
+                    "ID": id
+                }
+                var lststring;
+                var getstring = "";
+                var lenghst = 0;
+                $.ajax({
+                    url: '/Administrator/ProductsColors/DeleteProductsColors',
+                    data: pr,
+                    dataType: 'text',
+                    type: 'POST',
+                    cache: false,
+                    success: function (result) {
+                        window.location.reload();
+                    }
+                });
+                //
+
+            }, cancelEvent: function () { }, cancelButton: 'Không'
+        })
+
+    }
+</script>
+<style>
+
+    div#multidd img {
+        width: 100px;
+        height: auto;
+        padding: 5px;
+        box-shadow: 0px 2px 5px #dedede;
+        object-fit: cover;
+    }
+</style>

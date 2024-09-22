@@ -1,0 +1,134 @@
+﻿
+@{
+    ViewBag.Title = "Quản lý danh sách slideshow";
+    Layout = "~/Areas/Administrator/Views/Shared/_Layout.cshtml";
+}
+<div class="app-main__inner">
+    <div class="app-page-title">
+        <div class="page-title-wrapper">
+            <div class="page-title-heading">
+                <div class="page-title-icon">
+                    <i class="pe-7s-drawer icon-gradient bg-happy-itmeo"></i>
+                </div>
+                <div>
+                    Quản lý danh sách giá tham khảo
+                    @*<div class="page-title-subheading">Tables are the backbone of almost all web applications.</div>*@
+                </div>
+            </div>
+            <div class="page-title-actions">
+                @*<button type="button" data-toggle="tooltip" title="" data-placement="bottom" class="btn-shadow mr-3 btn btn-dark" data-original-title="Example Tooltip">
+                        <i class="fa fa-star"></i>
+                    </button>*@
+                <div class="d-inline-block dropdown">
+                    <button onclick="goto()" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn-shadow  btn btn-info">
+                        @*<span class="btn-icon-wrapper pr-2 opacity-7">
+                                <i class="fa fa-business-time fa-w-20"></i>
+                            </span>*@
+                        Thêm
+                    </button>
+                    @*<div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right">
+                            <ul class="nav flex-column">
+                                <li class="nav-item">
+                                    <a class="nav-link">
+                                        <i class="nav-link-icon lnr-inbox"></i>
+                                        <span> Inbox</span>
+                                        <div class="ml-auto badge badge-pill badge-secondary">86</div>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link">
+                                        <i class="nav-link-icon lnr-book"></i>
+                                        <span> Book</span>
+                                        <div class="ml-auto badge badge-pill badge-danger">5</div>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link">
+                                        <i class="nav-link-icon lnr-picture"></i>
+                                        <span> Picture</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a disabled="" class="nav-link disabled">
+                                        <i class="nav-link-icon lnr-file-empty"></i>
+                                        <span> File Disabled</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>*@
+                </div>
+            </div>
+        </div>
+    </div>        <div class="row">
+        <div class="col-lg-12">
+            <div class="main-card mb-3 card">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        Tham chiếu giá
+                    </h5>
+                    <div class="table-responsive">
+                        <table class="mb-0 table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Tiêu đề</th>
+                                    <th>Giá</th>
+                                    <th>Ngày tháng</th>
+                                    <th>Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody id="bodydata">
+                                @if (Model != null)
+                                {
+                                    var i = 1;
+                                    foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td scope="row">@item.Id</td>
+                                            <td>@item.Name</td>
+                                            <td class="table_img">
+                                              @item.Price
+                                            </td>
+                                            <td>@item.CreateDate</td>
+                                            <td>
+                                                <a href="/Administrator/Giathamkhao/GiathamkhaoInsertList?Id=@item.Id&ProductId=@ViewBag.ProductId">
+                                                    <i class="lnr-pencil" style="font-size: 13px; color: white; background-color: #16aaff; padding: 10px 10px;"></i>
+                                                </a>
+                                                <a href="javascript:deletes('@item.Id')">
+                                                    <i class="lnr-trash" style="font-size: 13px; color: white; margin-left: 5px; background-color: #d92550; padding: 10px 10px;"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        i++;
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function deletes(id) {
+        var param =
+        {
+            "Id": id
+        }
+
+        $.ajax({
+            url: '/Administrator/Giathamkhao/GiathamkhaoDelete',
+            data: param,
+            dataType: 'text',
+            type: 'POST',
+            cache: false,
+            success: function (result) {
+                window.location.reload();
+            }
+        });
+    }
+    function goto() {
+        window.location.href = "/Administrator/Giathamkhao/GiathamkhaoInsertList?Id=0&ProductId="+'@ViewBag.ProductId'
+    }
+</script>

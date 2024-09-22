@@ -1,0 +1,15 @@
+﻿@{ 
+    Layout = null;
+}
+@if (ViewBag.Listcate != null)
+{
+   
+    foreach (var item in ViewBag.Listcate)
+    {
+        <li>
+            <a onclick="toget('@item.ProductCategoryId','@item.ProductCategoryTitle')">
+                --@item.ProductCategoryTitle
+            </a>
+        </li>
+    }
+}

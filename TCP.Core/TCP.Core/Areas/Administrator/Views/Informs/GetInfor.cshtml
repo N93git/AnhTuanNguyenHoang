@@ -1,0 +1,237 @@
+﻿
+@{
+    ViewBag.Title = "ĐƠN VỊ CHỦ QUẢN";
+    Layout = "~/Areas/Administrator/Views/Shared/_Layout.cshtml";
+}
+<input type="hidden" id="typeimage" value="1" />
+@*@Html.Action("Test", "NewsCategory", new { parentId = 1, exexcep = 2 })*@
+<div class="app-main__inner">
+    <div class="app-page-title">
+        <div class="page-title-wrapper">
+            <div class="page-title-heading">
+                <div class="page-title-icon">
+                    <i class="pe-7s-drawer icon-gradient bg-happy-itmeo"></i>
+                </div>
+                <div>
+                    ĐƠN VỊ CHỦ QUẢN
+                    @*<div class="page-title-subheading">Tables are the backbone of almost all web applications.</div>*@
+                </div>
+            </div>
+            <div class="page-title-actions">
+                <button type="button" data-toggle="tooltip" title="" data-placement="bottom" class="btn-shadow mr-3 btn btn-dark" >
+                    <i class="fa fa-star"></i>
+                </button>
+                <button class="mt-1 btn btn-danger" data-toggle="tooltip" data-placement="bottom" onclick="SaveData()" >Lưu</button>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            @*<div class="inputWrapper">
+                    <input type="file" id="fu" multiple>
+                </div>
+                <div id="dd">
+
+                </div>*@
+            <div class="tab-content">
+                <div class="tab-pane tabs-animation fade show active" id="tab-content-0" role="tabpanel">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="main-card mb-3 card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Nội dung</h5>
+                                    <div class="">
+                                        <!--Tiêu đề-->
+                                        <div class="position-relative form-group">
+                                            <label for="exampleEmail" class="">Tên đơn vị <span style="color:red">(*)</span></label>
+                                            @if (Model != null && Model.Count > 0)
+                                            {
+                                                foreach (var item in Model)
+                                                {
+                                                    <input name="Name" id="Name" placeholder="" type="text" class="form-control" value="@item.Name">
+                                                    <input type="hidden" id="txtID" name="txtID" value="@item.InforID" />
+                                                }
+
+                                            }
+
+                                        </div>
+                                        <!--Address-->
+                                        <div class="position-relative form-group">
+                                            <label for="exampleEmail" class="">Địa chỉ</label>
+                                            @if (Model != null && Model.Count > 0)
+                                            {
+                                                foreach (var item in Model)
+                                                {
+                                                    <input name="Address" id="Address" placeholder="" type="text" class="form-control" value="@item.Address">
+                                                }
+
+                                            }
+
+                                        </div>
+                                        <!--Hotline-->
+                                        <div class="position-relative form-group">
+                                            <label for="exampleEmail" class="">Hotline</label>
+                                            @if (Model != null && Model.Count > 0)
+                                            {
+                                                foreach (var item in Model)
+                                                {
+                                                    <input name="Hotline" id="Hotline" placeholder="" type="text" class="form-control" value="@item.Hotline">
+                                                }
+
+                                            }
+                                        </div>
+                                        <!--Hotline-->
+                                        <div class="position-relative form-group">
+                                            <label for="Email" class="">Email</label>
+                                            @if (Model != null && Model.Count > 0)
+                                            {
+                                                foreach (var item in Model)
+                                                {
+                                                    <input name="Email" id="Email" placeholder="" type="text" class="form-control" value="@item.Email">
+                                                }
+
+                                            }
+                                        </div>
+                                        <!--Hotline-->
+                                        <div class="position-relative form-group">
+                                            <label for="Email" class="">Giờ mở cửa</label>
+                                            @if (Model != null && Model.Count > 0)
+                                            {
+                                                foreach (var item in Model)
+                                                {
+                                                    <input name="OpenTimes" id="OpenTimes" placeholder="" type="text" class="form-control" value="@item.OpenTimes">
+                                                }
+
+                                            }
+                                        </div>
+                                        <!--Facebook-->
+                                        <div class="position-relative form-group">
+                                            <label for="Email" class="">Facebook</label>
+                                            @if (Model != null && Model.Count > 0)
+                                            {
+                                                foreach (var item in Model)
+                                                {
+                                                    <input name="Facebook" id="Facebook" placeholder="" type="text" class="form-control" value="@item.Facebook">
+                                                }
+
+                                            }
+                                        </div>
+                                        <!--Youtube-->
+                                        <div class="position-relative form-group">
+                                            <label for="Email" class="">Youtube</label>
+                                            @if (Model != null && Model.Count > 0)
+                                            {
+                                                foreach (var item in Model)
+                                                {
+                                                    <input name="Youtube" id="Youtube" placeholder="" type="text" class="form-control" value="@item.Youtube">
+                                                }
+
+                                            }
+                                        </div>
+                                        <div class="position-relative form-group">
+                                            <label for="examplePassword" class="">Mô tả ngắn</label>
+                                            @if (Model != null && Model.Count > 0)
+                                            {
+                                                foreach (var item in Model)
+                                                {
+                                                    <textarea id="editor2" name="editor2" class="form-control">@item.Description</textarea>
+                                                }
+                                            }
+                                        </div>
+                                        <!--Nội dung-->
+                                        <div class="position-relative form-group">
+                                            <label for="examplePassword" class="">Nội dung</label>
+                                            @if (Model != null && Model.Count > 0)
+                                            {
+                                                foreach (var item in Model)
+                                                {
+                                                    <textarea id="editor1" name="editor1" class="form-control">@item.Contents</textarea>
+                                                }
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="btn_Save_Fixed">
+                @*<button class="mt-1 btn btn-primary" onclick="SaveData()">Submit</button>*@
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+
+    function SaveData() {
+        var param = {
+            "Name": $("#Name").val(),
+            "Address": $("#Address").val(),
+            "Hotline": $("#Hotline").val(),
+            "Email": $("#Email").val(),
+            "OpenTimes": $("#OpenTimes").val(),
+            "Facebook": $("#Facebook").val(),
+            "Youtube": $("#Youtube").val(),
+            "Description": CKEDITOR.instances.editor2.getData(),
+            "Contents": CKEDITOR.instances.editor1.getData(),
+
+        }
+        $.post("/Administrator/Informs/inforUpdates", { "data": "" + JSON.stringify(param) + "" }, function (result) {
+            window.location.href = "/Administrator/Informs/GetInfor";
+        });
+    }
+</script>
+<script src="~/assets/uploads/jquery.html5uploader.min.js"></script>
+<script src="~/assets/uploads/elnino.drag-upload.js"></script>
+<script type="text/javascript">
+    pnlContainer = 'pnlTemplateFile';
+    pnlDragUpload = 'pnlDragTemplateFile';
+    fileUploadControl = 'fu';
+    fileUploadControl2 = 'fu2';
+    ReloadDragUpload();
+    $("#ddl-productCate").val($("#txtparentId").val());
+    $("#ddlshowmenu").val($("#txtshowmenuId").val());
+    $("#ddlisshowhome").val($("#txtisshowhomeId").val());
+    function ChangeDD() {
+        alert(dd);
+    }
+    //$('#dd').bind('DOMSubtreeModified', function () {
+    //    alert('changed');
+    //});
+    $(document).ready(function () {
+       
+    });
+    var bien = 0;
+    var savedd = "";
+
+    function img_click(name, folder, name2) {
+
+
+        $("#dd").html('');
+        $("#hdFileName").val('');
+        //if()
+        //Ajax xóa
+
+        $.ajax({
+            url: '/Tool/DeleteFile.ashx',
+            data: 'name=' + name + '&folder=' + folder,
+            dataType: 'text',
+            type: 'GET',
+            cache: false,
+            success: function (result) {
+
+            }
+        });
+
+    }
+</script>

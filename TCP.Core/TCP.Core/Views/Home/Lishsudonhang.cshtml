@@ -1,0 +1,244 @@
+﻿
+@{
+    Layout = null;
+}
+<div class="block-breadcrumb">
+    <div class="container">
+        <ul class="">
+            <li>
+                @if (ViewBag.lang == "vn")
+                {
+                    <a href="/?lang=vn">Trang chủ</a>
+                }
+                @if (ViewBag.lang == "en")
+                {
+                    <a href="/?lang=en">Home</a>
+                }
+                @if (ViewBag.lang == "fr")
+                {
+                    <a href="/?lang=fr">Accueil</a>
+                }
+            </li>
+            <li>
+                <i class="fa fa-angle-right"></i>
+            </li>
+
+            <li class="active">
+                @if (ViewBag.lang == "vn")
+                {
+                    <span>
+                        Thông tin tài khoản
+                    </span>
+                }
+                @if (ViewBag.lang == "en")
+                {
+                    <span>
+                        User info
+                    </span>
+                }
+
+                @if (ViewBag.lang == "fr")
+                {
+                    <span>
+                        Informations utilisateur
+                    </span>
+                }
+            </li>
+        </ul>
+    </div>
+</div>
+@if (ViewBag.getuser != null)
+{
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="left-menu">
+                <h3>My account</h3>
+                <ul>
+                    <li>
+                        @if (ViewBag.lang == "vn")
+                        {
+                            <a id="identity-link" href="/thong-tin-tai-khoan?lang=vn">
+                                <span class="link-item">
+                                    Thông tin tài khoản
+                                </span>
+                            </a>
+                        }
+                        @if (ViewBag.lang == "en")
+                        {
+                            <a id="identity-link" href="/thong-tin-tai-khoan?lang=en">
+                                <span class="link-item">
+                                    User info
+                                </span>
+                            </a>
+                        }
+                        @if (ViewBag.lang == "fr")
+                        {
+                            <a id="identity-link" href="/thong-tin-tai-khoan?lang=fr">
+                                <span class="link-item">
+                                    User info
+                                </span>
+                            </a>
+                        }
+
+                    </li>
+                    <li>
+                        @if (ViewBag.lang == "vn")
+                        {
+                            <a id="history-link" href="lich-su-don-hang?lang=vn">
+                                <span class="link-item">
+                                    Lịch sử đơn hàng
+                                </span>
+                            </a>
+                        }
+                        @if (ViewBag.lang == "en")
+                        {
+                            <a id="history-link" href="lich-su-don-hang?lang=en">
+                                <span class="link-item">
+                                    History order
+                                </span>
+                            </a>
+                        }
+                        @if (ViewBag.lang == "fr")
+                        {
+                            <a id="history-link" href="lich-su-don-hang?lang=fr">
+                                <span class="link-item">
+                                    Ordre de l'historique
+                                </span>
+                            </a>
+                        }
+                    </li>
+
+                    <li>
+                        <a onclick="logout()">
+                            @if (ViewBag.lang == "vn")
+                            {
+                                <span>Đăng xuất</span>
+                            }
+                            @if (ViewBag.lang == "en")
+                            {
+                                <span>Log out</span>
+                            }
+                            @if (ViewBag.lang == "fr")
+                            {
+                                <span>  Se déconnecter</span>
+                            }
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-9">
+            @if (Model != null)
+            {
+                foreach (var item in Model)
+                {
+                    <div class="lsdh_box">
+                        <div class="lsdh_order">
+                            @if (ViewBag.lang == "vn")
+                            {
+                                <span>
+                                    Ngày tạo
+                                </span>
+                            }
+                            @if (ViewBag.lang == "en")
+                            {
+                                <span>
+                                    Date create
+                                </span>
+                            }
+
+                            @if (ViewBag.lang == "fr")
+                            {
+                                <span>
+                                    Date de création
+                                </span>
+                            }
+                            @item.DateCreated | @if (ViewBag.lang == "vn")
+                            {
+                                <span>
+                                    Tình trạng
+                                </span>
+                            }
+                            @if (ViewBag.lang == "en")
+                            {
+                                <span>
+                                    Status
+                                </span>
+                            }
+
+                            @if (ViewBag.lang == "fr")
+                            {
+                                <span>
+                                    Statut
+                                </span>
+                            }
+                            @if (item.Status == 0)
+                            {
+                                if (ViewBag.lang == "vn")
+                                {
+                                    <span>
+                                        Chưa xử lý
+                                    </span>
+                                }
+                                if (ViewBag.lang == "en")
+                                {
+                                    <span>
+                                        No process
+                                    </span>
+                                }
+
+                                if (ViewBag.lang == "fr")
+                                {
+                                    <span>
+                                        Aucun processus
+                                    </span>
+                                }
+                            }
+                        </div>
+                        <div>
+                            <table class="table">
+                                @Html.Action("HistoryOrder", "Home", new { OrderID = item.OrderID, lang = ViewBag.lang })
+                                <tr>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td class="text-right">
+                                        @if (ViewBag.lang == "vn")
+                                        {
+                                            <span>
+                                                Tổng tiền
+                                            </span>
+                                        }
+                                        @if (ViewBag.lang == "en")
+                                        {
+                                            <span>
+                                                Totals
+                                            </span>
+                                        }
+
+                                        @if (ViewBag.lang == "fr")
+                                        {
+                                            <span>
+                                                Le total
+                                            </span>
+                                        }
+                                        <span>@item.Totals.ToString("#,##0")</span>
+                                    </td>
+                                </tr>
+                            </table>
+
+                        </div>
+
+                    </div>
+                }
+            }
+        </div>
+    </div>
+    </div>
+}

@@ -1,0 +1,146 @@
+﻿<div class="block-breadcrumb">
+    <div class="container">
+        <ul class="breadcrumb">
+            <li>
+                @if (ViewBag.lang == "vn")
+                {
+                    <a href="/?lang=vn">Trang chủ</a>
+                }
+                @if (ViewBag.lang == "en")
+                {
+                    <a href="/?lang=en">Home</a>
+                }
+                @if (ViewBag.lang == "fr")
+                {
+                    <a href="/?lang=fr">Accueil</a>
+                }
+            </li>
+            <li>
+                <a href="/chi-nhanh">
+                    @if (ViewBag.lang == "vn")
+                    {
+                        <span>
+                            Chi nhánh
+                        </span>
+                    }
+                    @if (ViewBag.lang == "en")
+                    {
+                <span>
+                    Branch
+                </span>
+                    }
+
+                    @if (ViewBag.lang == "fr")
+                    {
+                <span>
+                    Branche
+                </span>
+                    }
+                </a>
+            </li>
+
+        </ul>
+    </div>
+</div>
+
+<div class="container">
+    <h1 class="text-center" style="margin-bottom:20px;">
+        @if (ViewBag.lang == "vn")
+        {
+            <span>
+                Chi nhánh
+            </span>
+        }
+        @if (ViewBag.lang == "en")
+        {
+            <span>
+                Branch
+            </span>
+        }
+
+        @if (ViewBag.lang == "fr")
+        {
+            <span>
+                Branche
+            </span>
+        }
+    </h1>
+    <div class="row">
+        <div class="col-sm-8">
+            <div class="slidedoitac">
+                @if (Model != null)
+                {
+                    foreach (var item in Model)
+                    {
+                        <div>
+                            <img src="~/Upload/Doitac/@item.Images" class="img-responsive" style="width:100%;" />
+                        </div>
+                    }
+                }
+            </div>
+
+        </div>
+        <div class="col-sm-4">
+            @if (Model != null)
+            {
+            <ul class="chinhanh">
+                @{ 
+                    var i = 0;
+                }
+                @foreach(var item in Model)
+                {
+                <li>
+                    <a onclick="toggle_chinhanh(@i)">
+                        <div>
+                          <i class="fa fa-map-marker"></i>  @item.Name
+                        </div>
+                        <div>
+                            Phone: @item.Contents
+                        </div>
+                    </a>
+                </li>
+                    i++;
+                }
+            </ul>
+              
+            }
+        </div>
+    </div>
+</div>
+<script>
+    function toggle_chinhanh(id) {
+        $(".slidedoitac").slickGoTo(id, +4000);
+    }
+    $('.slidedoitac').slick({
+        infinite: true,
+        speed: 300,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        autoplay: false,
+        arrows: false,
+        responsive: [
+            {
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                }
+            },
+            {
+                breakpoint: 600,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                }
+            },
+            {
+                breakpoint: 480,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    autoplay: true,
+                }
+            }
+        ]
+    });
+</script>

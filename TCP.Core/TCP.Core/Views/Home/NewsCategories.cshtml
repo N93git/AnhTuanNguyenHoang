@@ -1,0 +1,365 @@
+﻿
+<div class="block-breadcrumb">
+    <div class="container">
+        <ul class="breadcrumb">
+            <li>
+                @if (ViewBag.lang == "vn")
+                {
+                    <a href="/?lang=vn">Trang chủ</a>
+                }
+                @if (ViewBag.lang == "en")
+                {
+                    <a href="/?lang=en">Home</a>
+                }
+                @if (ViewBag.lang == "fr")
+                {
+                    <a href="/?lang=fr">Accueil</a>
+                }
+            </li>
+
+            <li class="active">
+                @if (ViewBag.lang == "vn")
+                {
+                    @ViewBag.Parant.NewsCategoryTitle
+                }
+                @if (ViewBag.lang == "en")
+                {
+                    @ViewBag.Parant.NewsCategoryTitle1
+                }
+                @if (ViewBag.lang == "fr")
+                {
+                    @ViewBag.Parant.NewsCategoryTitle2
+                }
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="catalog-service py-40"  >
+    <div class="container">
+        <h1 class="text-left" style="margin-bottom:20px;">
+            @if (ViewBag.lang == "vn")
+            {
+                @ViewBag.Parant.NewsCategoryTitle
+            }
+            @if (ViewBag.lang == "en")
+            {
+                @ViewBag.Parant.NewsCategoryTitle1
+            }
+            @if (ViewBag.lang == "fr")
+            {
+                @ViewBag.Parant.NewsCategoryTitle2
+            }
+
+        </h1>
+        @if (ViewBag.Listparent != null && ViewBag.Listparent.Count>0)
+        {
+            <div class="row" style="margin-bottom:30px;">
+                <div class="col-sm-12">
+                    <div class="boxseo_ul">
+                        <div class="row">
+                            @if (ViewBag.Listparent != null)
+                            {
+                                foreach (var item in ViewBag.Listparent)
+                                {
+                                    <div class="col-sm-6 col-xs-6 col-md-3">
+                                        <a href="@item.NewsCategoryUrl" title="@item.NewsCategoryTitle">
+                                            <i class="fa fa-caret-right"></i>   @item.NewsCategoryTitle
+                                        </a>
+                                    </div>
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        <div class="row">
+
+            @if (ViewBag.Parant.NewsCategoryDesc != "")
+            {
+                <div class="banggiabox table-responsive">
+                    @Html.Raw(ViewBag.Parant.NewsCategoryDesc)
+                </div>
+            }
+            @if (ViewBag.title != "Album")
+            {
+                if (Model != null)
+                {
+                    foreach (var item in Model)
+                    {
+                        if (((ViewBag.lang == "vn") && item.NewsTitle != "") || ((ViewBag.lang == "en") && item.NewsTitle1 != "") || ((ViewBag.lang == "fr") && item.NewsTitle2 != ""))
+                        {
+                            <div class="col-md-3 col-sm-6" style="margin-bottom:30px;">
+                                <div class="xaydunglist_box">
+                                    <div class="items">
+                                        <a href="@item.NewsUrl" class="tmb-imgcc">
+                                            <img src="~/Upload/News/@item.NewsImage" class="img-responsive" style="object-fit:cover" />
+                                        </a>
+                                    </div>
+                                    <div class="xaydung_ct_box news_ctbox">
+                                        <div class="xaydunglist_title ">
+                                            <a href="@item.NewsUrl" title="@item.NewsTitle">
+                                                @item.NewsTitle
+                                            </a>
+                                        </div>
+                                       
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        }
+                    }
+                }
+
+
+            }
+            else
+            {
+
+
+                <div style="margin-bottom:30px;">
+                    <div class="albumn_ul text-center">
+                        <ul>
+                            @if (ViewBag.Albumn != null)
+                            {
+                                var i = 0;
+                                foreach (var it in ViewBag.Albumn)
+                                {
+                                    if (i == 0)
+                                    {
+                                        <li>
+                                            <a data-id="@it.NewsCategoryId" class="abactive  achung" onclick="activea(this)">
+                                                @it.NewsCategoryTitle
+                                            </a>
+                                        </li>
+                                    }
+                                    else
+                                    {
+                                        <li>
+                                            <a data-id="@it.NewsCategoryId" class="achung" onclick="activea(this)">
+                                                @it.NewsCategoryTitle
+                                            </a>
+                                        </li>
+                                    }
+                                    i++;
+
+                                }
+                            }
+                        </ul>
+                    </div>
+                    <div>
+                        @if (ViewBag.Albumn != null)
+                        {
+                            var i = 0;
+                            foreach (var item2 in ViewBag.Albumn)
+                            {
+                                if (i == 0)
+                                {
+                                    <div class="parent_@item2.NewsCategoryId prchung">
+                                        @Html.Action("LoadAlbumn", "Home", new { NewsCategoryId = item2.NewsCategoryId })
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="parent_@item2.NewsCategoryId prchung" style="opacity:0;height:0px;">
+                                        @Html.Action("LoadAlbumn", "Home", new { NewsCategoryId = item2.NewsCategoryId })
+                                    </div>
+                                }
+                                i++;
+                            }
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <ul id="pagination" class="pagination">
+                    @*<li class="active"><a href="trai-cay-cac-loai?price=&amp;hangsanxuat=&amp;chungloai=&amp;page=1">1</a></li>*@
+                    @if (ViewBag.tongSoTrang != null)
+                    {
+
+                        for (int i = 0; i < ViewBag.tongSoTrang; i++)
+                        {
+                            if (ViewBag.pages == (i + 1))
+                            {
+                                <li class="active">
+                                    <a href="/@ViewBag.url?page=@(i+1)">@(i + 1)</a>
+                                </li>
+
+                            }
+                            else
+                            {
+                                <li>
+                                    <a href="/@ViewBag.url?page=@(i+1)">@(i + 1)</a>
+                                </li>
+
+                            }
+
+                        }
+                    }
+                </ul>
+                <div class="clr">
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $('.autoplay').slick({
+        infinite: true,
+        speed: 300,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        autoplay: true,
+        arrows: true,
+        responsive: [
+            {
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                }
+            },
+            {
+                breakpoint: 600,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                }
+            },
+            {
+                breakpoint: 480,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    autoplay: true,
+                }
+            }
+        ]
+    });
+    $('.autoplay2').slick({
+        infinite: true,
+        speed: 300,
+        slidesToShow: 3,
+        slidesToScroll: 1,
+        autoplay: true,
+        arrows: false,
+        responsive: [
+            {
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: 3,
+                    slidesToScroll: 1,
+                }
+            },
+            {
+                breakpoint: 600,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                }
+            },
+            {
+                breakpoint: 480,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    autoplay: true,
+                }
+            }
+        ]
+    });
+    $('.autoplay3').slick({
+        infinite: true,
+        speed: 300,
+        slidesToShow: 5,
+        slidesToScroll: 1,
+        autoplay: true,
+        arrows: false,
+        responsive: [
+            {
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: 3,
+                    slidesToScroll: 1,
+                }
+            },
+            {
+                breakpoint: 600,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                }
+            },
+            {
+                breakpoint: 480,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    autoplay: true,
+                }
+            }
+        ]
+    });
+    $('.autoplay4').slick({
+        infinite: true,
+        speed: 300,
+        slidesToShow: 3,
+        slidesToScroll: 1,
+        autoplay: true,
+        arrows: false,
+        responsive: [
+            {
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: 3,
+                    slidesToScroll: 1,
+                }
+            },
+            {
+                breakpoint: 600,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                }
+            },
+            {
+                breakpoint: 480,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    autoplay: true,
+                }
+            }
+        ]
+    });
+    function activea(dis) {
+        var parentid = $(dis).attr("data-id");
+        $(".prchung").css("opacity", "0");
+        $(".prchung").css("height", "0px");
+        $(".parent_" + parentid).css("opacity", "1");
+        $(".parent_" + parentid).css("height", "auto");
+        $(".achung").removeClass("abactive");
+        $(dis).addClass("abactive");
+    }
+    $("table").addClass("table table-bordered table-hover");
+
+</script>
+<style>
+    .banggiabox table{
+        width:100%!important;
+        max-width:100%!important;
+        text-align:left;
+    }
+    .banggiabox{
+        font-size:14px;
+    }
+    .banggiabox td{
+        text-align:left!important;
+    }
+</style>

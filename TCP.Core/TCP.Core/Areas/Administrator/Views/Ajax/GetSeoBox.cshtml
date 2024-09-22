@@ -1,0 +1,84 @@
+﻿
+@{
+    Layout = null;
+}
+
+<div>
+    <div class="position-relative form-group">
+        <label for="exampleEmail" class="">Tiêu đề <span style="color:red">(*)</span></label>
+        @if (Model != null && Model.Count > 0)
+        {
+            foreach (var item in Model)
+            {
+                <input name="txttitlemenu" id="txttitle" placeholder="" type="text" class="form-control" value="@item.Title">
+
+            }
+
+        }
+        else
+        {
+            <input name="txttitlemenu" id="txttitle" placeholder="" type="text" class="form-control">
+        }
+
+    </div>
+    <div class="position-relative form-group">
+        <label for="exampleEmail" class="">URL Seo <span style="color:red"></span></label> <a onclick="ConvertToUnSign()" class="dongboURL">Đồng bộ url theo tiêu đề</a>
+        @if (Model != null && Model.Count > 0)
+        {
+            foreach (var item in Model)
+            {
+                <input name="txtseoURL" id="txtseoURL" placeholder="" type="text" class="form-control" value="@item.Url">
+
+            }
+
+        }
+        else
+        {
+            <input name="txtseoURL" id="txtseoURL" placeholder="" type="text" class="form-control">
+        }
+
+    </div>
+
+    <div class="position-relative form-group">
+        <label for="exampleEmail" class="">MetaDescription<span style="color:red"></span></label>
+        @if (Model != null && Model.Count > 0)
+        {
+            foreach (var item in Model)
+            {
+    <textarea name="txtMetaDescription" id="txtMetaDescription" placeholder="" class="form-control">@item.MetaDescription</textarea>
+
+            }
+
+        }
+        else
+        {
+            <textarea name="txtMetaDescription" id="txtMetaDescription" placeholder="" class="form-control"></textarea>
+        }
+
+    </div>
+
+    <div class="position-relative form-group">
+        <label for="exampleEmail" class="">MetaKeywords<span style="color:red"></span></label>
+        @if (Model != null && Model.Count > 0)
+        {
+            foreach (var item in Model)
+            {
+    <textarea name="txtMetaKeywords" id="txtMetaKeywords" placeholder="" class="form-control" >@item.MetaKeywords</textarea>
+
+            }
+
+        }
+        else
+        {
+            <textarea name="txtMetaKeywords" id="txtMetaKeywords" placeholder="" class="form-control"></textarea>
+        }
+
+    </div>
+</div>
+<script>
+    function ConvertToUnSign() {
+        $.post("/Administrator/Ajax/ConvertToUnSign", { "url": "" + $("#txtName").val() + "" }, function (result) {
+            $("#txtseoURL").val(result);
+        });
+    }
+</script>

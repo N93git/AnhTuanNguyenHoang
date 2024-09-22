@@ -1,0 +1,371 @@
+﻿<div class="block-breadcrumb">
+    <div class="container">
+        <ul class="breadcrumb">
+            <li>
+                <a href="/">Trang chủ</a>
+            </li>
+
+            <li class="active">Trả góp</li>
+        </ul>
+    </div>
+</div>
+@if (Model != null)
+{
+    foreach (var item in Model)
+    {
+        <div class="container">
+            <div class="installment-product">
+                <div class="tragop_title">
+                    <div class="installment-title">
+                        <div class="icon">
+                            <i class="fa fa-credit-card"></i>
+                        </div>
+                        <span>Mua trả góp</span>
+                    </div>
+                </div>
+                <div class="installment-info">
+                    <figure>
+                        <div class="product-img">
+                            <a href="@item.ProductUrl"><img src="~/upload/Products/@item.ProductImage" class="img-responsive" onerror="javascript:this.src='/noimage.png?v=1'"></a>
+
+                        </div>
+                        <figcaption>
+                            <h1 class="product-name">
+                                <a href="@item.ProductUrl">@item.ProductTitle </a>
+                                <input type="hidden" value="@item.ProductTitle" id="txtProductTitle" />
+                                <input type="hidden" value="@item.ProductUrl" id="txtProductUrl" />
+                            </h1>
+                            <div class="product-price">
+                                <div class="new">@item.ProductPriceDrop.ToString("#,##0")đ</div>
+                                <input type="hidden" id="tru_price" value="16200000">
+                            </div>
+                        </figcaption>
+                    </figure>
+                    <div class="tab-cx clear-fix">
+                        <button type="button" class="tab-cx-bt actd" id="actd-1" onclick="slTab(1)"> 
+                            <img src="~/assets/images/m7.png"> TRẢ GÓP KHÔNG CẦN THẺ
+                        </button>
+                        <button type="button" class="tab-cx-bt" id="actd-2" onclick="slTab(2)">
+                            <img src="~/assets/images/m2.png"> TRẢ GÓP QUA THẺ TÍN DỤNG
+                        </button>
+                        <div class="clearfix">
+
+                        </div>
+                    </div>
+                    <div class="content-b" id="con-actd-1">
+                        <div><strong>Chọn số thời hạn trả góp và giá trị trả trước</strong></div>
+                        <div class="tb-list-content-b">
+                            <button type="button" data-month="3" class="achung" onclick="monthclick(this)">3 tháng</button>
+                            <button type="button" data-month="6" class="achung" onclick="monthclick(this)">6 tháng</button>
+                            <button type="button" data-month="9" class="achung" onclick="monthclick(this)">9 tháng</button>
+                            <button type="button" data-month="12" class="achung act" onclick="monthclick(this)">12 tháng</button>
+                        </div>
+                        <div class="installment-table">
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <th>Giá sản phẩm:</th>
+                                        <td>
+                                            <div class="text-bluegrey">@item.ProductPriceDrop.ToString("#,##0") đ</div>
+
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            Trả trước
+                                            <select id="ddl-tratuoc" onchange="changeppercent(this)" class="prepay-select installment-prepaid">
+                                                <option value="20">20% - @((item.ProductPriceDrop * 20 / 100).ToString("#,##0")) đ</option>
+                                                <option value="30">30% - @((item.ProductPriceDrop * 30 / 100).ToString("#,##0")) đ</option>
+                                                <option value="40">40% - @((item.ProductPriceDrop * 40 / 100).ToString("#,##0")) đ</option>
+                                                <option value="50">50% - @((item.ProductPriceDrop * 50 / 100).ToString("#,##0")) đ</option>
+                                                <option value="60">60% - @((item.ProductPriceDrop * 60 / 100).ToString("#,##0")) đ</option>
+                                                <option value="70">70% - @((item.ProductPriceDrop * 70 / 100).ToString("#,##0")) đ</option>
+
+                                            </select>
+                                        </th>
+                                        <td>
+                                            <div data-trueprice="@(item.ProductPriceDrop * 20 / 100)" class="idpric" id="d-20">@((item.ProductPriceDrop * 20 / 100).ToString("#,##0")) đ</div>
+                                            <div data-trueprice="@(item.ProductPriceDrop * 30 / 100)" class="idpric hide" id="d-30">@((item.ProductPriceDrop * 30 / 100).ToString("#,##0")) đ</div>
+                                            <div data-trueprice="@(item.ProductPriceDrop * 40 / 100)" class="idpric hide" id="d-40">@((item.ProductPriceDrop * 40 / 100).ToString("#,##0")) đ</div>
+                                            <div data-trueprice="@(item.ProductPriceDrop * 50 / 100)" class="idpric hide" id="d-50">@((item.ProductPriceDrop * 50 / 100).ToString("#,##0")) đ</div>
+                                            <div data-trueprice="@(item.ProductPriceDrop * 60 / 100)" class="idpric hide" id="d-60">@((item.ProductPriceDrop * 60 / 100).ToString("#,##0")) đ</div>
+                                            <div data-trueprice="@(item.ProductPriceDrop * 70 / 100)" class="idpric hide" id="d-70">@((item.ProductPriceDrop * 70 / 100).ToString("#,##0")) đ</div>
+
+                                        </td>
+
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                            <table id="tiengop">
+                                <tbody>
+                                    <tr>
+                                        <th>Số tiền góp</th>
+                                        <td class="idpric" id="tg-20" data-val="@(item.ProductPriceDrop - (item.ProductPriceDrop * 20 / 100))">@((item.ProductPriceDrop - (item.ProductPriceDrop * 20 / 100)).ToString("#,##0")) đ</td>
+                                        <td class="hide idpric" id="tg-30" data-val="@(item.ProductPriceDrop - (item.ProductPriceDrop * 30 / 100))">@((item.ProductPriceDrop - (item.ProductPriceDrop * 30 / 100)).ToString("#,##0")) đ</td>
+                                        <td class="hide idpric" id="tg-40" data-val="@(item.ProductPriceDrop - (item.ProductPriceDrop * 40 / 100))">@((item.ProductPriceDrop - (item.ProductPriceDrop * 40 / 100)).ToString("#,##0")) đ</td>
+                                        <td class="hide idpric" id="tg-50" data-val="@(item.ProductPriceDrop - (item.ProductPriceDrop * 50 / 100))">@((item.ProductPriceDrop - (item.ProductPriceDrop * 50 / 100)).ToString("#,##0")) đ</td>
+                                        <td class="hide idpric" id="tg-60" data-val="@(item.ProductPriceDrop - (item.ProductPriceDrop * 60 / 100))">@((item.ProductPriceDrop - (item.ProductPriceDrop * 60 / 100)).ToString("#,##0")) đ</td>
+                                        <td class="hide idpric" id="tg-70" data-val="@(item.ProductPriceDrop - (item.ProductPriceDrop * 70 / 100))">@((item.ProductPriceDrop - (item.ProductPriceDrop * 70 / 100)).ToString("#,##0")) đ</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Tiền góp mỗi tháng</th>
+                                        <td data-val="0" id="tiengopmoithang"><b class="">0 đ</b></td>
+                                    </tr>
+                                    <tr class="hide">
+                                        <th>Tổng tiền phải trả</th>
+                                        <td class="text-danger" data-val="0" id="tienphaitra">0</td>
+                                    </tr>
+                                    <tr class="hide">
+                                        <th>Chênh lệch với mua trả thẳng</th>
+                                        <td>
+                                            <div data-val="0" id="chenhlechmuatrathang">0</div>
+                                        </td>
+                                    </tr>
+
+
+
+                                </tbody>
+                            </table>
+                        </div>
+
+
+                    </div>
+                    <div class="content-b" id="con-actd-2">
+                        <div><strong>Chọn ngân hàng</strong></div>
+                        <div class="tb-list-content-b">
+                            <button type="button" data-month="3" class="achung" onclick="monthclick2(this)">3 tháng</button>
+                            <button type="button" data-month="6" class="achung" onclick="monthclick2(this)">6 tháng</button>
+                            <button type="button" data-month="9" class="achung" onclick="monthclick2(this)">9 tháng</button>
+                            <button type="button" data-month="12" class="achung act" onclick="monthclick2(this)">12 tháng</button>
+                        </div>
+                        <div class="row">
+                            @if (ViewBag.Bank != null)
+                            {
+                                var i = 0;
+                                foreach (var its in ViewBag.Bank)
+                                {
+                                    if (i == 0)
+                                    {
+                                        <div class="col-md-2">
+                                            <div data-id="@its.BankID" data-name="@its.BankName" class="bankbox bankboxact" onclick="actbank(this)">
+                                                <img src="~/Upload/Bank/@its.Images" class="img-fluid"  />
+                                            </div>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="col-md-2">
+                                            <div data-id="@its.BankID" class="bankbox" onclick="actbank(this)">
+                                                <img src="~/Upload/Bank/@its.Images" class="img-fluid" />
+                                            </div>
+                                        </div>
+                                    }
+
+                                    i++;
+                                }
+                            }
+                        </div>
+                        <div class="installment-table">
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <th>Giá sản phẩm:</th>
+                                        <td>
+                                            <div id="pricebank" class="text-bluegrey">@item.ProductPriceDrop.ToString("#,##0") đ</div>
+
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            Trả trước 0%
+                                          
+                                        </th>
+                                        <td>
+                                           0đ
+                                        </td>
+
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                            <table id="tiengop">
+                                <tbody>
+                                    <tr>
+                                        <th>Số tháng trả góp</th>
+                                        <th id="bankmonth">12 tháng</th>
+                                    </tr>
+
+                                    <tr class="">
+                                        <th>Tổng tiền phải trả</th>
+                                        <td class="text-danger" data-val="0" id="tienphaitra2">0</td>
+                                    </tr>
+                                    <tr class="">
+                                        <th>Góp mỗi tháng</th>
+                                        <td class="text-danger" data-val="0" id="gopmoithang">0</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+
+                    </div>
+                    <div class="ing">
+                        <h4 class="text-success">Nhập thông tin trả góp:</h4>
+                        <div class="form-group clear-fix"></div>
+                        <div class="row form-group">
+                            <label class="col-md-2" style="font-size:15px;">Họ Tên: <span class="text-danger">*</span></label>
+                            <div class="col-md-10"><input type="text" class="form-control" id="txt_ht_tragop"></div>
+                        </div>
+                        <div class="row form-group">
+                            <label class="col-md-2" style="font-size:15px;">Email: <span class="text-danger">*</span></label>
+                            <div class="col-md-10"><input type="email" class="form-control" id="txt_email_tragop"></div>
+                        </div>
+                        <div class="row form-group">
+                            <label class="col-md-2" style="font-size:15px;">Số điện thoại: <span class="text-danger">*</span></label>
+                            <div class="col-md-10"><input type="tel" class="form-control" id="txt_phone_tragop"></div>
+                        </div>
+                        <div class="row form-group">
+                            <label class="col-md-2" style="font-size:15px;">Địa chỉ:</label>
+                            <div class="col-md-10"><input type="text" class="form-control" id="txt_addr_tragop"></div>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <button type="button" class="btn btn-primary btn-lg" onclick="MuaTraGop(this)">Mua trả góp</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    }
+}
+<script src="~/Content/accounting.js"></script>
+<script>
+    $("#con-actd-2").hide();
+    var type = 1;
+    function slTab(id) {
+        $(".tab-cx-bt").removeClass("actd");
+        if (id == 1) {
+            $("#con-actd-2").hide();
+            $("#con-actd-1").show();
+            $("#actd-1").addClass("actd");
+            type = 1;
+        }
+        else {
+            $("#con-actd-2").show();
+            $("#con-actd-1").hide();
+            type = 2;
+            $("#actd-2").addClass("actd");
+        }
+        $(".achung").removeClass("act");
+        monthclick($("[data-month=12]"))
+        monthclick2($("[data-month=12]"))
+    }
+    function monthclick(dis) {
+        $(".achung").removeClass("act");
+        $(dis).addClass("act");
+        thang = $(dis).attr("data-month");
+        tinhtiengop($("#ddl-tratuoc").val())
+    }
+    function monthclick2(dis) {
+        $(".achung").removeClass("act");
+        $(dis).addClass("act");
+        var value = $(dis).attr("data-month"); 
+        $("#bankmonth").html(value +" tháng")
+        datamonth = value;
+        $(".bankboxact").click();
+    }
+    var thang = 12;
+    function changeppercent(dis) {
+        var id = $(dis).val();
+        $(".idpric").addClass("hide");
+        $("#d-" + id).removeClass("hide");
+        $("#tg-" + id).removeClass("hide");
+        tinhtiengop(id);
+    }
+    tinhtiengop(20);
+    function tinhtiengop(id) {
+        var sotiengop = $("#tg-" + id).attr("data-val");
+        $("#tiengopmoithang").html(accounting.formatNumber(Math.round(sotiengop / thang)) + "đ")
+        $("#tiengopmoithang").attr("data-val", Math.round(sotiengop / thang))
+    }
+    function MuaTraGop() {
+        if ($("#txt_ht_tragop").val() == '') {
+            alert('Cần phải nhập họ tên');
+            $("#txt_ht_tragop").focus();
+            return;
+        }
+        if ($("#txt_email_tragop").val() == '') {
+            alert('Cần phải nhập họ email');
+            $("#txt_email_tragop").focus();
+            return;
+        }
+        if ($("#txt_phone_tragop").val() == '') {
+            alert('Cần phải nhập họ số điện thoại');
+            $("#txt_phone_tragop").focus();
+            return;
+        }
+        if (type == 1) {
+            var params = {
+                "Name": $("#txt_ht_tragop").val(),
+                "Email": $("#txt_email_tragop").val(),
+                "Phone": $("#txt_phone_tragop").val(),
+                "Address": $("#txt_addr_tragop").val(),
+                "ProductTitle": $("#txtProductTitle").val(),
+                "ProductUrl": $("#txtProductUrl").val(),
+                "ThoiHan": thang,
+                "Tratruoc": $("#ddl-tratuoc").val(),
+                "Gopmoithang": $("#tiengopmoithang").attr("data-val"),
+                "Loai": "1"
+            }
+        }
+        else {
+            var params = {
+                "Name": $("#txt_ht_tragop").val(),
+                "Email": $("#txt_email_tragop").val(),
+                "Phone": $("#txt_phone_tragop").val(),
+                "Address": $("#txt_addr_tragop").val(),
+                "ProductTitle": $("#txtProductTitle").val(),
+                "ProductUrl": $("#txtProductUrl").val(),
+                "ThoiHan": datamonth,
+                "Tratruoc": 0,
+                "Gopmoithang": gmt,
+                "Loai": "2",
+                "BankName": bankname
+            }
+        }
+        
+        $.post("/Home/MuatraGop", { "data": "" + JSON.stringify(params) + "" }, function (result) {
+            alert("Gửi thành công");
+            window.location.href = "/";
+        });
+    }
+
+    var datamonth = 0;
+    var gmt = 0;
+    var bankname = "";
+    function actbank(dis) {
+
+        $(".bankbox").removeClass("bankboxact");
+        $(dis).addClass("bankboxact");
+        bankname = $(dis).attr("data-name");
+        var param = {
+            "BankID": $(dis).attr("data-id"),
+            "Month": datamonth,
+            "price": $("#pricebank").html().replace(" đ", "").replace(",", "").replace(",", "").replace(",", "")
+        }
+        $.ajax({
+            url: '/Home/GetBankInfo',
+            data: param,
+            dataType: 'html',
+            type: 'POST',
+            cache: false,
+            success: function (result) {
+                gmt = result / datamonth;
+                
+                $("#tienphaitra2").html(accounting.formatNumber(result) + "đ")
+                $("#gopmoithang").html(accounting.formatNumber(result / datamonth) + "đ")
+            }
+        });
+    }
+</script>

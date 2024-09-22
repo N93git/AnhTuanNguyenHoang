@@ -1,0 +1,347 @@
+﻿
+@{
+    ViewBag.Title = "InsertList";
+    Layout = "~/Areas/Administrator/Views/Shared/_Layout.cshtml";
+}
+<input type="hidden" id="typeimage" value="1" />
+@*@Html.Action("Test", "NewsCategory", new { parentId = 1, exexcep = 2 })*@
+<div class="app-main__inner">
+    <div class="app-page-title">
+        <div class="page-title-wrapper">
+            <div class="page-title-heading">
+                <div class="page-title-icon">
+                    <i class="pe-7s-drawer icon-gradient bg-happy-itmeo"></i>
+                </div>
+                <div>
+                    CHI TIẾT DANH MỤC TIN TỨC
+                    @*<div class="page-title-subheading">Tables are the backbone of almost all web applications.</div>*@
+                </div>
+            </div>
+            <div class="page-title-actions">
+                <button onclick="back()" type="button" data-toggle="tooltip" title="" data-placement="bottom" class="btn-shadow mr-3 btn btn-dark" >
+                Quay lại
+                </button>
+                <button class="mt-1 btn btn-danger" data-toggle="tooltip" data-placement="bottom" onclick="SaveData()" >Lưu</button>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+          
+            <div class="tab-content">
+                <div class="tab-pane tabs-animation fade show active" id="tab-content-0" role="tabpanel">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="main-card mb-3 card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Nội dung</h5>
+                                    <div class="">
+                                        <!--Tiêu đề-->
+                                        <div class="position-relative form-group">
+                                            <label for="exampleEmail" class="">Tiêu đề <span style="color:red">(*)</span></label>
+                                            @if (Model != null && Model.Count > 0)
+                                            {
+                                                foreach (var item in Model)
+                                                {
+                                                    <div class="box0">
+                                                        <input name="txtName" id="txtName" placeholder="" type="text" class="form-control " value="@item.NewsCategoryTitle">
+                                                    </div>
+                                                    <div class="box1">
+                                                        <input name="txtName1 " id="txtName1" placeholder="" type="text" class="form-control box1" value="@item.NewsCategoryTitle1">
+
+                                                    </div>
+                                                    <div class="box2">
+                                                        <input name="txtName2 " id="txtName2" placeholder="" type="text" class="form-control box2" value="@item.NewsCategoryTitle2">
+                                                    </div>
+                                                    <input type="hidden" id="txtID" name="txtID" value="@item.NewsCategoryId" />
+                                                }
+
+                                            }
+                                            else
+                                            {
+                                                <input name="txtName" id="txtName" placeholder="" type="text" class="form-control box0">
+                                                <input name="txtName1" id="txtName1" placeholder="" type="text" class="form-control box1">
+                                                <input name="txtName2" id="txtName2" placeholder="" type="text" class="form-control box2">
+                                                <input type="hidden" id="txtID" name="txtID" value="0" />
+                                            }
+
+                                        </div>
+                                        <!--Hình ảnh-->
+                                        <div class="position-relative form-group">
+                                            <label for="exampleFile" class="">Hình ảnh</label>
+                                            @if (Model != null && Model.Count > 0)
+                                            {
+                                                foreach (var item in Model)
+                                                {
+                                                    <input name="file" id="fu" type="file" class="form-control-file" multiple>
+                                                    <input type="hidden" id="hdFileName" value="@item.NewsCategoryImage" />
+                                                    <div id="dd" onchange="ChangeDD()">
+                                                        @*<img src="~/Upload/ProductCategories/@item.NewsCategoryImage" />
+                        <a onclick="img_click('@item.ProductImage','Products','')">
+                            x
+
+                        </a>*@
+
+                                                        @if (item.NewsCategoryImage != "")
+                                                        {
+                                                            <div class="myimage">
+                                                                <img src="~/Upload/NewsCategories/@item.NewsCategoryImage" class="img-fluid" />
+                                                                <a onclick="img_click('@item.NewsCategoryImage','NewsCategories','')">
+                                                                    x
+
+                                                                </a>
+                                                            </div>
+                                                        }
+                                                    </div>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <input name="file" id="fu" type="file" class="form-control-file" multiple>
+                                                <input type="hidden" id="hdFileName" />
+                                                <div id="dd" onchange="ChangeDD()">
+
+                                                </div>
+                                            }
+
+                                            <small class="form-text text-muted">
+                                                Vui lòng chọn hình ảnh có kích thước <strong>600x600px</strong>
+                                            </small>
+                                        </div>
+                                        <!--Danh mục-->
+                                        <div class="position-relative form-group">
+                                            <label for="exampleSelect" class="">Danh mục</label>
+                                            <select name="slPoductCategory" id="slPoductCategory" class="form-control">
+                                                <option value="0">--Root--</option>
+                                                @if (ViewBag.ListProCate != null)
+                                                {
+                                                    foreach (var item in ViewBag.ListProCate)
+                                                    {
+                                                        <option value="@item.NewsCategoryId">@item.NewsCategoryTitle</option>
+                                                        @*@Html.Action("NewsCategoryselect", "NewsCategory", new { parentId = item.NewsCategoryId, exexcep = ViewBag.Excep })*@
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+                                        <!--Mô tả ngắn-->
+                                        <div class="position-relative form-group box0">
+
+                                            <label for="examplePassword" class="">Mô tả ngắn</label>
+                                            @if (Model != null && Model.Count > 0)
+                                            {
+                                                foreach (var item in Model)
+                                                {
+                                                    <textarea id="editor2" name="editor2" class="form-control">@item.NewsCategoryDesc</textarea>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <textarea id="editor2" name="editor2" class="form-control"></textarea>
+                                            }
+
+                                        </div>
+                                        <div class="position-relative form-group box1">
+                                            <label for="examplePassword" class="">Mô tả ngắn</label>
+                                            @if (Model != null && Model.Count > 0)
+                                            {
+                                                foreach (var item in Model)
+                                                {
+                                                    <textarea id="editor3" name="editor3" class="form-control">@item.NewsCategoryDesc1</textarea>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <textarea id="editor3" name="editor3" class="form-control"></textarea>
+                                            }
+
+                                        </div>
+                                        <div class="position-relative form-group box2">
+                                            <label for="examplePassword" class="">Mô tả ngắn</label>
+                                            @if (Model != null && Model.Count > 0)
+                                            {
+                                                foreach (var item in Model)
+                                                {
+                                                    <textarea id="editor4" name="editor4" class="form-control">@item.NewsCategoryDesc2</textarea>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <textarea id="editor4" name="editor4" class="form-control"></textarea>
+                                            }
+
+                                        </div>
+                                        <!--Nội dung-->
+                                        <div class="position-relative form-group">
+                                            <label for="examplePassword" class="">Nội dung</label>
+                                            @if (Model != null && Model.Count > 0)
+                                            {
+                                                foreach (var item in Model)
+                                                {
+                                                    <textarea id="editor1" name="editor1" class="form-control">@item.NewsCategoryContents</textarea>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <textarea id="editor1" name="editor1" class="form-control"></textarea>
+                                            }
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            @*<div class="inputWrapper">
+                    <input type="file" id="fu" multiple>
+                </div>Tiêu đề (*)
+                <div id="dd">
+
+                </div>*@
+            <div class="tab-content">
+                <div class="tab-pane tabs-animation fade show active" id="tab-content-0" role="tabpanel">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="main-card mb-3 card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Tối ưu seo</h5>
+                                    @if (Model != null && Model.Count > 0)
+                                    {
+                                        foreach (var item in Model)
+                                        {
+                                            @Html.Action("GetSeoBox", "Ajax", new { relatedId = item.NewsCategoryId, templateid = 3 })
+                                        }
+                                    }
+                                    else
+                                    {
+                                        @Html.Action("GetSeoBox", "Ajax", new { relatedId = 0, templateid = 0 })
+                                    }
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="btn_Save_Fixed">
+                @*<button class="mt-1 btn btn-primary" onclick="SaveData()">Submit</button>*@
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+
+    function SaveData() {
+        var param = {
+            "NewsCategoryId": $("#txtID").val(),
+            "NewsCategoryTitle": $("#txtName").val(),
+            "NewsCategoryTitle1": $("#txtName1").val(),
+            "NewsCategoryTitle2": $("#txtName2").val(),
+            "NewsCategoryImage": $("#hdFileName").val(),
+            "NewsCategoryDesc": CKEDITOR.instances.editor2.getData(),
+            "NewsCategoryDesc1": CKEDITOR.instances.editor3.getData(),
+            "NewsCategoryDesc2": CKEDITOR.instances.editor4.getData(),
+            "NewsCategoryContents": CKEDITOR.instances.editor1.getData(),
+            "ParentID": $("#slPoductCategory").val(),
+
+            "Title": $("#txttitle").val(),
+            "Url": $("#txtseoURL").val(),
+            "MetaDescription": $("#txtMetaDescription").val(),
+            "MetaKeywords": $("#txtMetaKeywords").val(),
+        }
+        $.post("/Administrator/NewsCategories/UpdateNewsCategories", { "data": "" + JSON.stringify(param) + "" }, function (result) {
+            window.location.href = "/Administrator/NewsCategories/NewCategoriesGetList";
+        });
+    }
+</script>
+<script src="~/assets/uploads/jquery.html5uploader.min.js"></script>
+<script src="~/assets/uploads/elnino.drag-upload.js"></script>
+<script type="text/javascript">
+    pnlContainer = 'pnlTemplateFile';
+    pnlDragUpload = 'pnlDragTemplateFile';
+    fileUploadControl = 'fu';
+    fileUploadControl2 = 'fu2';
+    fileUploadControl3 = 'fu3';
+    fileUploadControl4 = 'fu4';
+    fileUploadControl5 = 'fu5';
+    ReloadDragUpload();
+    $("#ddl-productCate").val($("#txtparentId").val());
+    $("#ddlshowmenu").val($("#txtshowmenuId").val());
+    $("#ddlisshowhome").val($("#txtisshowhomeId").val());
+    function ChangeDD() {
+        alert(dd);
+    }
+    //$('#dd').bind('DOMSubtreeModified', function () {
+    //    alert('changed');
+    //});
+    $(document).ready(function () {
+        //alert("ready!");
+        var vb = '@ViewBag.Selected';
+        $("#slPoductCategory").val(vb).change();
+    });
+    var bien = 0;
+    var savedd = "";
+
+    function img_click(name, folder, name2) {
+
+
+        $("#dd").html('');
+        $("#hdFileName").val('');
+        //if()
+        //Ajax xóa
+
+        $.ajax({
+            url: '/Tool/DeleteFile.ashx',
+            data: 'name=' + name + '&folder=' + folder,
+            dataType: 'text',
+            type: 'GET',
+            cache: false,
+            success: function (result) {
+
+            }
+        });
+
+    }
+    function back() {
+        window.location.href = "/Administrator/NewsCategories/NewCategoriesGetList";
+    }
+    function toogle_langue(dis) {
+        var index = $(dis).attr("data-index");
+        $(".achung").removeClass("langue_active");
+        $(dis).addClass("langue_active");
+        if (index == 0) {
+            $(".box0").show();
+            $(".box1").hide();
+            $(".box2").hide();
+        }
+        if (index == 1) {
+            $(".box1").show();
+            $(".box0").hide();
+            $(".box2").hide();
+        }
+        if (index == 2) {
+            $(".box2").show();
+            $(".box1").hide();
+            $(".box0").hide();
+        }
+    }
+    $(".box1").hide();
+    $(".box2").hide();
+</script>

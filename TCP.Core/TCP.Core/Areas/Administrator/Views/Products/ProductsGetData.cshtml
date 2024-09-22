@@ -1,0 +1,214 @@
+﻿
+@{
+
+    Layout = null;
+}
+
+
+@{
+    Layout = null;
+}
+
+
+@if (Model != null)
+{
+    var i = 1;
+    foreach (var item in Model)
+    {
+        <tr>
+            <td scope="row"><input type="checkbox" data-id="@item.ProductId" /></td>
+            <td>@item.ProductTitle</td>
+            <td class="table_img">
+                @if (item.ProductImage != "" && item.ProductImage != null)
+                {
+                    <img src="/upload/Products/@item.ProductImage" />
+
+                }
+                else
+                {
+            <img src="~/assets/images/Admin/Noimage.png" />
+                }
+            </td>
+            <td>@item.ProductUrl</td>
+            <td><input class="admin_sort" value="@item.DisplayOrder" onchange="change_displayorder('@item.ProductId',this)" /></td>
+            <td>
+
+                @if (item.IsShow == 1)
+                {
+                    <p><input  checked="checked" type="checkbox" name="check-1" value="@item.ProductId" class="lcs_check" autocomplete="off" /></p>
+                }
+                else
+                {
+                    <p><input type="checkbox" name="check-1" value="@item.ProductId" class="lcs_check" autocomplete="off" /></p>
+                }
+
+            </td>
+            <td>
+                <a href="/Administrator/Products/ProductsInsertList?ProductId=@item.ProductId">
+                    <i class="lnr-pencil" style="font-size: 13px; color: white; background-color: #16aaff; padding: 10px 10px;"></i>
+                </a>
+                <a href="javascript:deletes('@item.ProductId','@item.ProductImage')">
+                    <i class="lnr-trash" style="font-size: 13px; color: white; margin-left: 5px; background-color: #d92550; padding: 10px 10px;"></i>
+                </a>
+
+            </td>
+        </tr>
+
+    }
+}
+<script>
+    function deletes(id, name) {
+        $.confirm('Bạn có muốn xóa sản phẩm này?', {
+            em:'', title: 'Cảnh báo!', callEvent: function () {
+
+                $.ajax({
+                    url: '/Tool/DeleteFile.ashx',
+                    data: 'name=' + name + '&folder=' + 'Products',
+                    dataType: 'text',
+                    type: 'GET',
+                    cache: false,
+                    success: function (result) {
+
+                    }
+                });
+                //Lấy list ten hình con
+                var pr =
+                {
+                    "ProductID": id
+                }
+                var lststring;
+                var getstring = "";
+                var lenghst = 0;
+                $.ajax({
+                    url: '/Administrator/Products/GetNameImages',
+                    data: pr,
+                    dataType: 'text',
+                    type: 'POST',
+                    cache: false,
+                    success: function (result) {
+                        getstring = result.toString();
+                        lststring = getstring.split(',');
+
+                        lenghst = lststring.length;
+                        console.log(lststring)
+                        for (i = 0; i < lenghst - 1; i++) {
+                            if (lststring[i] != "") {
+                                $.ajax({
+                                    url: '/Tool/DeleteFile.ashx',
+                                    data: 'name=' + lststring[i] + '&folder=' + 'ProductsImg',
+                                    dataType: 'text',
+                                    type: 'GET',
+                                    cache: false,
+                                    success: function (result) {
+
+                                    }
+                                });
+                            }
+
+                        }
+                    }
+                });
+                //
+                var param =
+                {
+                    "ProductID": id
+                }
+
+                $.ajax({
+                    url: '/Administrator/Products/ProductsDelete',
+                    data: param,
+                    dataType: 'text',
+                    type: 'POST',
+                    cache: false,
+                    success: function (result) {
+                        window.location.reload();
+                    }
+                });
+            }, cancelEvent: function () { }, cancelButton: 'Không'
+        })
+
+
+    }
+
+
+    function change_displayorder(id, dd) {
+        var param =
+        {
+            "id": id,
+            "idorder": $(dd).val()
+        }
+        console.log(param);
+        $.ajax({
+            url: '/Administrator/Products/ProductSort',
+            data: param,
+            dataType: 'text',
+            type: 'POST',
+            cache: false,
+            success: function (result) {
+
+            }
+        });
+    }
+
+</script>
+
+
+
+<script type="text/javascript">
+    $(document).ready(function (e) {
+        $('input').lc_switch();
+
+        // triggered each time a field changes status
+        $(document).on('lcs-statuschange', '.lcs_check', function () {
+            var status = ($(this).is(':checked')) ? 'checked' : 'unchecked',
+                subj = ($(this).attr('type') == 'radio') ? 'radio #' : 'checkbox #',
+                num = $(this).val();
+
+            $('#third_div ul').prepend('<li><em>[lcs-statuschange]</em>' + subj + num + ' changed status: ' + status + '</li>');
+        });
+
+
+        // triggered each time a field is checked
+        $(document).on('lcs-on', '.lcs_check', function () {
+            updateDisplay($(this).val(),1);
+            var subj = ($(this).attr('type') == 'radio') ? 'radio #' : 'checkbox #',
+                num = $(this).val();
+
+            $('#third_div ul').prepend('<li><em>[lcs-on]</em>' + subj + num + ' is checked</li>');
+        });
+
+
+        // triggered each time a is unchecked
+        $(document).on('lcs-off', '.lcs_check', function () {
+            updateDisplay($(this).val(),0);
+            var subj = ($(this).attr('type') == 'radio') ? 'radio #' : 'checkbox #',
+                num = $(this).val();
+
+            $('#third_div ul').prepend('<li><em>[lcs-off]</em>' + subj + num + ' is unchecked</li>');
+        });
+    });
+
+
+
+    // clean events log
+    $('#third_div small').click(function () {
+        $('#third_div ul').empty();
+    });
+    function updateDisplay(id, status) {
+        var param =
+        {
+            "id": id, 
+            "idorder": status
+        }
+        $.ajax({
+            url: '/Administrator/Products/ProductShow',
+            data: param,
+            dataType: 'text',
+            type: 'POST',
+            cache: false,
+            success: function (result) {
+                getList();
+            }
+        });
+    }
+</script>

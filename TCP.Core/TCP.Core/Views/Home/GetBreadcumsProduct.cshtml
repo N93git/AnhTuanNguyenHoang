@@ -1,0 +1,8 @@
+﻿@if (Model != null)
+{
+    foreach (var item in Model)
+    {
+        <li><span style="margin:0px 5px"> |  </span> </li>
+        <li><a href="@item.ProductCategoryUrl">@item.ProductCategoryTitle</a></li>
+    }
+}

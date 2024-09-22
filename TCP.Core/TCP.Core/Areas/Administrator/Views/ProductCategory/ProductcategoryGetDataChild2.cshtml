@@ -1,0 +1,96 @@
+﻿
+@{
+    Layout = null;
+}
+@if (Model != null)
+{
+    var i = 1;
+    foreach (var item in Model)
+    {
+        <tr>
+            <td scope="row">@item.ProductCategoryId</td>
+            <td style="color:#666">----@item.ProductCategoryTitle</td>
+            <td class="table_img">
+                @if (item.ProductCategoryImage != "" && item.ProductCategoryImage != null)
+                {
+                    <img src="/upload/ProductCategories/@item.ProductCategoryImage" />
+
+                }
+                else
+                {
+                    <img src="~/assets/images/Admin/Noimage.png" />
+                }
+            </td>
+            <td>@item.ProductCategoryUrl</td>
+            <td><input class="admin_sort" value="@item.DisplayOrder" onchange="change_displayorder('@item.ProductCategoryId',this)" /></td>
+            @*<td>@item.IsShow</td>*@
+            <td>
+                @if (item.IsShow == 1)
+                {
+                    <p><input checked="checked" type="checkbox" name="check-1" value="@item.ProductCategoryId" class="lcs_check1" autocomplete="off" /></p>
+                }
+                else
+                {
+                    <p><input type="checkbox" name="check-1" value="@item.ProductCategoryId" class="lcs_check1" autocomplete="off" /></p>
+                }
+
+            </td>
+            <td>
+                <a href="/Administrator/ProductCategory/insertlist?ProductCategoryId=@item.ProductCategoryId">
+                    <i class="lnr-pencil" style="font-size: 13px; color: white; background-color: #16aaff; padding: 10px 10px;"></i>
+                </a>
+                <a href="javascript:deletes2('@item.ProductCategoryId','@item.ProductCategoryImage')">
+                    <i class="lnr-trash" style="font-size: 13px; color: white; margin-left: 5px; background-color: #d92550; padding: 10px 10px;"></i>
+                </a>
+            </td>
+        </tr>
+      
+        i++;
+    }
+}
+<script>
+    function deletes2(id, name) {
+        $.confirm('Bạn có muốn xóa danh mục này?', {
+            em: '', title: 'Cảnh báo!', callEvent: function () {
+
+                $.ajax({
+                    url: '/Tool/DeleteFile.ashx',
+                    data: 'name=' + name + '&folder=' + 'ProductCategories',
+                    dataType: 'text',
+                    type: 'GET',
+                    cache: false,
+                    success: function (result) {
+
+                    }
+                });
+                //
+                var param =
+                {
+                    "productCategoryId": id
+                }
+
+                $.ajax({
+                    url: '/Administrator/ProductCategory/ProductcategoryDelete',
+                    data: param,
+                    dataType: 'text',
+                    type: 'POST',
+                    cache: false,
+                    success: function (result) {
+                        if (result == "-1") {
+                            $.alert('Danh mục này đang có sản phẩm, không thể xóa', { em: '', title: 'Cảnh báo' })
+                        }
+                        else {
+                            window.location.href = "/Administrator/ProductCategory/getlist";
+
+                        }
+                    }
+                });
+            }, cancelEvent: function () { }, cancelButton: 'Không'
+        })
+
+
+    }
+</script>
+
+
+
